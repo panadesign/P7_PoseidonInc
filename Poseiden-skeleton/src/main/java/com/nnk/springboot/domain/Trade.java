@@ -8,9 +8,8 @@ import java.sql.Timestamp;
 
 @Data
 @Entity
-@Table(name = "trade")
+@Table(name = "Trade")
 public class Trade {
-    // TODO: Map columns in data table TRADE with corresponding java fields
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	Integer tradeId;

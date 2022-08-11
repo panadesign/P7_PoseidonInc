@@ -1,6 +1,8 @@
 package com.nnk.springboot.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,14 +12,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 @Data
+@AllArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "Users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
     private Integer id;
     @NotBlank(message = "Username is mandatory")
+    @UniqueElements
     private String username;
     @NotBlank(message = "Password is mandatory")
     private String password;
@@ -25,4 +29,11 @@ public class User {
     private String fullname;
     @NotBlank(message = "Role is mandatory")
     private String role;
+
+    public User(String username, String password, String fullname) {
+        this.username = username;
+        this.password = password;
+        this.fullname = fullname;
+    }
+
 }

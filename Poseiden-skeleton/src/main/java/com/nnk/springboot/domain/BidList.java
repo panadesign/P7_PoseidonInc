@@ -11,14 +11,16 @@ import java.sql.Timestamp;
 
 @Data
 @Entity
-@Table(name = "bidlist")
+@Table(name = "Bidlist")
 public class BidList {
-    // TODO: Map columns in data table BIDLIST with corresponding java fields
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Integer BidListId;
+	@NotBlank
 	String account;
+	@NotBlank
 	String type;
+	@NotBlank
 	Double bidQuantity;
 	Double askQuantity;
 	Double bid;

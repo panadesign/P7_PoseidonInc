@@ -10,15 +10,18 @@ import java.sql.Timestamp;
 
 @Data
 @Entity
-@Table(name = "curvepoint")
+@Table(name = "Curvepoint")
 public class CurvePoint {
-    // TODO: Map columns in data table CURVEPOINT with corresponding java fields
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@NotBlank
 	Integer id;
+	@NotBlank
 	Integer curveId;
 	Timestamp asOfDate;
+	@NotBlank
 	Double term;
+	@NotBlank
 	Double value;
 	Timestamp creationDate;
 }

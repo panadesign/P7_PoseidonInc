@@ -1,0 +1,16 @@
+[
+  {
+    "_class": "com.nnk.springboot.domain.User",
+    "username": "admin",
+    "password": "$2a$12$zmd8RXM4BHE1qfyo0ltDGu1fti6G2BcyffToZWcOMf9h5PcIp3HHK",
+    "fullname": "Administrator",
+    "role": "ADMIN"
+  },
+  {
+    "_class": "com.nnk.springboot.domain.User",
+    "username": "user",
+    "password": "$2a$12$Ip2trlJdQGYcIzsH7x7POeNaL4Fj.GaQhcqP9K3J2W6udyNQFRD.6",
+    "fullname": "User",
+    "role": "USER"
+  }
+]

@@ -8,9 +8,8 @@ import java.sql.Timestamp;
 
 @Data
 @Entity
-@Table(name = "rulename")
+@Table(name = "Rulename")
 public class RuleName {
-    // TODO: Map columns in data table RULENAME with corresponding java fields
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	Integer id;
