@@ -1,10 +1,9 @@
 package com.nnk.springboot.service;
 
-import com.nnk.springboot.Exception.BidListNotExistException;
+import com.nnk.springboot.Exception.ResourceExistException;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.repositories.BidListRepository;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -15,26 +14,52 @@ import java.util.List;
 @Log4j2
 public class BidListServiceImpl implements BidListService{
 
-	@Autowired
-	BidListRepository bidListRepository;
+	private final BidListRepository bidListRepository;
 
-	public BidList addBidList(BidList bidList) {
-		BidList bidListToCreate = new BidList(bidList.getAccount(), bidList.getType(), bidList.getBidQuantity());
-		log.debug("A new bid list has been created: " + bidListToCreate.getAccount());
-		return bidListRepository.save(bidListToCreate);
+	BidListServiceImpl(BidListRepository bidListRepository) {
+		this.bidListRepository = bidListRepository;
 	}
 
-	public boolean delete(BidList bidList) {
-		if(!bidListRepository.findById(bidList.getBidListId()).isPresent()){
-			throw new BidListNotExistException("This bidlist is not existing: " + bidList.getBidListId());
+	public BidList addBidList(BidList bidList) {
+		if(bidListRepository.findById(bidList.getBidListId()).isPresent()){
+			throw new ResourceExistException("This bid list is already existing: " + bidList.getBidListId());
 		}
-		log.debug("Bidlist with id: " + bidList.getBidListId() + " is deleted");
+		BidList newBidList = new BidList(bidList.getBidListId(), bidList.getAccount(), bidList.getType(), bidList.getBidQuantity());
+		log.debug("A new bid list has been created: " + newBidList.getAccount());
+		return bidListRepository.save(newBidList);
+	}
+
+	public void delete(BidList bidList) {
+		if(!bidListRepository.findById(bidList.getBidListId()).isPresent()){
+			throw new ResourceExistException("This bidlist is not existing: " + bidList.getBidListId());
+		}
+		log.debug("Bid list with id: " + bidList.getBidListId() + " is deleted");
 		bidListRepository.delete(bidList);
-		return true;
 	}
 
 	public List<BidList> getAllBidList() {
-		log.debug("All bidlist: " + bidListRepository.findAll());
+		log.debug("All bid list: ");
 		return bidListRepository.findAll();
 	}
+
+	public BidList getBidListById(BidList bidList) {
+		log.debug("Bid list with id: " + bidList.getBidListId());
+		return bidListRepository.findBidListById(bidList.getBidListId()).orElseThrow(() -> new ResourceExistException("Bid list with id " + bidList.getBidListId() + " doesn't exist."));
+	}
+
+//	public BidList updateBidList(BidList bidList) {
+//
+//		if(!bidListRepository.findById(bidList.getBidListId()).isPresent()) {
+//			throw new ResourceExistException("This bidlist id is not existing: " + bidList.getBidListId());
+//		}
+//
+//		BidList bidListToUpdate = bidList;
+//		bidListToUpdate.setType(bidList.getType());
+//		bidListToUpdate.setAccount(bidList.getAccount());
+//		bidListToUpdate.setBidQuantity(bidList.getBidQuantity());
+//		bidListToUpdate.setAskQuantity(bidListToUpdate.getAskQuantity());
+//
+//
+//		return bidListRepository.save(bidListToUpdate);
+//	}
 }

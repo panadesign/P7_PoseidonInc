@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -21,7 +23,8 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
 
-	private UserService userService;
+	@Spy
+	UserService userService;
 
 	@Mock
 	private UserRepository mockUserRepository;
@@ -84,14 +87,16 @@ class UserServiceImplTest {
 	@Test
 	void deleteUser() {
 		//GIVEN
-		User user = new User(1, "bob", "1", "Morane", "ADMIN");
+		User user = new User(1, "Bob", "1", "Morane", "ADMIN");
 
 		//WHEN
-		when(mockUserRepository.findByUsername("bob")).thenReturn(Optional.of(user));
+		userService = Mockito.spy(new UserServiceImpl(mockUserRepository, mockPasswordEncoder));
+
 		userService.deleteUser(user);
 
 		//THEN
-		verify(mockUserRepository).delete(user);
+		verify(userService).deleteUser(user);
+		Assertions.assertTrue(userService.getAllUser().isEmpty());
 	}
 
 }
