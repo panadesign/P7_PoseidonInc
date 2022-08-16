@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface BidListService {
 	BidList addBidList(BidList bidList);
-	void delete(BidList bidList);
+	void deleteBidList(BidList bidList);
 	List<BidList> getAllBidList();
 	BidList getBidListById(BidList bidList);
 //	BidList updateBidList(BidList bidList);

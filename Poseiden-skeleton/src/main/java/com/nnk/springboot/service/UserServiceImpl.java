@@ -1,5 +1,6 @@
 package com.nnk.springboot.service;
 
+import com.nnk.springboot.Exception.ResourceNotExistException;
 import com.nnk.springboot.Exception.UserAlreadyExistException;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
@@ -41,6 +42,14 @@ public class UserServiceImpl implements UserService{
 
 	public void deleteUser(User user) {
 		userRepository.delete(user);
+	}
+
+	public User getUserById(User user) {
+		if(!userRepository.findById(user.getId()).isPresent()) {
+			throw new ResourceNotExistException("User with id " + user.getId() + " doesn't exist.");
+		}
+
+		return user;
 	}
 
 	public List<User> getAllUser() {

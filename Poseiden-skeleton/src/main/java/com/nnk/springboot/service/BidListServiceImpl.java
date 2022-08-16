@@ -1,6 +1,7 @@
 package com.nnk.springboot.service;
 
 import com.nnk.springboot.Exception.ResourceExistException;
+import com.nnk.springboot.Exception.ResourceNotExistException;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.repositories.BidListRepository;
 import lombok.extern.log4j.Log4j2;
@@ -29,7 +30,7 @@ public class BidListServiceImpl implements BidListService{
 		return bidListRepository.save(newBidList);
 	}
 
-	public void delete(BidList bidList) {
+	public void deleteBidList(BidList bidList) {
 		if(!bidListRepository.findById(bidList.getBidListId()).isPresent()){
 			throw new ResourceExistException("This bidlist is not existing: " + bidList.getBidListId());
 		}
@@ -44,7 +45,7 @@ public class BidListServiceImpl implements BidListService{
 
 	public BidList getBidListById(BidList bidList) {
 		log.debug("Bid list with id: " + bidList.getBidListId());
-		return bidListRepository.findBidListById(bidList.getBidListId()).orElseThrow(() -> new ResourceExistException("Bid list with id " + bidList.getBidListId() + " doesn't exist."));
+		return bidListRepository.findBidListById(bidList.getBidListId()).orElseThrow(() -> new ResourceNotExistException("Bid list with id " + bidList.getBidListId() + " doesn't exist."));
 	}
 
 //	public BidList updateBidList(BidList bidList) {

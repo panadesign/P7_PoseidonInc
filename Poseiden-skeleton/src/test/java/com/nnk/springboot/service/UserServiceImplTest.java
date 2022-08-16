@@ -1,5 +1,6 @@
 package com.nnk.springboot.service;
 
+import com.nnk.springboot.Exception.ResourceNotExistException;
 import com.nnk.springboot.Exception.UserAlreadyExistException;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
@@ -13,18 +14,21 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
 
-	@Spy
-	UserService userService;
+
+	private UserService userService;
 
 	@Mock
 	private UserRepository mockUserRepository;
@@ -90,13 +94,48 @@ class UserServiceImplTest {
 		User user = new User(1, "Bob", "1", "Morane", "ADMIN");
 
 		//WHEN
-		userService = Mockito.spy(new UserServiceImpl(mockUserRepository, mockPasswordEncoder));
-
 		userService.deleteUser(user);
 
 		//THEN
-		verify(userService).deleteUser(user);
-		Assertions.assertTrue(userService.getAllUser().isEmpty());
+		verify(mockUserRepository, times(1)).delete(user);
+	}
+
+	@Test
+	void getUserById() {
+		//GIVEN
+		User user = new User(1, "Bob", "1", "Morane", "ADMIN");
+
+		//WHEN
+		when(mockUserRepository.findById(1)).thenReturn(Optional.of(user));
+
+		User userToFind = userService.getUserById(user);
+
+		//THEN
+		Assertions.assertEquals(1, userToFind.getId());
+	}
+
+	@Test
+	void getUserByIdNotExistException() {
+		User user = new User(1, "Bob", "1", "Morane", "ADMIN");
+		Assertions.assertThrows(ResourceNotExistException.class, () -> userService.getUserById(user));
+	}
+
+	@Test
+	void getAllUsers() {
+		//GIVEN
+		List<User> users = new ArrayList<>();
+		User user = new User(1, "Bob", "1", "Morane", "ADMIN");
+		User user2 = new User(2, "Bla", "1", "Morane", "ADMIN");
+		users.add(user);
+		users.add(user2);
+
+		//WHEN
+		when(mockUserRepository.findAll()).thenReturn(users);
+
+		List<User> allUsers = userService.getAllUser();
+
+		//THEN
+		Assertions.assertEquals(allUsers, users);
 	}
 
 }

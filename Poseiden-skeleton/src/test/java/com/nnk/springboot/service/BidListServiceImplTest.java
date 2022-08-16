@@ -1,6 +1,7 @@
 package com.nnk.springboot.service;
 
 import com.nnk.springboot.Exception.ResourceExistException;
+import com.nnk.springboot.Exception.ResourceNotExistException;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.repositories.BidListRepository;
 import org.junit.jupiter.api.Assertions;
@@ -8,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -16,6 +16,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -52,7 +53,7 @@ class BidListServiceImplTest {
 	}
 
 	@Test
-	void addBidListReturnException() {
+	void addBidListAlreadyExistException() {
 		//GIVEN
 		BidList bidList = new BidList(2, "account1", "type1", 12);
 
@@ -69,14 +70,13 @@ class BidListServiceImplTest {
 		//GIVEN
 		BidList bidList = new BidList(2, "account1", "type1", 12);
 
-		bidListService = Mockito.spy(new BidListServiceImpl(bidListRepository));
 
 		//WHEN
 		when(bidListRepository.findById(2)).thenReturn(Optional.of(bidList));
-		bidListService.delete(bidList);
+		bidListService.deleteBidList(bidList);
 
 		//THEN
-		verify(bidListService).delete(bidList);
+		verify(bidListRepository, times(1)).delete(bidList);
 	}
 
 	@Test
@@ -85,7 +85,7 @@ class BidListServiceImplTest {
 		BidList bidList2 = new BidList(2, "account1", "type1", 12);
 
 		//THEN
-		Assertions.assertThrows(ResourceExistException.class, () -> bidListService.delete(bidList2));
+		Assertions.assertThrows(ResourceExistException.class, () -> bidListService.deleteBidList(bidList2));
 	}
 
 	@Test
@@ -100,6 +100,13 @@ class BidListServiceImplTest {
 
 		//THEN
 		Assertions.assertEquals(2, bidList1.getBidListId());
+	}
+
+	@Test
+	void getBidListByIdNotExistResource() {
+		BidList bidList = new BidList(2, "account1", "type1", 12);
+
+		Assertions.assertThrows(ResourceNotExistException.class, () -> bidListService.getBidListById(bidList));
 	}
 
 	@Test
