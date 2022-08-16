@@ -1,4 +1,4 @@
-package com.nnk.springboot.Exception;
+package com.nnk.springboot.exception;
 
 public class UserAlreadyExistException extends RuntimeException {
 	public UserAlreadyExistException(String message) {

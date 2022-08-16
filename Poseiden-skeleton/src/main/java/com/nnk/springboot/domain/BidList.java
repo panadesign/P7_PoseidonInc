@@ -48,12 +48,6 @@ public class BidList {
 		this.bidQuantity = bidQuantity;
 	}
 
-	public BidList (String account, String type, double bidQuantity) {
-		this.account = account;
-		this.type = type;
-		this.bidQuantity = bidQuantity;
-	}
-
 	public BidList() {
 
 	}

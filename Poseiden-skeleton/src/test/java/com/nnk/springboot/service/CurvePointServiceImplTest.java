@@ -1,8 +1,7 @@
 package com.nnk.springboot.service;
 
-import com.nnk.springboot.Exception.ResourceExistException;
-import com.nnk.springboot.Exception.ResourceNotExistException;
-import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.exception.ResourceExistException;
+import com.nnk.springboot.exception.ResourceNotExistException;
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.repositories.CurvePointRepository;
 import org.junit.jupiter.api.Assertions;
@@ -11,15 +10,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

@@ -1,7 +1,7 @@
 package com.nnk.springboot.service;
 
-import com.nnk.springboot.Exception.ResourceExistException;
-import com.nnk.springboot.Exception.ResourceNotExistException;
+import com.nnk.springboot.exception.ResourceExistException;
+import com.nnk.springboot.exception.ResourceNotExistException;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.repositories.BidListRepository;
 import org.junit.jupiter.api.Assertions;

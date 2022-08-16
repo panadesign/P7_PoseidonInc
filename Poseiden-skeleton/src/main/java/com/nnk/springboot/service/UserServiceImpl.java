@@ -1,7 +1,7 @@
 package com.nnk.springboot.service;
 
-import com.nnk.springboot.Exception.ResourceNotExistException;
-import com.nnk.springboot.Exception.UserAlreadyExistException;
+import com.nnk.springboot.exception.ResourceNotExistException;
+import com.nnk.springboot.exception.UserAlreadyExistException;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
 import lombok.extern.log4j.Log4j2;

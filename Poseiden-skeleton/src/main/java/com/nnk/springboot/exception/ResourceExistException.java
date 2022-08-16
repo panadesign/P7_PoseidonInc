@@ -1,4 +1,4 @@
-package com.nnk.springboot.Exception;
+package com.nnk.springboot.exception;
 
 public class ResourceExistException extends RuntimeException{
 	public ResourceExistException(String message) {

@@ -1,8 +1,7 @@
 package com.nnk.springboot.service;
 
-import com.nnk.springboot.Exception.ResourceExistException;
-import com.nnk.springboot.Exception.ResourceNotExistException;
-import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.exception.ResourceExistException;
+import com.nnk.springboot.exception.ResourceNotExistException;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.repositories.RatingRepository;
 import org.junit.jupiter.api.Assertions;
@@ -16,7 +15,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
