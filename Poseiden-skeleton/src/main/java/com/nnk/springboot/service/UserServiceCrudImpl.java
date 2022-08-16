@@ -5,10 +5,11 @@ import com.nnk.springboot.exception.ResourceNotExistException;
 import com.nnk.springboot.exception.UserAlreadyExistException;
 import com.nnk.springboot.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Slf4j
+@Log4j2
 public class UserServiceCrudImpl extends AbstractServiceCrud<User, UserRepository>{
 	
 	private final PasswordEncoder passwordEncoder;

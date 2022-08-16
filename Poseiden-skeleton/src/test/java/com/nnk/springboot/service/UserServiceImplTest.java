@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 class UserServiceImplTest {
 
 
-	private UserService userService;
+	private UserServiceCrudImpl userService;
 
 	@Mock
 	private UserRepository mockUserRepository;
@@ -36,7 +36,7 @@ class UserServiceImplTest {
 
 	@BeforeEach
 	void init() {
-		userService = new UserServiceImpl(mockUserRepository, mockPasswordEncoder);
+		userService = new UserServiceCrudImpl(mockUserRepository, mockPasswordEncoder);
 	}
 
 	@Test
@@ -61,7 +61,7 @@ class UserServiceImplTest {
 		when(mockUserRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
 		when(mockPasswordEncoder.encode(any())).thenReturn(hashedPassword);
 
-		User userToRegister = userService.addUser(newUser);
+		User userToRegister = userService.add(newUser);
 
 		//THEN
 		assertThat(userToRegister)
@@ -82,7 +82,7 @@ class UserServiceImplTest {
 		when(mockUserRepository.findByUsername("bob")).thenReturn(Optional.of(newUser));
 
 		//THEN
-		Assertions.assertThrows(UserAlreadyExistException.class, () -> userService.addUser(newUser));
+		Assertions.assertThrows(UserAlreadyExistException.class, () -> userService.add(newUser));
 
 	}
 
@@ -92,10 +92,10 @@ class UserServiceImplTest {
 		User user = new User(1, "Bob", "1", "Morane", "ADMIN");
 
 		//WHEN
-		userService.deleteUser(user);
+		userService.delete(user.getId());
 
 		//THEN
-		verify(mockUserRepository, times(1)).delete(user);
+		verify(mockUserRepository, times(1)).deleteById(user.getId());
 	}
 
 	@Test
@@ -106,7 +106,7 @@ class UserServiceImplTest {
 		//WHEN
 		when(mockUserRepository.findById(1)).thenReturn(Optional.of(user));
 
-		User userToFind = userService.getUserById(user);
+		User userToFind = userService.getById(user.getId());
 
 		//THEN
 		Assertions.assertEquals(1, userToFind.getId());
@@ -115,7 +115,7 @@ class UserServiceImplTest {
 	@Test
 	void getUserByIdNotExistException() {
 		User user = new User(1, "Bob", "1", "Morane", "ADMIN");
-		Assertions.assertThrows(ResourceNotExistException.class, () -> userService.getUserById(user));
+		Assertions.assertThrows(ResourceNotExistException.class, () -> userService.getById(user.getId()));
 	}
 
 	@Test
@@ -130,7 +130,7 @@ class UserServiceImplTest {
 		//WHEN
 		when(mockUserRepository.findAll()).thenReturn(users);
 
-		List<User> allUsers = userService.getAllUser();
+		List<User> allUsers = userService.getAll();
 
 		//THEN
 		Assertions.assertEquals(allUsers, users);

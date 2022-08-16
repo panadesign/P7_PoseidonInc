@@ -22,14 +22,14 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class RatingServiceImplTest {
 
-	private RatingService ratingService;
+	private RatingServiceCrudImpl ratingService;
 
 	@Mock
 	private RatingRepository ratingRepository;
 
 	@BeforeEach
 	void init() {
-		ratingService = new RatingServiceImpl(ratingRepository);
+		ratingService = new RatingServiceCrudImpl(ratingRepository);
 	}
 
 	@Test
@@ -39,7 +39,7 @@ class RatingServiceImplTest {
 
 		//WHEN
 		when(ratingRepository.save(rating)).thenAnswer(r -> r.getArguments()[0]);
-		ratingService.addRating(rating);
+		ratingService.add(rating);
 
 		//THEN
 		assertThat(rating)
@@ -61,7 +61,7 @@ class RatingServiceImplTest {
 		when(ratingRepository.findById(1)).thenReturn(Optional.of(rating));
 
 		//THEN
-		Assertions.assertThrows(ResourceExistException.class, () -> ratingService.addRating(rating));
+		Assertions.assertThrows(ResourceExistException.class, () -> ratingService.add(rating));
 
 	}
 
@@ -70,22 +70,11 @@ class RatingServiceImplTest {
 		//GIVEN
 		Rating rating = new Rating(1, "test", "test1", "test2", 3);
 
-
 		//WHEN
-		when(ratingRepository.findById(1)).thenReturn(Optional.of(rating));
-		ratingService.deleteRating(rating);
+		ratingService.delete(rating.getId());
 
 		//THEN
-		verify(ratingRepository, times(1)).delete(rating);
-	}
-
-	@Test
-	void deleteException() {
-		//GIVEN
-		Rating rating = new Rating(1, "test", "test1", "test2", 3);
-
-		//THEN
-		Assertions.assertThrows(ResourceExistException.class, () -> ratingService.deleteRating(rating));
+		verify(ratingRepository, times(1)).deleteById(rating.getId());
 	}
 
 	@Test
@@ -94,13 +83,13 @@ class RatingServiceImplTest {
 		Rating rating = new Rating(1, "test", "test1", "test2", 3);
 		Rating rating2 = new Rating(2, "test", "test1", "test2", 3);
 
-		List<Rating> allRatings = ratingService.getAllRating();
+		List<Rating> allRatings = ratingService.getAll();
 
 		allRatings.add(rating);
 		allRatings.add(rating2);
 		when(ratingRepository.findAll()).thenReturn(allRatings);
 
-		List<Rating> ratingList = ratingService.getAllRating();
+		List<Rating> ratingList = ratingService.getAll();
 
 		Assertions.assertEquals(2, ratingList.size());
 	}
@@ -113,7 +102,7 @@ class RatingServiceImplTest {
 		//WHEN
 		when(ratingRepository.findById(1)).thenReturn(Optional.of(rating));
 
-		Rating getRating = ratingService.getRatingById(rating);
+		Rating getRating = ratingService.getById(rating.getId());
 
 		//THEN
 		Assertions.assertEquals(1, getRating.getId());
@@ -123,7 +112,7 @@ class RatingServiceImplTest {
 	void getBidListByIdNotExistResource() {
 		Rating rating = new Rating(1, "test", "test1", "test2", 3);
 
-		Assertions.assertThrows(ResourceNotExistException.class, () -> ratingService.getRatingById(rating));
+		Assertions.assertThrows(ResourceNotExistException.class, () -> ratingService.getById(rating.getId()));
 	}
 
 }

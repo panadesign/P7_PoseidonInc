@@ -23,14 +23,14 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class BidListServiceImplTest {
 
-	private BidListService bidListService;
+	private BidListServiceCrudImpl bidListService;
 
 	@Mock
 	private BidListRepository bidListRepository;
 
 	@BeforeEach
 	void init() {
-		bidListService = new BidListServiceImpl(bidListRepository);
+		bidListService = new BidListServiceCrudImpl(bidListRepository);
 	}
 
 	@Test
@@ -41,7 +41,7 @@ class BidListServiceImplTest {
 		//WHEN
 		when(bidListRepository.save(any())).thenAnswer(b -> b.getArguments()[0]);
 
-		BidList newBidList = bidListService.addBidList(bidList);
+		BidList newBidList = bidListService.add(bidList);
 		//THEN
 		assertThat(newBidList)
 				.satisfies(bl -> {
@@ -61,32 +61,24 @@ class BidListServiceImplTest {
 		when(bidListRepository.findById(2)).thenReturn(Optional.of(bidList));
 
 		//THEN
-		Assertions.assertThrows(ResourceExistException.class, () -> bidListService.addBidList(bidList));
+		Assertions.assertThrows(ResourceExistException.class, () -> bidListService.add(bidList));
 
 	}
 
 	@Test
 	void delete() {
 		//GIVEN
-		BidList bidList = new BidList(2, "account1", "type1", 12);
+		BidList bidList = new BidList(3, "account1", "type1", 12);
 
 
 		//WHEN
-		when(bidListRepository.findById(2)).thenReturn(Optional.of(bidList));
-		bidListService.deleteBidList(bidList);
+		bidListService.delete(bidList.getBidListId());
 
 		//THEN
-		verify(bidListRepository, times(1)).delete(bidList);
+		verify(bidListRepository, times(1)).deleteById(bidList.getBidListId());
 	}
 
-	@Test
-	void deleteException() {
-		//GIVEN
-		BidList bidList2 = new BidList(2, "account1", "type1", 12);
 
-		//THEN
-		Assertions.assertThrows(ResourceExistException.class, () -> bidListService.deleteBidList(bidList2));
-	}
 
 	@Test
 	void getBidListById() {
@@ -94,9 +86,9 @@ class BidListServiceImplTest {
 		BidList bidList = new BidList(2, "account1", "type1", 12);
 
 		//WHEN
-		when(bidListRepository.findBidListById(2)).thenReturn(Optional.of(bidList));
+		when(bidListRepository.findById(2)).thenReturn(Optional.of(bidList));
 
-		BidList bidList1 = bidListService.getBidListById(bidList);
+		BidList bidList1 = bidListService.getById(bidList.getBidListId());
 
 		//THEN
 		Assertions.assertEquals(2, bidList1.getBidListId());
@@ -106,7 +98,7 @@ class BidListServiceImplTest {
 	void getBidListByIdNotExistResource() {
 		BidList bidList = new BidList(2, "account1", "type1", 12);
 
-		Assertions.assertThrows(ResourceNotExistException.class, () -> bidListService.getBidListById(bidList));
+		Assertions.assertThrows(ResourceNotExistException.class, () -> bidListService.getById(bidList.getBidListId()));
 	}
 
 	@Test
@@ -115,13 +107,13 @@ class BidListServiceImplTest {
 		BidList bidList = new BidList(2, "account1", "type1", 12);
 		BidList bidList2 = new BidList(3, "account2", "type2", 129);
 
-		List<BidList> allBidList = bidListService.getAllBidList();
+		List<BidList> allBidList = bidListService.getAll();
 
 		allBidList.add(bidList);
 		allBidList.add(bidList2);
 		when(bidListRepository.findAll()).thenReturn(allBidList);
 
-		List<BidList> bidsList = bidListService.getAllBidList();
+		List<BidList> bidsList = bidListService.getAll();
 
 		Assertions.assertEquals(2, bidsList.size());
 	}
