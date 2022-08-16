@@ -30,10 +30,19 @@ public class User {
     @NotBlank(message = "Role is mandatory")
     private String role;
 
-    public User(String username, String password, String fullname) {
+    public User(String username, String password, String fullname, String role) {
         this.username = username;
         this.password = password;
         this.fullname = fullname;
+        this.role = role;
+    }
+    
+    public User update(User user){
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.fullname = user.getFullname();
+        this.role = user.getRole();
+        return this;
     }
 
 }

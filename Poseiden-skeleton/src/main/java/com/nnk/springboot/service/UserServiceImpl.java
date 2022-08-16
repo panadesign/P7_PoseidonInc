@@ -26,13 +26,13 @@ public class UserServiceImpl implements UserService{
 
 	public User addUser(User user) {
 
-		if(usernameExist(user.getUsername())) {
+		if(userRepository.existsByUsername(user.getUsername())) {
 			log.debug("User with this username :" + user.getUsername() + ", already exist");
 			throw new UserAlreadyExistException("This username exist already" + user.getUsername());
 		}
 
 		String password = passwordEncoder.encode(user.getPassword());
-		User newUser =  new User(user.getId(), user.getUsername(), password, user.getFullname(), user.getRole());
+		User newUser =  new User(user.getUsername(), password, user.getFullname(), user.getRole());
 
 		log.debug("New user has been created:" + user.getUsername());
 
@@ -40,25 +40,28 @@ public class UserServiceImpl implements UserService{
 	}
 
 
-	public void deleteUser(User user) {
-		userRepository.delete(user);
+	public void deleteUser(Integer id) {
+		userRepository.deleteById(id);
 	}
 
-	public User getUserById(User user) {
-		if(!userRepository.findById(user.getId()).isPresent()) {
-			throw new ResourceNotExistException("User with id " + user.getId() + " doesn't exist.");
-		}
-
-		return user;
+	public User getUserById(Integer  id) {
+		return userRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotExistException("User with id " + id + " doesn't exist."));
 	}
 
 	public List<User> getAllUser() {
 		log.debug("All users: " + userRepository.findAll());
 		return userRepository.findAll();
 	}
-
-	private boolean usernameExist(String username) {
-		return userRepository.findByUsername(username).isPresent();
+	
+	@Override
+	public User updateUser(Integer id, User userDto) {
+		User userToUpdate = userRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotExistException("User with id " + id + " doesn't exist."));
+		
+		User updatedUser = userToUpdate.update(userDto);
+		userRepository.save(updatedUser);
+		return updatedUser;
 	}
 }
 
