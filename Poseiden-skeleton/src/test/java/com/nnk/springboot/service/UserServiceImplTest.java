@@ -136,4 +136,28 @@ class UserServiceImplTest {
 		Assertions.assertEquals(allUsers, users);
 	}
 
+	@Test
+	void updateUser() {
+		//GIVEN
+		User user = new User(1, "Bob", "1", "Morane", "ADMIN");
+		//WHEN
+		when(mockUserRepository.findById(1)).thenReturn(Optional.of(user));
+
+		User userDto = new User("John", mockPasswordEncoder.encode("newPassword"), "Mclane", "USER");
+
+		User userUpdated = userService.update(1, userDto);
+
+		Assertions.assertEquals(1, userUpdated.getId());
+		Assertions.assertEquals("John", userUpdated.getUsername());
+		Assertions.assertEquals(mockPasswordEncoder.encode("newPassword"), userUpdated.getPassword());
+		Assertions.assertEquals("Mclane", userUpdated.getFullname());
+		Assertions.assertEquals("USER", userUpdated.getRole());
+	}
+
+	@Test
+	void updateUserNotExistingException() {
+		User userDto = new User("John", mockPasswordEncoder.encode("newPassword"), "Mclane", "USER");
+		Assertions.assertThrows(ResourceNotExistException.class, () -> userService.update(1, userDto));
+	}
+
 }

@@ -1,5 +1,6 @@
 package com.nnk.springboot.service;
 
+import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.exception.ResourceExistException;
 import com.nnk.springboot.exception.ResourceNotExistException;
 import com.nnk.springboot.domain.CurvePoint;
@@ -114,4 +115,28 @@ class CurvePointServiceImplTest {
 		//THEN
 		Assertions.assertEquals(2, curvePointList.size());
 	}
+
+	@Test
+	void updateCurvePoint() {
+		//GIVEN
+		CurvePoint curvePoint = new CurvePoint(1, 21, null, 4.3, 20.4, null);
+		//WHEN
+		when(curvePointRepository.findById(1)).thenReturn(Optional.of(curvePoint));
+
+		CurvePoint curvePointDto = new CurvePoint(34.5, 29.4);
+
+		CurvePoint curvePointUpdated = curvePointService.update(1, curvePointDto);
+
+		//THEN
+		Assertions.assertEquals(34.5, curvePointUpdated.getTerm());
+		Assertions.assertEquals(29.4, curvePointUpdated.getValue());
+
+	}
+
+	@Test
+	void updateBidListNotExistingException() {
+		CurvePoint curvePointDto = new CurvePoint(1, 21, null, 4.3, 20.4, null);
+		Assertions.assertThrows(ResourceNotExistException.class, () -> curvePointService.update(1, curvePointDto));
+	}
+
 }

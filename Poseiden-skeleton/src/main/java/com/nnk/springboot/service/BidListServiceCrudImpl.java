@@ -29,8 +29,13 @@ public class BidListServiceCrudImpl extends AbstractServiceCrud<BidList, BidList
 	}
 
 	@Override
-	public BidList update(Integer id, BidList bidList) {
-		return null;
+	public BidList update(Integer id, BidList bidListDto) {
+		BidList bidListToUpdate = repository.findById(id)
+				.orElseThrow(() -> new ResourceNotExistException("Bid list with id " + id + " doesn't exist."));
+
+		BidList updatedBidList = bidListToUpdate.update(bidListDto);
+		repository.save(updatedBidList);
+		return updatedBidList;
 	}
 
 }

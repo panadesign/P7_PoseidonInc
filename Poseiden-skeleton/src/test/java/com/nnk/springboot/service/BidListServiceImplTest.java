@@ -1,5 +1,6 @@
 package com.nnk.springboot.service;
 
+import com.nnk.springboot.domain.User;
 import com.nnk.springboot.exception.ResourceExistException;
 import com.nnk.springboot.exception.ResourceNotExistException;
 import com.nnk.springboot.domain.BidList;
@@ -118,5 +119,27 @@ class BidListServiceImplTest {
 		Assertions.assertEquals(2, bidsList.size());
 	}
 
+	@Test
+	void updateBidList() {
+		//GIVEN
+		BidList bidList = new BidList(2, "account1", "type1", 12);
+		//WHEN
+		when(bidListRepository.findById(2)).thenReturn(Optional.of(bidList));
+
+		BidList bidListDto = new BidList("account4", "type9", 63);
+
+		BidList bidListUpdated = bidListService.update(2, bidListDto);
+
+		//THEN
+		Assertions.assertEquals("account4", bidListUpdated.getAccount());
+		Assertions.assertEquals("type9", bidListUpdated.getType());
+		Assertions.assertEquals(63, bidListUpdated.getBidQuantity());
+	}
+
+	@Test
+	void updateBidListNotExistingException() {
+		BidList bidListDto = new BidList("account4", "type9", 63);
+		Assertions.assertThrows(ResourceNotExistException.class, () -> bidListService.update(1, bidListDto));
+	}
 
 }

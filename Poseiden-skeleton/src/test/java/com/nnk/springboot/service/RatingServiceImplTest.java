@@ -1,8 +1,8 @@
 package com.nnk.springboot.service;
 
+import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.exception.ResourceExistException;
 import com.nnk.springboot.exception.ResourceNotExistException;
-import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.repositories.RatingRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -109,10 +109,35 @@ class RatingServiceImplTest {
 	}
 
 	@Test
-	void getBidListByIdNotExistResource() {
+	void getRatingByIdNotExistResource() {
 		Rating rating = new Rating(1, "test", "test1", "test2", 3);
 
 		Assertions.assertThrows(ResourceNotExistException.class, () -> ratingService.getById(rating.getId()));
 	}
+
+	@Test
+	void updateBidList() {
+		//GIVEN
+		Rating rating = new Rating(1, "mood", "sand", "fitch", 3);
+		//WHEN
+		when(ratingRepository.findById(1)).thenReturn(Optional.of(rating));
+
+		Rating ratingDto = new Rating("test", "test1", "test2", 4);
+
+		Rating ratingUpdated = ratingService.update(1, ratingDto);
+
+		//THEN
+		Assertions.assertEquals("test", ratingUpdated.getMoodysRating());
+		Assertions.assertEquals("test1", ratingUpdated.getSandPRating());
+		Assertions.assertEquals("test2", ratingUpdated.getFitchRating());
+		Assertions.assertEquals(4, ratingUpdated.getOrderNumber());
+	}
+
+	@Test
+	void updateRatingNotExistingException() {
+		Rating ratingDto = new Rating("test", "test1", "test2", 3);
+		Assertions.assertThrows(ResourceNotExistException.class, () -> ratingService.update(1, ratingDto));
+	}
+
 
 }

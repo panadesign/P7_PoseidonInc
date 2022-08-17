@@ -1,7 +1,9 @@
 package com.nnk.springboot.service;
 
+import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.exception.ResourceExistException;
+import com.nnk.springboot.exception.ResourceNotExistException;
 import com.nnk.springboot.repositories.RuleNameRepository;
 import lombok.extern.log4j.Log4j2;
 
@@ -24,8 +26,13 @@ public class RuleNameServiceCrudImpl extends AbstractServiceCrud<RuleName, RuleN
 	}
 
 	@Override
-	public RuleName update(Integer id, RuleName ruleName) {
-		return null;
+	public RuleName update(Integer id, RuleName ruleNameDto) {
+		RuleName ruleNameToUpdate = repository.findById(id)
+				.orElseThrow(() -> new ResourceNotExistException("Rule name with id " + id + " doesn't exist."));
+
+		RuleName updatedRuleName = ruleNameToUpdate.update(ruleNameDto);
+		repository.save(updatedRuleName);
+		return updatedRuleName;
 	}
 
 }

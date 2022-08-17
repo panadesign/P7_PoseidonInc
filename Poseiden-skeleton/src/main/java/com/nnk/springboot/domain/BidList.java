@@ -1,16 +1,19 @@
 package com.nnk.springboot.domain;
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Required;
+import lombok.RequiredArgsConstructor;
 
-import javax.persistence.*;
-import javax.validation.constraints.Digits;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 @Data
 @Entity
+@RequiredArgsConstructor
 @Table(name = "Bidlist")
 public class BidList {
 	@Id
@@ -41,14 +44,38 @@ public class BidList {
 	String sourceListId;
 	String side;
 
-	public BidList (Integer bidListId, String account, String type, double bidQuantity) {
+	public BidList(Integer bidListId, String account, String type, double bidQuantity) {
 		this.bidListId = bidListId;
 		this.account = account;
 		this.type = type;
 		this.bidQuantity = bidQuantity;
 	}
 
-	public BidList() {
+	public BidList(String account, String type, double bidQuantity) {
+		this.account = account;
+		this.type = type;
+		this.bidQuantity = bidQuantity;
+	}
 
+	public BidList update(BidList bidList) {
+		this.account = bidList.getAccount();
+		this.type = bidList.getType();
+		this.bidQuantity = bidList.getBidQuantity();
+		this.askQuantity = bidList.getAskQuantity();
+		this.bid = bidList.getBid();
+		this.ask = bidList.getAsk();
+		this.benchmark = bidList.getBenchmark();
+		this.commentary = bidList.getCommentary();
+		this.security = bidList.getSecurity();
+		this.status = bidList.getStatus();
+		this.trader = bidList.getTrader();
+		this.book = bidList.getBook();
+		this.creationName = bidList.getCreationName();
+		this.revisionName = bidList.getRevisionName();
+		this.revisionDate = bidList.getRevisionDate();
+		this.dealName = bidList.getDealName();
+		this.dealType = bidList.getDealType();
+		this.side = bidList.getSide();
+		return this;
 	}
 }

@@ -1,5 +1,6 @@
 package com.nnk.springboot.service;
 
+import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.exception.ResourceExistException;
@@ -53,7 +54,7 @@ class RuleNameServiceImplTest {
 	}
 
 	@Test
-	void addRatingAlreadyExistException() {
+	void addRuleNameAlreadyExistException() {
 		//GIVEN
 		RuleName ruleName = new RuleName(1, "name", "description", "json", "template", "sqlStr", "sqlPart");
 
@@ -66,7 +67,7 @@ class RuleNameServiceImplTest {
 	}
 
 	@Test
-	void deleteRating() {
+	void deleteRuleName() {
 		//GIVEN
 		RuleName ruleName = new RuleName(1, "name", "description", "json", "template", "sqlStr", "sqlPart");
 
@@ -78,7 +79,7 @@ class RuleNameServiceImplTest {
 	}
 
 	@Test
-	void getAllRating() {
+	void getAllRuleName() {
 		//GIVEN
 		RuleName ruleName = new RuleName(1, "name", "description", "json", "template", "sqlStr", "sqlPart");
 		RuleName ruleName2 = new RuleName(1, "name", "description", "json", "template", "sqlStr", "sqlPart");
@@ -109,9 +110,33 @@ class RuleNameServiceImplTest {
 	}
 
 	@Test
-	void getBidListByIdNotExistResource() {
+	void getRuleNameByIdNotExistResource() {
 		RuleName ruleName = new RuleName(1, "name", "description", "json", "template", "sqlStr", "sqlPart");
 
 		Assertions.assertThrows(ResourceNotExistException.class, () -> ruleNameService.getById(ruleName.getId()));
+	}
+
+	@Test
+	void updateRuleName() {
+		RuleName ruleName = new RuleName(1, "name", "description", "json", "template", "sqlStr", "sqlPart");
+
+		when(ruleNameRepository.findById(1)).thenReturn(Optional.of(ruleName));
+
+		RuleName ruleNameDto = new RuleName("name1", "description1", "json1", "template1", "sqlStr1", "sqlPart1");
+		RuleName ruleNameUpdated = ruleNameService.update(1, ruleNameDto);
+
+		Assertions.assertEquals("name1", ruleNameUpdated.getName());
+		Assertions.assertEquals("description1", ruleNameUpdated.getDescription());
+		Assertions.assertEquals("json1", ruleNameUpdated.getJson());
+		Assertions.assertEquals("template1", ruleNameUpdated.getTemplate());
+		Assertions.assertEquals("sqlStr1", ruleNameUpdated.getSqlStr());
+		Assertions.assertEquals("sqlPart1", ruleNameUpdated.getSqlPart());
+
+	}
+
+	@Test
+	void updateRuleNameNotExistingException() {
+		RuleName ruleNameDto = new RuleName("name1", "description1", "json1", "template1", "sqlStr1", "sqlPart1");
+		Assertions.assertThrows(ResourceNotExistException.class, () -> ruleNameService.update(1, ruleNameDto));
 	}
 }

@@ -29,4 +29,14 @@ public class CurvePoint {
 	Double value;
 	Timestamp creationDate;
 
+	public CurvePoint(Double term, Double value) {
+		this.term = term;
+		this.value = value;
+	}
+
+	public CurvePoint update(CurvePoint curvePoint) {
+		this.term = curvePoint.getTerm();
+		this.value = curvePoint.getValue();
+		return this;
+	}
 }
