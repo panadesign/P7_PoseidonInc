@@ -17,12 +17,8 @@ public class TradeServiceCrudImpl extends AbstractServiceCrud<Trade, TradeReposi
 	
 	@Override
 	public Trade add(Trade trade) {
-		if(repository.findById(trade.getId()).isPresent()){
-			throw new ResourceExistException("This trade is already existing: " + trade.getId());
-		}
-		Trade newTrade = new Trade(trade.getId(), trade.getAccount(), trade.getType());
 		log.debug("A new trade has been created: " + trade.getAccount());
-		return repository.save(newTrade);
+		return repository.save(trade);
 	}
 
 	@Override

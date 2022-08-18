@@ -19,12 +19,11 @@ public class BidListServiceCrudImpl extends AbstractServiceCrud<BidList, BidList
 
 	@Override
 	public BidList add(BidList bidList) {
-		if(repository.findById(bidList.getId()).isPresent()) {
-			throw new ResourceExistException("This bid list is already existing: " + bidList.getId());
+		log.debug("A new bid list has been created: " + bidList.getAccount());
+		if(bidList.getBidQuantity()<= 0) {
+			throw new IllegalArgumentException("Bid quantity must be positive");
 		}
-		BidList newBidList = new BidList(bidList.getId(), bidList.getAccount(), bidList.getType(), bidList.getBidQuantity());
-		log.debug("A new bid list has been created: " + newBidList.getAccount());
-		return repository.save(newBidList);
+		return repository.save(bidList);
 	}
 
 	@Override

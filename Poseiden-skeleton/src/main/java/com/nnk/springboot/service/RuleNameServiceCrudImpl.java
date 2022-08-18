@@ -18,13 +18,8 @@ public class RuleNameServiceCrudImpl extends AbstractServiceCrud<RuleName, RuleN
 	
 	@Override
 	public RuleName add(RuleName ruleName) {
-		if(repository.findById(ruleName.getId()).isPresent()) {
-			throw new ResourceExistException("This rule name is already existing: " + ruleName.getId());
-		}
-
-		RuleName newRuleName = new RuleName(ruleName.getId(), ruleName.getName(), ruleName.getDescription(), ruleName.getJson(), ruleName.getTemplate(), ruleName.getSqlStr(), ruleName.getSqlPart());
 		log.debug("A new rule name has been created: " + ruleName.getId());
-		return repository.save(newRuleName);
+		return repository.save(ruleName);
 	}
 
 	@Override

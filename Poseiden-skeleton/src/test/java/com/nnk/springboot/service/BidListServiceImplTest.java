@@ -53,23 +53,9 @@ class BidListServiceImplTest {
 	}
 
 	@Test
-	void addBidListAlreadyExistException() {
-		//GIVEN
-		BidList bidList = new BidList(2, "account1", "type1", 12);
-
-		//WHEN
-		when(bidListRepository.findById(2)).thenReturn(Optional.of(bidList));
-
-		//THEN
-		Assertions.assertThrows(ResourceExistException.class, () -> bidListService.add(bidList));
-
-	}
-
-	@Test
 	void delete() {
 		//GIVEN
 		BidList bidList = new BidList(3, "account1", "type1", 12);
-
 
 		//WHEN
 		bidListService.delete(bidList.getId());
@@ -77,8 +63,6 @@ class BidListServiceImplTest {
 		//THEN
 		verify(bidListRepository, times(1)).deleteById(bidList.getId());
 	}
-
-
 
 	@Test
 	void getBidListById() {

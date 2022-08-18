@@ -57,7 +57,7 @@ public class BidListController {
 		log.debug("Get update form for id" + id);
 		BidList bidList = crudService.getById(id);
 		model.addAttribute("bidList", bidList);
-		return "bidList/update";
+		return "redirect:bidList/update";
 	}
 //
 //	@PostMapping("/bidList/update/{id}")

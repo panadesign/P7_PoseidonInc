@@ -20,13 +20,8 @@ public class RatingServiceCrudImpl extends AbstractServiceCrud<Rating, RatingRep
 	
 	@Override
 	public Rating add(Rating rating) {
-		if(repository.findById(rating.getId()).isPresent()) {
-			throw new ResourceExistException("This rating is already existing: " + rating.getId());
-		}
-
-		Rating newRating = new Rating(rating.getId(), rating.getMoodysRating(), rating.getSandPRating(), rating.getFitchRating(), rating.getOrderNumber());
 		log.debug("A new rating has been created: " + rating.getId());
-		return repository.save(newRating);
+		return repository.save(rating);
 	}
 
 	@Override

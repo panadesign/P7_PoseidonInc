@@ -20,12 +20,8 @@ public class CurvePointServiceCrudImpl extends AbstractServiceCrud<CurvePoint, C
 	
 	@Override
 	public CurvePoint add(CurvePoint curvePoint) {
-		if(repository.findById(curvePoint.getId()).isPresent()) {
-			throw new ResourceExistException("This curve point is already existing: " + curvePoint.getId());
-		}
-		CurvePoint newCurvePoint = new CurvePoint(curvePoint.getId(), curvePoint.getCurveId(), curvePoint.getAsOfDate(), curvePoint.getTerm(), curvePoint.getValue(), curvePoint.getCreationDate());
 		log.debug("A new curve point has been created: " + curvePoint.getId());
-		return repository.save(newCurvePoint);
+		return repository.save(curvePoint);
 	}
 
 	@Override
