@@ -36,7 +36,7 @@
 				</thead>
 				<tbody th:action="@{/bidList/list}" th:method="GET">
 					<tr id="bidList" th:object="${allBidList}" th:each="bidList: ${allBidList}">
-						<td th:text="${bidList.getId}"></td>
+						<td th:text="${bidList.id}"></td>
 						<td th:text="${bidList.account}"></td>
 						<td th:text="${bidList.type}"></td>
 						<td th:text="${bidList.bidQuantity}"></td>

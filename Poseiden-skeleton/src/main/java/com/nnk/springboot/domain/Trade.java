@@ -22,9 +22,9 @@ public class Trade {
 	String account;
 	@NotBlank
 	String type;
+	@NotBlank
 	@Min(1)
 	Double buyQuantity;
-	@Min(1)
 	Double sellQuantity;
 	Double buyPrice;
 	Double sellPrice;

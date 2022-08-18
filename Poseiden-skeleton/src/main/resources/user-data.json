@@ -24,5 +24,33 @@
     "account": "Account Two",
     "type": "Type Two",
     "bidQuantity": 9
+  },
+  {
+    "_class": "com.nnk.springboot.domain.CurvePoint",
+    "curveId": 123,
+    "term": 12,
+    "value": 2
+  },
+  {
+    "_class": "com.nnk.springboot.domain.Rating",
+    "moodysRating": "A",
+    "sandPRating": "A",
+    "fitchRating": "B",
+    "orderNumber": 5
+  },
+  {
+    "_class": "com.nnk.springboot.domain.Trade",
+    "account": "Account X",
+    "type": "Type X",
+    "buyQuantity": 35
+  },
+  {
+    "_class": "com.nnk.springboot.domain.RuleName",
+    "name": "Name 1",
+    "description": "Description 1",
+    "json": "json 1",
+    "template": "Template 1",
+    "sqlStr": "sqlStr 1",
+    "sqlPart": "sqlPart 1"
   }
 ]

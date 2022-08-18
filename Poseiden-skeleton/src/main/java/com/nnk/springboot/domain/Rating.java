@@ -10,17 +10,21 @@ import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Table(name = "Rating")
 public class Rating {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Integer id;
+	@NotBlank
 	String moodysRating;
+	@NotBlank
 	String sandPRating;
+	@NotBlank
 	String fitchRating;
+	@NotBlank
 	Integer orderNumber;
 
 	public Rating(String moodysRating, String sandPRating, String fitchRating, Integer orderNumber) {

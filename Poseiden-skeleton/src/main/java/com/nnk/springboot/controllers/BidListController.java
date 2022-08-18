@@ -34,39 +34,39 @@ public class BidListController {
 	}
 
 	@GetMapping("/bidList/add")
-	public String addBidForm(BidList bid) {
+	public String addBidForm() {
 		log.debug("Get add bid list form");
 		return "bidList/add";
 	}
 
 	@PostMapping("/bidList/validate")
-	public String validate(@Valid BidList bid, BindingResult result, Model model) {
-		// TODO: check data valid and save to db, after saving return bid list
+	public String validate(@Valid BidList bid, BindingResult result) {
 		log.debug("Add a new bid with id: " + bid.getId());
-		if(!result.hasErrors()) {
-			crudService.add(bid);
-//			model.addAttribute("bid", bid);
+		if(result.hasErrors()) {
+			return "bidList/add";
 		}
-
-		return "bidList/list";
+		crudService.add(bid);
+		return "redirect:/bidList/list";
 	}
 
 	@GetMapping("/bidList/update/{id}")
 	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-		// TODO: get Bid by Id and to model then show to the form
 		log.debug("Get update form for id" + id);
 		BidList bidList = crudService.getById(id);
 		model.addAttribute("bidList", bidList);
-		return "redirect:bidList/update";
+		return "bidList/update";
 	}
-//
-//	@PostMapping("/bidList/update/{id}")
-//	public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList,
-//							BindingResult result, Model model) {
-//		// TODO: check required fields, if valid call service to update Bid and return list Bid
-//		return "redirect:/bidList/list";
-//	}
-//
+
+	@PostMapping("/bidList/update/{id}")
+	public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList,
+							BindingResult result, Model model) {
+		// TODO: check required fields, if valid call service to update Bid and return list Bid
+		model.addAttribute("bidList", bidList);
+		crudService.update(id, bidList);
+
+		return "redirect:/bidList/list";
+	}
+
 	@GetMapping("/bidList/delete/{id}")
 	public String deleteBid(@PathVariable("id") Integer id) {
 		log.debug("Delete bid list with id" + id);

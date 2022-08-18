@@ -12,22 +12,17 @@
 
 	<div class="row">
 		<form action="#" th:action="@{/bidList/update/{id}(id=${bidList.getId})}" th:object="${bidList}" method="post" class="form-horizontal" style="width: 100%">
-			<!--
-			TODO: Create a form to edit the values of Bid, there are 2 buttons: Update data and Cancel to the list Bid
-			 -->
-			<form class="container" th:action="@{/bidList/update/{id}}" method="GET">
 				<label class="account">
-					<input class="form-control" type="text" id="bidAccount" name="amount" min="1" placeholder="account" required>
+					<input class="form-control" type="text" id="bidAccount" name="account" min="1" placeholder="Account" required>
 				</label>
 				<label class="type">
-					<input class="form-control" type="text" id="bidType" name="type" placeholder="type" required>
+					<input class="form-control" type="text" id="bidType" name="type" placeholder="Type" required>
 				</label>
 				<label class="quantity">
-					<input class="form-control" type="number" id="bidQuantity" name="quantity" min="1" placeholder="quantity" required>
+					<input class="form-control" type="number" id="bidQuantity" name="bidQuantity" min="1" placeholder="Quantity" required>
 				</label>
-				<button class="btn btn-danger"  type="submit" value="Cancel"><a th:href="@{/bidList/list}" th:method="get" class="update">Cancel</a></button>
-				<button class="btn btn-primary cta"  type="submit" value="Update">Update</button>
-			</form>
+				<button class="btn btn-danger" type="submit" value="Cancel"><a th:href="@{/bidList/list}" th:method="get" class="update">Cancel</a></button>
+				<button class="btn btn-primary" type="submit" value="Update">Update</button>
 		</form>
 	</div>
 

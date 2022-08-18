@@ -53,19 +53,6 @@ class RatingServiceImplTest {
 	}
 
 	@Test
-	void addRatingAlreadyExistException() {
-		//GIVEN
-		Rating rating = new Rating(1, "test", "test1", "test2", 3);
-
-		//WHEN
-		when(ratingRepository.findById(1)).thenReturn(Optional.of(rating));
-
-		//THEN
-		Assertions.assertThrows(ResourceExistException.class, () -> ratingService.add(rating));
-
-	}
-
-	@Test
 	void deleteRating() {
 		//GIVEN
 		Rating rating = new Rating(1, "test", "test1", "test2", 3);

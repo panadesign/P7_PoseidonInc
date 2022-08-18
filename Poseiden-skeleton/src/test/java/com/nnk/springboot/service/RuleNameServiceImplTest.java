@@ -54,19 +54,6 @@ class RuleNameServiceImplTest {
 	}
 
 	@Test
-	void addRuleNameAlreadyExistException() {
-		//GIVEN
-		RuleName ruleName = new RuleName(1, "name", "description", "json", "template", "sqlStr", "sqlPart");
-
-		//WHEN
-		when(ruleNameRepository.findById(1)).thenReturn(Optional.of(ruleName));
-
-		//THEN
-		Assertions.assertThrows(ResourceExistException.class, () -> ruleNameService.add(ruleName));
-
-	}
-
-	@Test
 	void deleteRuleName() {
 		//GIVEN
 		RuleName ruleName = new RuleName(1, "name", "description", "json", "template", "sqlStr", "sqlPart");

@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 
@@ -24,6 +25,7 @@ public class BidList {
 	@NotBlank
 	String type;
 	@NotBlank
+	@Min(1)
 	Double bidQuantity;
 	Double askQuantity;
 	Double bid;

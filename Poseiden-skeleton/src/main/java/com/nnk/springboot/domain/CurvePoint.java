@@ -3,22 +3,23 @@ package com.nnk.springboot.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Table(name = "Curvepoint")
 public class CurvePoint {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@NotBlank
 	Integer id;
 	@NotBlank
 	Integer curveId;
@@ -35,6 +36,7 @@ public class CurvePoint {
 	}
 
 	public CurvePoint update(CurvePoint curvePoint) {
+		this.curveId = curvePoint.getCurveId();
 		this.term = curvePoint.getTerm();
 		this.value = curvePoint.getValue();
 		return this;

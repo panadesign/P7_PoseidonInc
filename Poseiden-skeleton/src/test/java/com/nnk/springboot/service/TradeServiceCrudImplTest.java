@@ -52,19 +52,6 @@ class TradeServiceCrudImplTest {
 	}
 
 	@Test
-	void addTradeAlreadyExistException() {
-		//GIVEN
-		Trade trade = new Trade(1, "account", "type");
-
-		//WHEN
-		when(tradeRepository.findById(1)).thenReturn(Optional.of(trade));
-
-		//THEN
-		Assertions.assertThrows(ResourceExistException.class, () -> tradeService.add(trade));
-
-	}
-
-	@Test
 	void deleteTrade() {
 		//GIVEN
 		Trade trade = new Trade(1, "account", "type");

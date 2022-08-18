@@ -52,18 +52,6 @@ class CurvePointServiceImplTest {
 	}
 
 	@Test
-	void addCurvePointAlreadyExistException() {
-		//GIVEN
-		CurvePoint curvePoint = new CurvePoint(1, 21, null, 4.3, 20.4, null);
-
-		//WHEN
-		when(curvePointRepository.findById(1)).thenReturn(Optional.of(curvePoint));
-
-		//THEN
-		Assertions.assertThrows(ResourceExistException.class, () -> curvePointService.add(curvePoint));
-	}
-
-	@Test
 	void deleteCurvePoint() {
 		//GIVEN
 		CurvePoint curvePoint = new CurvePoint(1, 21, null, 4.3, 20.4, null);

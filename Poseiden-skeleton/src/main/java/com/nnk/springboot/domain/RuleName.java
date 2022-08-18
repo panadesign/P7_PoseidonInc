@@ -3,11 +3,13 @@ package com.nnk.springboot.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
@@ -18,11 +20,17 @@ public class RuleName {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Integer id;
+	@NotBlank
 	String name;
+	@NotBlank
 	String description;
+	@NotBlank
 	String json;
+	@NotBlank
 	String template;
+	@NotBlank
 	String sqlStr;
+	@NotBlank
 	String sqlPart;
 
 	public RuleName(String name, String description, String json, String template, String sqlStr, String sqlPart) {
