@@ -5,8 +5,10 @@ import com.nnk.springboot.exception.ResourceExistException;
 import com.nnk.springboot.exception.ResourceNotExistException;
 import com.nnk.springboot.repositories.TradeRepository;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
 
 @Log4j2
+@Component
 public class TradeServiceCrudImpl extends AbstractServiceCrud<Trade, TradeRepository>{
 
 	public TradeServiceCrudImpl(TradeRepository repository) {
@@ -15,10 +17,10 @@ public class TradeServiceCrudImpl extends AbstractServiceCrud<Trade, TradeReposi
 	
 	@Override
 	public Trade add(Trade trade) {
-		if(repository.findById(trade.getTradeId()).isPresent()){
-			throw new ResourceExistException("This trade is already existing: " + trade.getTradeId());
+		if(repository.findById(trade.getId()).isPresent()){
+			throw new ResourceExistException("This trade is already existing: " + trade.getId());
 		}
-		Trade newTrade = new Trade(trade.getTradeId(), trade.getAccount(), trade.getType());
+		Trade newTrade = new Trade(trade.getId(), trade.getAccount(), trade.getType());
 		log.debug("A new trade has been created: " + trade.getAccount());
 		return repository.save(newTrade);
 	}

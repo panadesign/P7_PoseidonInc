@@ -8,8 +8,10 @@ import com.nnk.springboot.exception.ResourceNotExistException;
 import com.nnk.springboot.repositories.BidListRepository;
 import com.nnk.springboot.repositories.RatingRepository;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
 
 @Log4j2
+@Component
 public class RatingServiceCrudImpl extends AbstractServiceCrud<Rating, RatingRepository>{
 
 	public RatingServiceCrudImpl(RatingRepository repository) {

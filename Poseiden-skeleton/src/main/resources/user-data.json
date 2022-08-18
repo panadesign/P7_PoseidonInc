@@ -2,15 +2,27 @@
   {
     "_class": "com.nnk.springboot.domain.User",
     "username": "admin",
-    "password": "$2a$12$zmd8RXM4BHE1qfyo0ltDGu1fti6G2BcyffToZWcOMf9h5PcIp3HHK",
+    "password": "$2y$10$KlfLxcyHcqtr4ORTRVenbOU5QOQRYuKnNLm8LQXFVW5QvzPxooCS6",
     "fullname": "Administrator",
     "role": "ADMIN"
   },
   {
     "_class": "com.nnk.springboot.domain.User",
     "username": "user",
-    "password": "$2a$12$Ip2trlJdQGYcIzsH7x7POeNaL4Fj.GaQhcqP9K3J2W6udyNQFRD.6",
+    "password": "$2y$10$E.EqLkNDCvfihqUXYogEh.zIjzEWiuC913pPQ2w5QHa0rHMFZi1fa",
     "fullname": "User",
     "role": "USER"
+  },
+  {
+    "_class": "com.nnk.springboot.domain.BidList",
+    "account": "Account One",
+    "type": "Type One",
+    "bidQuantity": 12
+  },
+  {
+    "_class": "com.nnk.springboot.domain.BidList",
+    "account": "Account Two",
+    "type": "Type Two",
+    "bidQuantity": 9
   }
 ]

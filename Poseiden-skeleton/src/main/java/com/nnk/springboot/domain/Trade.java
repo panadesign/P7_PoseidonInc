@@ -2,6 +2,7 @@ package com.nnk.springboot.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -11,11 +12,12 @@ import java.sql.Timestamp;
 @Data
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "Trade")
 public class Trade {
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
-	Integer tradeId;
+	Integer id;
 	@NotBlank
 	String account;
 	@NotBlank
@@ -41,8 +43,8 @@ public class Trade {
 	String sourceListId;
 	String side;
 
-	public Trade(Integer tradeId, String account, String type) {
-		this.tradeId = tradeId;
+	public Trade(Integer id, String account, String type) {
+		this.id = id;
 		this.account = account;
 		this.type = type;
 	}

@@ -70,10 +70,10 @@ class TradeServiceCrudImplTest {
 		Trade trade = new Trade(1, "account", "type");
 
 		//WHEN
-		tradeService.delete(trade.getTradeId());
+		tradeService.delete(trade.getId());
 
 		//THEN
-		verify(tradeRepository, times(1)).deleteById(trade.getTradeId());
+		verify(tradeRepository, times(1)).deleteById(trade.getId());
 	}
 
 	@Test
@@ -84,16 +84,16 @@ class TradeServiceCrudImplTest {
 		//WHEN
 		when(tradeRepository.findById(1)).thenReturn(Optional.of(trade));
 
-		Trade tradeToFind = tradeService.getById(trade.getTradeId());
+		Trade tradeToFind = tradeService.getById(trade.getId());
 
 		//THEN
-		Assertions.assertEquals(1, tradeToFind.getTradeId());
+		Assertions.assertEquals(1, tradeToFind.getId());
 	}
 
 	@Test
 	void getTradeByIdNotExistException() {
 		Trade trade = new Trade(1, "account", "type");
-		Assertions.assertThrows(ResourceNotExistException.class, () -> tradeService.getById(trade.getTradeId()));
+		Assertions.assertThrows(ResourceNotExistException.class, () -> tradeService.getById(trade.getId()));
 	}
 
 	@Test
@@ -125,7 +125,7 @@ class TradeServiceCrudImplTest {
 
 		Trade tradeUpdated = tradeService.update(1, tradeDto);
 
-		Assertions.assertEquals(1, tradeUpdated.getTradeId());
+		Assertions.assertEquals(1, tradeUpdated.getId());
 		Assertions.assertEquals("account2", tradeUpdated.getAccount());
 		Assertions.assertEquals("type2", tradeUpdated.getType());
 	}

@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 public class BidList {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	Integer bidListId;
+	Integer id;
 	@NotBlank
 	String account;
 	@NotBlank
@@ -44,8 +44,8 @@ public class BidList {
 	String sourceListId;
 	String side;
 
-	public BidList(Integer bidListId, String account, String type, double bidQuantity) {
-		this.bidListId = bidListId;
+	public BidList(Integer id, String account, String type, double bidQuantity) {
+		this.id = id;
 		this.account = account;
 		this.type = type;
 		this.bidQuantity = bidQuantity;
@@ -61,21 +61,6 @@ public class BidList {
 		this.account = bidList.getAccount();
 		this.type = bidList.getType();
 		this.bidQuantity = bidList.getBidQuantity();
-		this.askQuantity = bidList.getAskQuantity();
-		this.bid = bidList.getBid();
-		this.ask = bidList.getAsk();
-		this.benchmark = bidList.getBenchmark();
-		this.commentary = bidList.getCommentary();
-		this.security = bidList.getSecurity();
-		this.status = bidList.getStatus();
-		this.trader = bidList.getTrader();
-		this.book = bidList.getBook();
-		this.creationName = bidList.getCreationName();
-		this.revisionName = bidList.getRevisionName();
-		this.revisionDate = bidList.getRevisionDate();
-		this.dealName = bidList.getDealName();
-		this.dealType = bidList.getDealType();
-		this.side = bidList.getSide();
 		return this;
 	}
 }

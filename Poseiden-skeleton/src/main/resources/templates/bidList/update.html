@@ -3,20 +3,31 @@
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8"/>
-<title>Home</title>
-<link rel="stylesheet" href="../../css/bootstrap.min.css" >
-</head>
-<body>
+<title>Poseidon Inc | Update Bid list</title>
+	<link rel="stylesheet" href="../../css/bootstrap.min.css" ><body>
 <div class="container">
 	<div class="row">
 		<h2>Update Bid</h2>
 	</div>
 
 	<div class="row">
-		<form action="#" th:action="@{/bidList/update/{id}(id=${bidList.bidListId})}" th:object="${bidList}" method="post" class="form-horizontal" style="width: 100%">
+		<form action="#" th:action="@{/bidList/update/{id}(id=${bidList.getId})}" th:object="${bidList}" method="post" class="form-horizontal" style="width: 100%">
 			<!--
 			TODO: Create a form to edit the values of Bid, there are 2 buttons: Update data and Cancel to the list Bid
 			 -->
+			<form class="container" th:action="@{/bidList/update/{id}}" method="GET">
+				<label class="account">
+					<input class="form-control" type="text" id="bidAccount" name="amount" min="1" placeholder="account" required>
+				</label>
+				<label class="type">
+					<input class="form-control" type="text" id="bidType" name="type" placeholder="type" required>
+				</label>
+				<label class="quantity">
+					<input class="form-control" type="number" id="bidQuantity" name="quantity" min="1" placeholder="quantity" required>
+				</label>
+				<button class="btn btn-danger"  type="submit" value="Cancel"><a th:href="@{/bidList/list}" th:method="get" class="update">Cancel</a></button>
+				<button class="btn btn-primary cta"  type="submit" value="Update">Update</button>
+			</form>
 		</form>
 	</div>
 

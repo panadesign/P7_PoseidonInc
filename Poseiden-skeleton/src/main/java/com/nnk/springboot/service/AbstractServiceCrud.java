@@ -2,20 +2,19 @@ package com.nnk.springboot.service;
 
 import com.nnk.springboot.exception.ResourceNotExistException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 
 @RequiredArgsConstructor
+@Component
 public abstract class AbstractServiceCrud<T, R extends JpaRepository<T, Integer>> implements CrudService<T> {
 	
 	protected final R repository;
-	
-	public abstract T add(T obj);
-	
-	public abstract T update(Integer id, T obj);
 	
 	@Override
 	public void delete(Integer id) {

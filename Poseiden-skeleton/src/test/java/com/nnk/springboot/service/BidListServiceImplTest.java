@@ -1,6 +1,5 @@
 package com.nnk.springboot.service;
 
-import com.nnk.springboot.domain.User;
 import com.nnk.springboot.exception.ResourceExistException;
 import com.nnk.springboot.exception.ResourceNotExistException;
 import com.nnk.springboot.domain.BidList;
@@ -46,7 +45,7 @@ class BidListServiceImplTest {
 		//THEN
 		assertThat(newBidList)
 				.satisfies(bl -> {
-					assertThat(bl.getBidListId()).hasToString("2");
+					assertThat(bl.getId()).hasToString("2");
 					assertThat(bl.getAccount()).hasToString("account1");
 					assertThat(bl.getType()).hasToString("type1");
 					assertThat(bl.getBidQuantity()).hasToString("12.0");
@@ -73,10 +72,10 @@ class BidListServiceImplTest {
 
 
 		//WHEN
-		bidListService.delete(bidList.getBidListId());
+		bidListService.delete(bidList.getId());
 
 		//THEN
-		verify(bidListRepository, times(1)).deleteById(bidList.getBidListId());
+		verify(bidListRepository, times(1)).deleteById(bidList.getId());
 	}
 
 
@@ -89,17 +88,17 @@ class BidListServiceImplTest {
 		//WHEN
 		when(bidListRepository.findById(2)).thenReturn(Optional.of(bidList));
 
-		BidList bidList1 = bidListService.getById(bidList.getBidListId());
+		BidList bidList1 = bidListService.getById(bidList.getId());
 
 		//THEN
-		Assertions.assertEquals(2, bidList1.getBidListId());
+		Assertions.assertEquals(2, bidList1.getId());
 	}
 
 	@Test
 	void getBidListByIdNotExistResource() {
 		BidList bidList = new BidList(2, "account1", "type1", 12);
 
-		Assertions.assertThrows(ResourceNotExistException.class, () -> bidListService.getById(bidList.getBidListId()));
+		Assertions.assertThrows(ResourceNotExistException.class, () -> bidListService.getById(bidList.getId()));
 	}
 
 	@Test

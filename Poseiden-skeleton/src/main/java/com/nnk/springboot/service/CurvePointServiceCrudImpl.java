@@ -8,8 +8,10 @@ import com.nnk.springboot.exception.ResourceNotExistException;
 import com.nnk.springboot.repositories.CurvePointRepository;
 import com.nnk.springboot.repositories.RatingRepository;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
 
 @Log4j2
+@Component
 public class CurvePointServiceCrudImpl extends AbstractServiceCrud<CurvePoint, CurvePointRepository>{
 
 	public CurvePointServiceCrudImpl(CurvePointRepository repository) {

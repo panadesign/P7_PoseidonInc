@@ -6,8 +6,10 @@ import com.nnk.springboot.exception.ResourceExistException;
 import com.nnk.springboot.exception.ResourceNotExistException;
 import com.nnk.springboot.repositories.RuleNameRepository;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
 
 @Log4j2
+@Component
 public class RuleNameServiceCrudImpl extends AbstractServiceCrud<RuleName, RuleNameRepository>{
 
 	public RuleNameServiceCrudImpl(RuleNameRepository repository) {

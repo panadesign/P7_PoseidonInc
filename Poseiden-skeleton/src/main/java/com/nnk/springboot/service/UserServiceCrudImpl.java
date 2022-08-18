@@ -8,8 +8,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 @Log4j2
+@Component
 public class UserServiceCrudImpl extends AbstractServiceCrud<User, UserRepository>{
 	
 	private final PasswordEncoder passwordEncoder;
