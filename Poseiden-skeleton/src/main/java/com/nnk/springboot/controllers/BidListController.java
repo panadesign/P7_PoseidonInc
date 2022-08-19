@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,12 +41,12 @@ public class BidListController {
 	}
 
 	@PostMapping("/bidList/validate")
-	public String validate(@Valid BidList bid, BindingResult result) {
-		log.debug("Add a new bid with id: " + bid.getId());
+	public String validate(@Valid BidList bidList, BindingResult result) {
+		log.debug("Add a new bid with id: " + bidList.getId());
 		if(result.hasErrors()) {
-			return "bidList/list";
+			return "bidList/add";
 		}
-		crudService.add(bid);
+		crudService.add(bidList);
 		return "redirect:/bidList/list";
 	}
 
