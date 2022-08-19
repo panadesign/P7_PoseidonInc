@@ -1,7 +1,5 @@
 package com.nnk.springboot.service;
 
-import com.nnk.springboot.domain.BidList;
-import com.nnk.springboot.exception.ResourceExistException;
 import com.nnk.springboot.exception.ResourceNotExistException;
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.repositories.CurvePointRepository;
@@ -47,7 +45,7 @@ class CurvePointServiceImplTest {
 					assertThat(cp.getId()).hasToString("1");
 					assertThat(cp.getCurveId()).hasToString("21");
 					assertThat(cp.getTerm()).hasToString("4.3");
-					assertThat(cp.getValue()).hasToString("20.4");
+					assertThat(cp.getCurveValue()).hasToString("20.4");
 				});
 	}
 
@@ -117,7 +115,7 @@ class CurvePointServiceImplTest {
 
 		//THEN
 		Assertions.assertEquals(34.5, curvePointUpdated.getTerm());
-		Assertions.assertEquals(29.4, curvePointUpdated.getValue());
+		Assertions.assertEquals(29.4, curvePointUpdated.getCurveValue());
 
 	}
 

@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Data
@@ -21,8 +22,10 @@ public class BidList {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Integer id;
 	@NotBlank
+	@NotNull(message = "Account cannot be null")
 	String account;
 	@NotBlank
+	@NotNull(message = "Type cannot be null")
 	String type;
 	@NotBlank
 	@Min(1)

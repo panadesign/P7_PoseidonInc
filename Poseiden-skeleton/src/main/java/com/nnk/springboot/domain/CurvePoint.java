@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Curvepoint")
+@Table(name = "CurvePoint")
 public class CurvePoint {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,18 +27,18 @@ public class CurvePoint {
 	@NotBlank
 	Double term;
 	@NotBlank
-	Double value;
+	Double curveValue;
 	Timestamp creationDate;
 
-	public CurvePoint(Double term, Double value) {
+	public CurvePoint(Double term, Double curveValue) {
 		this.term = term;
-		this.value = value;
+		this.curveValue = curveValue;
 	}
 
 	public CurvePoint update(CurvePoint curvePoint) {
 		this.curveId = curvePoint.getCurveId();
 		this.term = curvePoint.getTerm();
-		this.value = curvePoint.getValue();
+		this.curveValue = curvePoint.getCurveValue();
 		return this;
 	}
 }

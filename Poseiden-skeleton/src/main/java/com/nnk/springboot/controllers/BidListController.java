@@ -43,7 +43,7 @@ public class BidListController {
 	public String validate(@Valid BidList bid, BindingResult result) {
 		log.debug("Add a new bid with id: " + bid.getId());
 		if(result.hasErrors()) {
-			return "bidList/add";
+			return "bidList/list";
 		}
 		crudService.add(bid);
 		return "redirect:/bidList/list";
