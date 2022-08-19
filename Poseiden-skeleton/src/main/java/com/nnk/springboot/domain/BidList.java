@@ -27,7 +27,6 @@ public class BidList {
 	@NotBlank
 	@NotNull(message = "Type cannot be null")
 	String type;
-	@NotBlank
 	@Min(1)
 	Double bidQuantity;
 	Double askQuantity;

@@ -29,7 +29,7 @@
     "_class": "com.nnk.springboot.domain.CurvePoint",
     "curveId": 123,
     "term": 12,
-    "value": 2
+    "curveValue": 2
   },
   {
     "_class": "com.nnk.springboot.domain.Rating",

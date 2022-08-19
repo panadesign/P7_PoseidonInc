@@ -3,7 +3,7 @@
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8"/>
-<title>Home</title>
+<title>Poseidon Inc | Add New Curve point</title>
 <link rel="stylesheet" href="../../css/bootstrap.min.css" >
 </head>
 <body>
@@ -14,11 +14,18 @@
 	</div>
 
 	<div class="row">
-		<form action="#" th:action="@{/curvePoint/validate}" th:object="${curvePoint}" method="post" class="form-horizontal" style="width: 100%">
-			<!--
-			TODO: Create a form to input the values of CurvePoint, there are 2 buttons: Save data and Cancel to the list CurvePoint
-			 -->
-
+		<form action="#" th:action="@{/curvePoint/validate}" method="post" class="form-horizontal" style="width: 100%">
+			<label class="curveId">
+				<input class="form-control" type="number" name="curveId" placeholder="Curve Id">
+			</label>
+			<label class="term">
+				<input class="form-control" type="number" name="term" step="0.01" min="1" placeholder="Term">
+			</label>
+			<label class="curveValue">
+				<input class="form-control" type="number" name="curveValue" step="0.01" min="1" placeholder="Value">
+			</label>
+			<button class="btn btn-danger"  type="submit" value="Cancel"><a th:href="@{/curvePoint/list}" th:method="get" class="update">Cancel</a></button>
+			<button class="btn btn-primary"  type="submit" value="Create">Add Curve Point</button>
 		</form>
 	</div>
 

@@ -2,7 +2,9 @@ package com.nnk.springboot.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +14,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 
-@Data
+@Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,12 +24,9 @@ public class CurvePoint {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Integer id;
-	@NotBlank
 	Integer curveId;
 	Timestamp asOfDate;
-	@NotBlank
 	Double term;
-	@NotBlank
 	Double curveValue;
 	Timestamp creationDate;
 
