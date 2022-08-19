@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
@@ -24,7 +25,7 @@ public class Rating {
 	String sandPRating;
 	@NotBlank
 	String fitchRating;
-	@NotBlank
+	@Min(1)
 	Integer orderNumber;
 
 	public Rating(String moodysRating, String sandPRating, String fitchRating, Integer orderNumber) {

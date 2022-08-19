@@ -25,7 +25,7 @@ public class User {
 	@Column(nullable = false)
 	private Integer id;
 	@NotBlank(message = "Username is mandatory")
-	@UniqueElements
+
 	private String username;
 	@NotBlank(message = "Password is mandatory")
 	private String password;
