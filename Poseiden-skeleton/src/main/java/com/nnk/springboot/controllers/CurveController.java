@@ -33,7 +33,7 @@ public class CurveController {
 	@RequestMapping("/curvePoint/list")
 	public String home(Model model) {
 		log.debug("Get all curve point");
-		List<CurvePoint> curvePointList = curvePointRepository.findAll();
+		List<CurvePoint> curvePointList = crudService.getAll();
 		model.addAttribute("curvePointList", curvePointList);
 		return "curvePoint/list";
 	}
@@ -55,7 +55,8 @@ public class CurveController {
 		}
 		
 		crudService.add(curvePoint);
-		model.addAttribute("curvePoints",curvePointRepository.findAll());
+		log.debug("Curve point with id: " + curvePoint.getId() + ", has been added");
+		model.addAttribute("curvePoint",curvePointRepository.findAll());
 		return "redirect:/curvePoint/list";
 	}
 	

@@ -3,7 +3,7 @@
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8"/>
-<title>Home</title>
+<title>Poseidon Inc | Add New Rating</title>
 <link rel="stylesheet" href="../../css/bootstrap.min.css" >
 </head>
 <body>
@@ -15,10 +15,23 @@
 
 	<div class="row">
 		<form action="#" th:action="@{/rating/validate}" th:object="${rating}" method="post" class="form-horizontal" style="width: 100%">
-			<!--
-			TODO: Create a form to input the values of Rating, there are 2 buttons: Save data and Cancel to the list Rating
-			 -->
-
+			<label class="ratingId">
+				<input class="form-control" type="number"  placeholder="Rating Id">
+			</label>
+			<label class="moodysRating">
+				<input class="form-control" type="text" name="moodysRating" placeholder="Moody's rating">
+			</label>
+			<label class="sandPRating">
+				<input class="form-control" type="text" name="sandPRating" placeholder="Sand rating">
+			</label>
+			<label class="fitchRating">
+				<input class="form-control" type="text" name="fitchRating" placeholder="Fitch rating">
+			</label>
+			<label class="orderNumber">
+				<input class="form-control" type="text" name="orderNumber" min="1" placeholder="Order number">
+			</label>
+			<button class="btn btn-danger"  type="submit" value="Cancel"><a th:href="@{/rating/list}" th:method="get" class="update">Cancel</a></button>
+			<button class="btn btn-primary"  type="submit" value="Create">Add Rating</button>
 		</form>
 	</div>
 

@@ -19,12 +19,13 @@ public class Rating {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Integer id;
-	@NotBlank
+	@NotBlank(message = "Moody's rating cannot be null")
 	String moodysRating;
-	@NotBlank
+	@NotBlank(message = "Sand rating cannot be null")
 	String sandPRating;
-	@NotBlank
+	@NotBlank(message = "Fitch rating cannot be null")
 	String fitchRating;
+	@NotNull(message = "Order number cannot be null")
 	@Min(1)
 	Integer orderNumber;
 

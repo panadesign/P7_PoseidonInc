@@ -10,10 +10,10 @@
 <div class="container">
 	<div class="row">
 		<div class="col-6">
-			<a href="/bidList/list">Bid List</a>&nbsp;|&nbsp;
-			<a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
-			<a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
-			<a href="/trade/list">Trade</a>&nbsp;|&nbsp;
+			<a href="/bidList/list">Bid List</a>&nbsp;|
+			<a href="/curvePoint/list">Curve Points</a>&nbsp;|
+			<a href="/rating/list">Ratings</a>&nbsp;|
+			<a href="/trade/list">Trade</a>&nbsp;|
 			<a href="/ruleName/list">Rule</a>
 		</div>
 		<div class="col-6 text-right">
@@ -37,7 +37,7 @@
 				</tr>
 			</thead>
 			<tbody th:action="@{/curvePoint/list}" th:method="GET">
-			<tr id="bidList" th:object="${curvePointList}" th:each="curvePointList: ${curvePointList}">
+			<tr id="curvePoint" th:object="${curvePointList}" th:each="curvePointList: ${curvePointList}">
 				<td th:text="${curvePointList.id}"></td>
 				<td th:text="${curvePointList.curveId}"></td>
 				<td th:text="${curvePointList.term}"></td>

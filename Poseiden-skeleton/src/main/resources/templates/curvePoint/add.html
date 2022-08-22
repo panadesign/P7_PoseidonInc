@@ -14,16 +14,23 @@
 	</div>
 
 	<div class="row">
-		<form action="#" th:action="@{/curvePoint/validate}" method="post" class="form-horizontal" style="width: 100%">
-				<label class="curveId">
-					<input class="form-control" type="number"  placeholder="Curve Id">
-				</label>
-			<label class="term">
-				<input class="form-control" type="number" name="term" step="0.01" min="1" placeholder="Term">
-			</label>
-			<label class="curveValue">
-				<input class="form-control" type="number" name="curveValue" step="0.01" min="1" placeholder="Value">
-			</label>
+			<form action="#" th:action="@{/curvePoint/validate}" th:object="${curvePoint}" method="post" class="form-horizontal" style="width: 100%">
+			<div class="form-group">
+				<label for="curveId" class="col-sm-2 control-label">Curve Id</label>
+				<input type="number" th:field="*{curveId}" name="curveId" id="curveId" placeholder="Curve Id" class="col-4"/>
+				<p class="text-danger" th:if="${#fields.hasErrors('curveId')}" th:errors="*{curveId}"></p>
+			</div>
+			<div class="form-group">
+				<label for="term" class="col-sm-2 control-label">Term</label>
+				<input type="number" th:field="*{term}" name="term" id="term" placeholder="Term" class="col-4"/>
+				<p class="text-danger" th:if="${#fields.hasErrors('term')}" th:errors="*{term}"></p>
+			</div>
+			<div class="form-group">
+				<label for="curveValue" class="col-sm-2 control-label">Value</label>
+				<input type="number" th:field="*{curveValue}" name="curveValue" id="curveValue" placeholder="Value" class="col-4"/>
+				<p class="text-danger" th:if="${#fields.hasErrors('curveValue')}" th:errors="*{curveValue}"></p>
+			</div>
+
 			<button class="btn btn-danger"  type="submit" value="Cancel"><a th:href="@{/curvePoint/list}" th:method="get" class="update">Cancel</a></button>
 			<button class="btn btn-primary"  type="submit" value="Create">Add Curve Point</button>
 		</form>
