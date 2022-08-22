@@ -14,18 +14,18 @@
 	</div>
 
 	<div class="row">
-		<!--
-			TODO: Create a form to input the values of Bid, there are 2 buttons: Save data and Cancel to the list Bid
-		-->
-		<form action="#" th:action="@{/bidList/validate}" method="post" class="form-horizontal" style="width: 100%">
-				<label class="account">
-					<input class="form-control" type="text" name="account" placeholder="Account">
+		<form action="#" th:action="@{/bidList/validate}" th:object="${bidList}" method="post" class="form-horizontal" style="width: 100%">
+				<label for="account">
+					<input id="account" class="form-control" type="text" name="account"  th:field="*{account}" placeholder="Account">
+					<p class="text-danger" th:if="${#fields.hasErrors('account')}" th:errors="*{account}"></p>
 				</label>
-				<label class="type">
-					<input class="form-control" type="text" name="type" placeholder="Type">
+				<label for="type">
+					<input id="type" class="form-control" type="text" name="type"  th:field="*{type}" placeholder="Type">
+					<p class="text-danger" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></p>
 				</label>
-				<label class="quantity">
-					<input class="form-control" type="number" name="bidQuantity" step="0.01" min="1" placeholder="Bid quantity">
+				<label for="bidQuantity">
+					<input id="bidQuantity" class="form-control" type="text" name="bidQuantity"  th:field="*{bidQuantity}" placeholder="Bid quantity">
+					<p class="text-danger" th:if="${#fields.hasErrors('bidQuantity')}" th:errors="*{bidQuantity}"></p>
 				</label>
 				<button class="btn btn-danger"  type="submit" value="Cancel"><a th:href="@{/bidList/list}" th:method="get" class="update">Cancel</a></button>
 				<button class="btn btn-primary"  type="submit" value="Create">Add BidList</button>

@@ -12,23 +12,23 @@
 	<div class="row">
 		<h2>Add New Rating</h2>
 	</div>
-
 	<div class="row">
 		<form action="#" th:action="@{/rating/validate}" th:object="${rating}" method="post" class="form-horizontal" style="width: 100%">
-			<label class="ratingId">
-				<input class="form-control" type="number"  placeholder="Rating Id">
+			<label for="moodysRating">
+				<input id="moodysRating" class="form-control" type="text" th:field="*{moodysRating}" name="moodysRating" placeholder="Moody's rating">
+				<p class="text-danger" th:if="${#fields.hasErrors('moodysRating')}" th:errors="*{moodysRating}"></p>
 			</label>
-			<label class="moodysRating">
-				<input class="form-control" type="text" name="moodysRating" placeholder="Moody's rating">
+			<label for="sandPRating">
+				<input id="sandPRating" class="form-control" type="text" th:field="*{sandPRating}" name="sandPRating" placeholder="Sand rating">
+				<p class="text-danger" th:if="${#fields.hasErrors('sandPRating')}" th:errors="*{sandPRating}"></p>
 			</label>
-			<label class="sandPRating">
-				<input class="form-control" type="text" name="sandPRating" placeholder="Sand rating">
+			<label for="fitchRating">
+				<input id="fitchRating" class="form-control" type="text" th:field="*{fitchRating}" name="fitchRating" placeholder="Fitch rating">
+				<p class="text-danger" th:if="${#fields.hasErrors('fitchRating')}" th:errors="*{fitchRating}"></p>
 			</label>
-			<label class="fitchRating">
-				<input class="form-control" type="text" name="fitchRating" placeholder="Fitch rating">
-			</label>
-			<label class="orderNumber">
-				<input class="form-control" type="text" name="orderNumber" min="1" placeholder="Order number">
+			<label for="orderNumber">
+				<input id="orderNumber" class="form-control" type="number" th:field="*{orderNumber}" name="orderNumber" placeholder="Order number">
+				<p class="text-danger" th:if="${#fields.hasErrors('orderNumber')}" th:errors="*{orderNumber}"></p>
 			</label>
 			<button class="btn btn-danger"  type="submit" value="Cancel"><a th:href="@{/rating/list}" th:method="get" class="update">Cancel</a></button>
 			<button class="btn btn-primary"  type="submit" value="Create">Add Rating</button>

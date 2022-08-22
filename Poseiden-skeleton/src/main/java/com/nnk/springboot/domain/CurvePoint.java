@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
@@ -26,19 +27,22 @@ public class CurvePoint {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Integer id;
 	@NotNull(message = "Curve point id cannot be null")
+	@Min(1)
 	Integer curveId;
 	Timestamp asOfDate;
 	@NotNull(message = "Curve point term cannot be null")
+	@Min(1)
 	Double term;
 	@NotNull(message = "Curve point value cannot be null")
+	@Min(1)
 	Double curveValue;
 	Timestamp creationDate;
-
+	
 	public CurvePoint(Double term, Double curveValue) {
 		this.term = term;
 		this.curveValue = curveValue;
 	}
-
+	
 	public CurvePoint update(CurvePoint curvePoint) {
 		this.curveId = curvePoint.getCurveId();
 		this.term = curvePoint.getTerm();

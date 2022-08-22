@@ -1,5 +1,6 @@
 package com.nnk.springboot.controllers;
 
+import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.repositories.CurvePointRepository;
 import com.nnk.springboot.service.CrudService;
@@ -22,13 +23,12 @@ import java.util.List;
 public class CurveController {
 	@Qualifier("curvePoint")
 	private final CrudService<CurvePoint> crudService;
+	@Autowired
+	private CurvePointRepository curvePointRepository;
 	
 	CurveController(CrudService<CurvePoint> crudService) {
 		this.crudService = crudService;
 	}
-	
-	@Autowired
-	private CurvePointRepository curvePointRepository;
 	
 	@RequestMapping("/curvePoint/list")
 	public String home(Model model) {
@@ -39,16 +39,14 @@ public class CurveController {
 	}
 	
 	@GetMapping("/curvePoint/add")
-	public String addBidForm() {
+	public String addBidForm(CurvePoint curvePoint) {
 		log.debug("Get add curve point form");
 		return "curvePoint/add";
 	}
 	
 	@PostMapping("/curvePoint/validate")
 	public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
-		// TODO: check data valid and save to db, after saving return Curve list
 		log.debug("Add a new curve point id: " + curvePoint.getId());
-		
 		if (result.hasErrors()) {
 			log.error("Error: " + result.getFieldError());
 			return "curvePoint/add";
@@ -56,24 +54,29 @@ public class CurveController {
 		
 		crudService.add(curvePoint);
 		log.debug("Curve point with id: " + curvePoint.getId() + ", has been added");
-		model.addAttribute("curvePoint",curvePointRepository.findAll());
+		model.addAttribute("curvePoint", curvePointRepository.findAll());
 		return "redirect:/curvePoint/list";
 	}
 	
 	@GetMapping("/curvePoint/update/{id}")
-	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-		CurvePoint curvePoint = crudService.getById(id);
-		model.addAttribute("curvePointToUpdate", curvePoint);
+	public String showUpdateForm(@PathVariable("id") Integer id, CurvePoint curvePoint, Model model) {
+		log.debug("Get update form for id " + id);
+		CurvePoint cp = crudService.getById(id);
+		model.addAttribute("curvePoint", cp);
 		return "curvePoint/update";
 	}
 	
-	//	@PostMapping("/curvePoint/update/{id}")
-//	public String updateBid(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint,
-//							BindingResult result, Model model) {
-//		// TODO: check required fields, if valid call service to update Curve and return Curve list
-//		return "redirect:/curvePoint/list";
-//	}
-//
+	@PostMapping("/curvePoint/update/{id}")
+	public String updateCurvePoint(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			return "curvePoint/update/{id}";
+		}
+		curvePoint.setId(curvePoint.getId());
+		crudService.update(id, curvePoint);
+		model.addAttribute("curvePoints", curvePointRepository.findAll());
+		return "redirect:/curvePoint/list";
+	}
+
 	@GetMapping("/curvePoint/delete/{id}")
 	public String deleteBid(@PathVariable("id") Integer id) {
 		log.debug("Delete curve point with id" + id);

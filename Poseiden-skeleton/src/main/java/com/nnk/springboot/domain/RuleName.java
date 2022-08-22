@@ -20,17 +20,17 @@ public class RuleName {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Integer id;
-	@NotBlank
+	@NotBlank(message = "Name cannot be null")
 	String name;
-	@NotBlank
+	@NotBlank(message = "Description cannot be null")
 	String description;
-	@NotBlank
+	@NotBlank(message = "Json cannot be null")
 	String json;
-	@NotBlank
+	@NotBlank(message = "Template cannot be null")
 	String template;
-	@NotBlank
+	@NotBlank(message = "Sql str cannot be null")
 	String sqlStr;
-	@NotBlank
+	@NotBlank(message = "Sql part cannot be null")
 	String sqlPart;
 
 	public RuleName(String name, String description, String json, String template, String sqlStr, String sqlPart) {

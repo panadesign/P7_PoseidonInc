@@ -37,7 +37,6 @@
 					<th>Action</th>
 				</tr>
 			</thead>
-			<tbody>
 			<tbody th:action="@{/rating/list}" th:method="GET">
 			<tr id="rating" th:object="${allRatings}" th:each="rating: ${allRatings}">
 				<td th:text="${rating.id}"></td>
@@ -47,7 +46,6 @@
 				<td th:text="${rating.orderNumber}"></td>
 				<td><a th:href="@{/rating/update/{id}(id=${rating.getId})}" th:method="get" class="update">Edit</a> | <a th:href="@{/rating/delete/{id}(id=${rating.getId})}" th:method="delete" class="delete">Delete</a></td>
 			</tr>
-			</tbody>
 			</tbody>
 		</table>
 	</div>

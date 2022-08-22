@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Data
@@ -18,12 +19,14 @@ public class Trade {
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	Integer id;
-	@NotBlank
+	@NotBlank(message = "Account cannot be null")
 	String account;
-	@NotBlank
+	@NotBlank(message = "Type cannot be null")
 	String type;
+	@NotNull(message = "Quantity cannot be null")
 	@Min(1)
 	Double buyQuantity;
+	@Min(1)
 	Double sellQuantity;
 	Double buyPrice;
 	Double sellPrice;
@@ -56,6 +59,7 @@ public class Trade {
 	public Trade update(Trade trade) {
 		this.account = trade.getAccount();
 		this.type = trade.getType();
+		this.buyQuantity = trade.getBuyQuantity();
 		return this;
 	}
 }

@@ -1,9 +1,12 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.domain.Rating;
+import com.nnk.springboot.repositories.RatingRepository;
 import com.nnk.springboot.service.CrudService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +29,9 @@ public class RatingController {
 		this.crudService = crudService;
 	}
 	
+	@Autowired
+	RatingRepository ratingRepository;
+	
 	@RequestMapping("/rating/list")
 	public String home(Model model) {
 		log.debug("Get all ratings");
@@ -35,27 +41,40 @@ public class RatingController {
 	}
 	
 	@GetMapping("/rating/add")
-	public String addRatingForm() {
+	public String addRatingForm(Rating rating) {
 		log.debug("Get add rating form");
 		return "rating/add";
 	}
 	
 	@PostMapping("/rating/validate")
 	public String validate(@Valid Rating rating, BindingResult result, Model model) {
-		// TODO: check data valid and save to db, after saving return Rating list
-		return "rating/add";
+		log.debug("Add a new rating with id: " + rating.getId());
+		if (result.hasErrors()) {
+			log.error("Error: " + result.getFieldError());
+			return "rating/add";
+		}
+		
+		crudService.add(rating);
+		log.debug("rating with id: " + rating.getId() + ", has been added");
+		model.addAttribute("rating", ratingRepository.findAll());
+		return "redirect:/rating/list";
 	}
 	
 	@GetMapping("/rating/update/{id}")
-	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-		// TODO: get Rating by Id and to model then show to the form
+	public String showUpdateForm(@PathVariable("id") Integer id, Rating rating, Model model) {
+		log.debug("Get update form for id" + id);
+		Rating rate = crudService.getById(id);
+		model.addAttribute("rating", rate);
 		return "rating/update";
 	}
-	
+
 	@PostMapping("/rating/update/{id}")
-	public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating,
-	                           BindingResult result, Model model) {
-		// TODO: check required fields, if valid call service to update Rating and return Rating list
+	public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			return "rating/update/{id}";
+		}
+		crudService.update(id, rating);
+		model.addAttribute("rating", ratingRepository.findAll());
 		return "redirect:/rating/list";
 	}
 	

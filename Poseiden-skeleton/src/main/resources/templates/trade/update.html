@@ -3,7 +3,7 @@
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8"/>
-<title>Home</title>
+<title>Poseidon Inc | Update trade</title>
 <link rel="stylesheet" href="../../css/bootstrap.min.css" >
 </head>
 <body>
@@ -13,10 +13,21 @@
 	</div>
 
 	<div class="row">
-		<form action="#" th:action="@{/trade/update/{id}(id=${trade.tradeId})}" th:object="${trade}" method="post" class="form-horizontal" style="width: 100%">
-			<!--
-			TODO: Create a form to edit the values of Trade, there are 2 buttons: Update data and Cancel to the Trade List
-			 -->
+		<form action="#" th:action="@{/trade/update/{id}(id=${trade.id})}" th:object="${trade}" method="post" class="form-horizontal" style="width: 100%">
+			<label for="account">
+				<input class="form-control" type="text" th:field="*{account}" name="name" id="account" placeholder="Account"/>
+				<p class="text-danger" th:if="${#fields.hasErrors('account')}" th:errors="*{account}"></p>
+			</label>
+			<label for="type">
+				<input class="form-control" type="text" th:field="*{type}" name="description" id="type" placeholder="Type"/>
+				<p class="text-danger" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></p>
+			</label>
+			<label for="buyQuantity">
+				<input class="form-control" type="number" th:field="*{buyQuantity}" name="buyQuantity" id="buyQuantity" placeholder="Buy quantity"/>
+				<p class="text-danger" th:if="${#fields.hasErrors('buyQuantity')}" th:errors="*{buyQuantity}"></p>
+			</label>
+			<button class="btn btn-danger" type="submit" value="Cancel"><a th:href="@{/trade/list}" th:method="get" class="update">Cancel</a></button>
+			<button class="btn btn-primary" type="submit" value="Update">Update</button>
 		</form>
 	</div>
 

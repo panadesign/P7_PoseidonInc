@@ -12,14 +12,17 @@
 
 	<div class="row">
 		<form action="#" th:action="@{/bidList/update/{id}(id=${bidList.getId})}" th:object="${bidList}" method="post" class="form-horizontal" style="width: 100%">
-				<label class="account">
-					<input class="form-control" type="text" id="bidAccount" name="account" min="1" placeholder="Account" required>
+				<label for="account">
+					<input id="account" class="form-control" th:field="*{account}" type="text" name="account" placeholder="Account">
+					<p class="text-danger" th:if="${#fields.hasErrors('account')}" th:errors="*{account}"></p>
 				</label>
-				<label class="type">
-					<input class="form-control" type="text" id="bidType" name="type" placeholder="Type" required>
+				<label for="type">
+					<input id="type" class="form-control" th:field="*{type}" type="text" name="type" placeholder="Type">
+					<p class="text-danger" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></p>
 				</label>
-				<label class="quantity">
-					<input class="form-control" type="number" id="bidQuantity" name="bidQuantity" min="1" placeholder="Quantity" required>
+				<label for="quantity">
+					<input id="quantity" class="form-control" th:field="*{bidQuantity}" type="number" name="bidQuantity" placeholder="Bid quantity">
+					<p class="text-danger" th:if="${#fields.hasErrors('bidQuantity')}" th:errors="*{bidQuantity}"></p>
 				</label>
 				<button class="btn btn-danger" type="submit" value="Cancel"><a th:href="@{/bidList/list}" th:method="get" class="update">Cancel</a></button>
 				<button class="btn btn-primary" type="submit" value="Update">Update</button>

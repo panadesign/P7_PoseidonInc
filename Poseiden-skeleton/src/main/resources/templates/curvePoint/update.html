@@ -3,20 +3,31 @@
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8"/>
-<title>Home</title>
+<title>Poseidon Inc | Update Curve point</title>
 <link rel="stylesheet" href="../../css/bootstrap.min.css" >
 </head>
 <body>
 <div class="container">
 	<div class="row">
-		<h2>Update CurvePoint</h2>
+		<h2>Update Curve point</h2>
 	</div>
 
 	<div class="row">
-		<form action="#" th:action="@{/curvePoint/update/{id}(id=${curvePoint.id})}" th:object="${curvePoint}" method="post" class="form-horizontal" style="width: 100%">
-			<!--
-			TODO: Create a form to edit the values of CurvePoint, there are 2 buttons: Update data and Cancel to the Curve Point
-			 -->
+		<form action="#" th:action="@{/curvePoint/update/{id}(id=${curvePoint.getId})}" th:object="${curvePoint}" method="post" class="form-horizontal" style="width: 100%">
+			<label for="curveId">
+				<input id="curveId" class="form-control" th:field="*{curveId}" type="number" name="curveId" placeholder="Curve id">
+				<p class="text-danger" th:if="${#fields.hasErrors('curveId')}" th:errors="*{curveId}"></p>
+			</label>
+			<label for="term">
+				<input id="term" class="form-control" th:field="*{term}" type="number" name="term" placeholder="Term">
+				<p class="text-danger" th:if="${#fields.hasErrors('term')}" th:errors="*{term}"></p>
+			</label>
+			<label for="curveValue">
+				<input id="curveValue" class="form-control" th:field="*{curveValue}" type="number" name="curveValue" placeholder="Value">
+				<p class="text-danger" th:if="${#fields.hasErrors('curveValue')}" th:errors="*{curveValue}"></p>
+			</label>
+			<button class="btn btn-danger" type="submit" value="Cancel"><a th:href="@{/curvePoint/list}" th:method="get" class="update">Cancel</a></button>
+			<button class="btn btn-primary" type="submit" value="Update">Update</button>
 		</form>
 	</div>
 
