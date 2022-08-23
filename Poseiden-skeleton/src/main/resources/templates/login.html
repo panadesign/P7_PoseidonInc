@@ -10,7 +10,7 @@
     <div th:if="${param.error}">
         Invalid email or password.
     </div>
-    <form class="form-group login">
+    <form class="form-group login" th:action="@{/login}" method="post">
         <div class="form-group">
             <label for="username">User: </label>
             <input id="username" type="text" class="form-control" placeholder="Enter username" required autofocus>
