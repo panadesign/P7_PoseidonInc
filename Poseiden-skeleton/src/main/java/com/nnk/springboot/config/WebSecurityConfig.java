@@ -10,19 +10,20 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig{
 	
 	@Bean
-	@Override
 	public UserDetailsService userDetailsService() {
 		return new MyUserDetailsService();
 	}
@@ -31,41 +32,71 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
+	
 	@Bean
-	public DaoAuthenticationProvider authProvider() {
-		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-		authProvider.setUserDetailsService(userDetailsService());
-		authProvider.setPasswordEncoder(passwordEncoder());
-
-		return authProvider;
-	}
-
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) {
-		auth.authenticationProvider(authProvider());
-	}
-
-
-	@Override
-	public void configure(HttpSecurity http) throws Exception {
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/login", "/", "/403", "/user/add").permitAll()
-				.anyRequest().authenticated()
+				.antMatchers("/login", "/*", "/403", "/user/add").permitAll()
+				.anyRequest().fullyAuthenticated()
 				.and()
 				.formLogin()
 				.loginPage("/login")
-				.defaultSuccessUrl("/bidList/list")
+				.defaultSuccessUrl("/bidList/list", true)
 				.failureUrl("/login?error=true")
 				.usernameParameter("username")
-				.passwordParameter("password") ;
+				.passwordParameter("password")
+				.permitAll()
+				.and()
+				.logout()
+				.invalidateHttpSession(true)
+				.clearAuthentication(true)
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.permitAll();
+				
+		return http.build();
 	}
-
-	@Override
-	public void configure(WebSecurity web) {
-		web.ignoring()
-				.antMatchers("static/css/**", "/img/**")
+	
+	@Bean
+	public WebSecurityCustomizer webSecurityCustomizer() {
+		return (web) -> web.ignoring()
+				.antMatchers("/css/**", "/js/**")
 				.antMatchers("/h2-console/**");
 	}
+
+//	@Bean
+//	public DaoAuthenticationProvider authProvider() {
+//		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+//		authProvider.setUserDetailsService(userDetailsService());
+//		authProvider.setPasswordEncoder(passwordEncoder());
+//
+//		return authProvider;
+//	}
+
+//	@Override
+//	protected void configure(AuthenticationManagerBuilder auth) {
+//		auth.authenticationProvider(authProvider());
+//	}
+//
+//
+//	@Override
+//	public void configure(HttpSecurity http) throws Exception {
+//		http.authorizeRequests()
+//				.antMatchers("/login", "/", "/403", "/user/add").permitAll()
+//				.anyRequest().authenticated()
+//				.and()
+//				.formLogin()
+//				.loginPage("/login")
+//				.defaultSuccessUrl("/bidList/list")
+//				.failureUrl("/login?error=true")
+//				.usernameParameter("username")
+//				.passwordParameter("password") ;
+//	}
+//
+//	@Override
+//	public void configure(WebSecurity web) {
+//		web.ignoring()
+//				.antMatchers("static/css/**", "/img/**")
+//				.antMatchers("/h2-console/**");
+//	}
 
 }

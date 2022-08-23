@@ -13,11 +13,11 @@
     <form class="form-group login" th:action="@{/login}" method="post">
         <div class="form-group">
             <label for="username">User: </label>
-            <input id="username" type="text" class="form-control" placeholder="Enter username" required autofocus>
+            <input id="username" name="username" type="text" class="form-control" placeholder="Enter username" required autofocus>
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input id="password" type="password" class="form-control" placeholder="Password" required>
+            <input id="password"  name="password" class="form-control" placeholder="Password" required>
         </div>
         <button type="submit" class="btn btn-primary">Login</button>
     </form>

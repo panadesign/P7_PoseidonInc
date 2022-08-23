@@ -18,29 +18,32 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Users")
+@Table(name = "UserAccount")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(nullable = false)
 	private Integer id;
+	
 	@NotBlank(message = "Username is mandatory")
-
 	private String username;
+	
 	@NotBlank(message = "Password is mandatory")
 	private String password;
+	
 	@NotBlank(message = "FullName is mandatory")
 	private String fullname;
+	
 	@NotBlank(message = "Role is mandatory")
 	private String role;
-
+	
 	public User(String username, String password, String fullname, String role) {
 		this.username = username;
 		this.password = password;
 		this.fullname = fullname;
 		this.role = role;
 	}
-
+	
 	public User update(User user) {
 		this.username = user.getUsername();
 		this.password = user.getPassword();
@@ -48,5 +51,5 @@ public class User {
 		this.role = user.getRole();
 		return this;
 	}
-
+	
 }
