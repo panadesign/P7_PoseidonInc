@@ -67,7 +67,7 @@ public class TradeController {
 	public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade,
 	                          BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "trade/update/{id}";
+            return "trade/update";
         }
         crudService.update(id, trade);
         model.addAttribute("trade", tradeRepository.findAll());

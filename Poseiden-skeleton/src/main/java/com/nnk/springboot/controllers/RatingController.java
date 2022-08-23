@@ -71,7 +71,7 @@ public class RatingController {
 	@PostMapping("/rating/update/{id}")
 	public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating, BindingResult result, Model model) {
 		if(result.hasErrors()) {
-			return "rating/update/{id}";
+			return "rating/update";
 		}
 		crudService.update(id, rating);
 		model.addAttribute("rating", ratingRepository.findAll());

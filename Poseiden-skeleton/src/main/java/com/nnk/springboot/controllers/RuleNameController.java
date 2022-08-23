@@ -67,7 +67,7 @@ public class RuleNameController {
 	public String updateRuleName(@PathVariable("id") Integer id, @Valid RuleName ruleName,
 	                             BindingResult result, Model model) {
 		if (result.hasErrors()) {
-			return "ruleName/update/{id}";
+			return "ruleName/update";
 		}
 		crudService.update(id, ruleName);
 		model.addAttribute("ruleName", ruleNameRepository.findAll());

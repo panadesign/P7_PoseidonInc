@@ -69,7 +69,7 @@ public class CurveController {
 	@PostMapping("/curvePoint/update/{id}")
 	public String updateCurvePoint(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint, BindingResult result, Model model) {
 		if(result.hasErrors()) {
-			return "curvePoint/update/{id}";
+			return "curvePoint/update";
 		}
 		curvePoint.setId(curvePoint.getId());
 		crudService.update(id, curvePoint);
