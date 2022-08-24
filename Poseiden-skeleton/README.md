@@ -31,5 +31,5 @@
 2. Add configuration class and place in package com.nnk.springboot.config
 
 ## Users for dev
-1. Role ADMIN(username: admin, password: 123)
-2. Role USER(username: user, password: 123)
+1. Role ADMIN(username: admin, password: AdminSpring_123)
+2. Role USER(username: user, password: UserSpring_123)

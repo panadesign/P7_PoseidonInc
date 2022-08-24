@@ -2,14 +2,14 @@
   {
     "_class": "com.nnk.springboot.domain.User",
     "username": "admin",
-    "password": "$2y$10$KlfLxcyHcqtr4ORTRVenbOU5QOQRYuKnNLm8LQXFVW5QvzPxooCS6",
+    "password": "$2y$10$IBP5qFgrzcoHfKN2X6thmulbZ2jZDNi29PkVC2k4dG5Pl6nzsGFbC",
     "fullname": "Administrator",
     "role": "ADMIN"
   },
   {
     "_class": "com.nnk.springboot.domain.User",
     "username": "user",
-    "password": "$2y$10$E.EqLkNDCvfihqUXYogEh.zIjzEWiuC913pPQ2w5QHa0rHMFZi1fa",
+    "password": "$2y$10$YmKdFBHtXRaTdwyAQvWLae4GIir5PPHQ.CMkwPnV.oOgyJkJVBGb6",
     "fullname": "User",
     "role": "USER"
   },

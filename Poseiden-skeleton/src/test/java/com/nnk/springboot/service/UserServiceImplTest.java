@@ -33,6 +33,9 @@ class UserServiceImplTest {
 
 	@Mock
 	private PasswordEncoder mockPasswordEncoder;
+	
+	@Mock
+	private PasswordConstraintValidator mockPasswordConstraintValidator;
 
 	@BeforeEach
 	void init() {
