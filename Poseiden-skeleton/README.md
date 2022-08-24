@@ -1,10 +1,10 @@
 # spring-boot
 ## Technical:
 
-1. Framework: Spring Boot v2.0.4
-2. Java 8
+1. Framework: Spring Boot v2.7.3
+2. Java 17
 3. Thymeleaf
-4. Bootstrap v.4.3.1
+4. Bootstrap v.5.2.0
 
 
 ## Setup with Intellij IDE
@@ -29,3 +29,7 @@
 ## Security
 1. Create user service to load user from  database and place in package com.nnk.springboot.services
 2. Add configuration class and place in package com.nnk.springboot.config
+
+## Users for dev
+1. Role ADMIN(username: admin, password: 123)
+2. Role USER(username: user, password: 123)

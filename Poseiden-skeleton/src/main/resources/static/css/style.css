@@ -1,0 +1,35 @@
+.login {
+    border: solid 1px #000;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.loginForm {
+    max-width: 500px;
+}
+
+.logo {
+    display: block;
+    max-width: 150px;
+    margin: 0 auto;
+}
+
+h4 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.bi {
+    margin-right: 10px;
+}
+
+button {
+    margin-top: 10px;
+}
+
+.loginGitHub {
+    margin: 10px auto 0;
+    display: block;
+    text-align: center;
+    width: 190px;
+}
