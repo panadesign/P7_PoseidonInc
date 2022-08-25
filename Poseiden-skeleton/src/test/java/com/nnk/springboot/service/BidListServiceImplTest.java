@@ -51,6 +51,12 @@ class BidListServiceImplTest {
 					assertThat(bl.getBidQuantity()).hasToString("12.0");
 				});
 	}
+	
+	@Test
+	void addBidListReturnIllegalArgumentException() {
+		BidList bidList = new BidList(2, "account1", "type1", -12);
+		Assertions.assertThrows(IllegalArgumentException.class,() -> bidListService.add( bidList));
+	}
 
 	@Test
 	void delete() {
@@ -81,7 +87,6 @@ class BidListServiceImplTest {
 	@Test
 	void getBidListByIdNotExistResource() {
 		BidList bidList = new BidList(2, "account1", "type1", 12);
-
 		Assertions.assertThrows(ResourceNotExistException.class, () -> bidListService.getById(bidList.getId()));
 	}
 

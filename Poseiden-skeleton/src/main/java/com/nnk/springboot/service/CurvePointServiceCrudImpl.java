@@ -1,12 +1,8 @@
 package com.nnk.springboot.service;
 
 import com.nnk.springboot.domain.CurvePoint;
-import com.nnk.springboot.domain.Rating;
-import com.nnk.springboot.domain.User;
-import com.nnk.springboot.exception.ResourceExistException;
 import com.nnk.springboot.exception.ResourceNotExistException;
 import com.nnk.springboot.repositories.CurvePointRepository;
-import com.nnk.springboot.repositories.RatingRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 

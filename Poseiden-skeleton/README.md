@@ -27,9 +27,9 @@
 1. Create unit test and place in package com.nnk.springboot in folder test > java
 
 ## Security
-1. Create user service to load user from  database and place in package com.nnk.springboot.services
+1. Create userAccount service to load userAccount from  database and place in package com.nnk.springboot.services
 2. Add configuration class and place in package com.nnk.springboot.config
 
 ## Users for dev
 1. Role ADMIN(username: admin, password: AdminSpring_123)
-2. Role USER(username: user, password: UserSpring_123)
+2. Role USER(username: userAccount, password: UserSpring_123)

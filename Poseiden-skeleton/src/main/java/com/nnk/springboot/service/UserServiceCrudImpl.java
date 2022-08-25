@@ -1,18 +1,16 @@
 package com.nnk.springboot.service;
 
-import com.nnk.springboot.domain.User;
+import com.nnk.springboot.domain.UserAccount;
 import com.nnk.springboot.exception.ResourceNotExistException;
 import com.nnk.springboot.exception.UserAlreadyExistException;
 import com.nnk.springboot.repositories.UserRepository;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Log4j2
 @Component
-public class UserServiceCrudImpl extends AbstractServiceCrud<User, UserRepository>{
+public class UserServiceCrudImpl extends AbstractServiceCrud<UserAccount, UserRepository>{
 	
 	private final PasswordEncoder passwordEncoder;
 	
@@ -22,27 +20,27 @@ public class UserServiceCrudImpl extends AbstractServiceCrud<User, UserRepositor
 	}
 	
 	@Override
-	public User add(User user) {
-		if(usernameExist(user.getUsername())) {
-			throw new UserAlreadyExistException("This username exist already" + user.getUsername());
+	public UserAccount add(UserAccount userAccount) {
+		if(usernameExist(userAccount.getUsername())) {
+			throw new UserAlreadyExistException("This username exist already" + userAccount.getUsername());
 		}
 		
-		String password = passwordEncoder.encode(user.getPassword());
-		User newUser =  new User(user.getUsername(), password, user.getFullname(), user.getRole());
+		String password = passwordEncoder.encode(userAccount.getPassword());
+		UserAccount newUserAccount =  new UserAccount(userAccount.getUsername(), password, userAccount.getFullname(), userAccount.getRole());
 		
-		log.debug("New user has been created:" + user.getUsername());
+		log.debug("New user has been created:" + userAccount.getUsername());
 		
-		return repository.save(newUser);
+		return repository.save(newUserAccount);
 	}
 	
 	@Override
-	public User update(Integer id, User userDto) {
-		User userToUpdate = repository.findById(id)
+	public UserAccount update(Integer id, UserAccount userAccountDto) {
+		UserAccount userAccountToUpdate = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotExistException("User with id " + id + " doesn't exist."));
 		
-		User updatedUser = userToUpdate.update(userDto);
-		repository.save(updatedUser);
-		return updatedUser;
+		UserAccount updatedUserAccount = userAccountToUpdate.update(userAccountDto);
+		repository.save(updatedUserAccount);
+		return updatedUserAccount;
 	}
 	
 	private boolean usernameExist(String username) {

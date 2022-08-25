@@ -3,7 +3,7 @@
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8"/>
-<title>Home</title>
+<title>Poseidon Inc | User</title>
 <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
 </head>
 <body>
@@ -16,7 +16,9 @@
 			<a href="/">Home</a>&nbsp;|&nbsp;<a href="/login">Login</a>
 		</div>
 	</div>
-	<div class="row"><h2>User List</h2></div>
+	<div class="row">
+		<h2>User List</h2>
+	</div>
 	<div class="row">
 		<a href="/user/add" class="btn btn-primary btn-sm">Add New</a>
 		<table class="table table-bordered">
@@ -29,15 +31,15 @@
 					<th>Action</th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr th:each="user : ${users}">
-					<td style="width: 10%" th:text="${user.id}"></td>
-					<td th:text="${user.fullname}"></td>
-					<td th:text="${user.username}"></td>
-					<td style="width: 25%" th:text="${user.role}"></td>
+			<tbody th:action="@{/user/list}" th:method="GET">
+				<tr th:each="userAccount : ${users}">
+					<td style="width: 10%" th:text="${userAccount.id}"></td>
+					<td th:text="${userAccount.fullname}"></td>
+					<td th:text="${userAccount.username}"></td>
+					<td style="width: 25%" th:text="${userAccount.role}"></td>
 					<td style="width: 15%" class="text-center">
-						<a th:href="@{/user/update/{id}(id=${user.id})}">Edit</a>&nbsp;|&nbsp;
-						<a th:href="@{/user/delete/{id}(id=${user.id})}">Delete</a>
+						<a th:href="@{/user/update/{id}(id=${userAccount.id})}">Edit</a>&nbsp;|&nbsp;
+						<a th:href="@{/user/delete/{id}(id=${userAccount.id})}">Delete</a>
 					</td>
 				</tr>
 			</tbody>

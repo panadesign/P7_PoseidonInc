@@ -1,13 +1,13 @@
 [
   {
-    "_class": "com.nnk.springboot.domain.User",
+    "_class": "com.nnk.springboot.domain.UserAccount",
     "username": "admin",
     "password": "$2y$10$IBP5qFgrzcoHfKN2X6thmulbZ2jZDNi29PkVC2k4dG5Pl6nzsGFbC",
     "fullname": "Administrator",
     "role": "ADMIN"
   },
   {
-    "_class": "com.nnk.springboot.domain.User",
+    "_class": "com.nnk.springboot.domain.UserAccount",
     "username": "user",
     "password": "$2y$10$YmKdFBHtXRaTdwyAQvWLae4GIir5PPHQ.CMkwPnV.oOgyJkJVBGb6",
     "fullname": "User",

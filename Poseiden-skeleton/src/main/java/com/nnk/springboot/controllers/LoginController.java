@@ -1,10 +1,9 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domain.User;
+import com.nnk.springboot.domain.UserAccount;
 import com.nnk.springboot.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +20,7 @@ public class LoginController {
     private UserRepository userRepository;
 
     @GetMapping("login")
-    public ModelAndView login(@Valid User user, BindingResult result) {
+    public ModelAndView login(@Valid UserAccount userAccount, BindingResult result) {
         ModelAndView mav = new ModelAndView();
         if (result.hasErrors()) {
             String errorMessage = "User with this user name doesn't exist or password is false";
