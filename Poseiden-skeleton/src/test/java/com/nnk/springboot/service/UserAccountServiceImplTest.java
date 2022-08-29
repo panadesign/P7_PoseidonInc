@@ -37,9 +37,12 @@ class UserAccountServiceImplTest {
 	@Mock
 	private PasswordConstraintValidator mockPasswordConstraintValidator;
 
+	@Mock
+	private MyUserDetailsService myUserDetailsService;
+
 	@BeforeEach
 	void init() {
-		userService = new UserServiceCrudImpl(mockUserRepository, mockPasswordEncoder);
+		userService = new UserServiceCrudImpl(mockUserRepository, mockPasswordEncoder, myUserDetailsService);
 	}
 
 	@Test

@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.context.WebApplicationContext;
 
 @Configuration
 @EnableWebSecurity
@@ -18,12 +19,12 @@ public class WebSecurityConfig{
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/user/**", "/app/secure/article-details").hasAuthority("ADMIN")
-				.antMatchers("/login", "/*", "/403").permitAll()
+				.antMatchers("/*", "/403").permitAll()
 				.anyRequest().authenticated()
 				.and()
 				.formLogin()

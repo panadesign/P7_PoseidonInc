@@ -13,7 +13,9 @@
 
 		</div>
 		<div class="col-6 text-right">
-			<a href="/">Home</a>&nbsp;|&nbsp;<a href="/login">Login</a>
+			<a href="/bidList/list">Home</a>&nbsp;|&nbsp;<form th:action="@{/app-logout}" method="POST">
+			<input type="submit" value="Logout"/>
+		</form>
 		</div>
 	</div>
 	<div class="row">

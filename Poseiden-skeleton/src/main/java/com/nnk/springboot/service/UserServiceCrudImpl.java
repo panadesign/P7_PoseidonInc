@@ -13,10 +13,12 @@ import org.springframework.stereotype.Component;
 public class UserServiceCrudImpl extends AbstractServiceCrud<UserAccount, UserRepository>{
 	
 	private final PasswordEncoder passwordEncoder;
-	
-	public UserServiceCrudImpl(UserRepository repository, PasswordEncoder passwordEncoder) {
+	private final MyUserDetailsService myUserDetailsService;
+
+	public UserServiceCrudImpl(UserRepository repository, PasswordEncoder passwordEncoder, MyUserDetailsService myUserDetailsService) {
 		super(repository);
 		this.passwordEncoder = passwordEncoder;
+		this.myUserDetailsService = myUserDetailsService;
 	}
 	
 	@Override
