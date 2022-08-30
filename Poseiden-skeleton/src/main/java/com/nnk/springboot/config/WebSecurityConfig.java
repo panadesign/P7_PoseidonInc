@@ -9,7 +9,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.context.WebApplicationContext;
 
 @Configuration
 @EnableWebSecurity
@@ -28,7 +27,7 @@ public class WebSecurityConfig{
 				.anyRequest().authenticated()
 				.and()
 				.formLogin()
-				.loginPage("/login")
+				.loginPage("/")
 				.defaultSuccessUrl("/bidList/list", true)
 				.failureUrl("/login?error=true")
 				.usernameParameter("username")
@@ -36,7 +35,7 @@ public class WebSecurityConfig{
 				.permitAll()
 				.and()
 				.oauth2Login()
-				.loginPage("/login")
+				.loginPage("/")
 				.defaultSuccessUrl("/bidList/list", true)
 				.and()
 				.logout()
