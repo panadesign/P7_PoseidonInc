@@ -1,74 +1,68 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.BidList;
-import com.nnk.springboot.service.BidListServiceCrudImpl;
+import com.nnk.springboot.domain.UserAccount;
+import com.nnk.springboot.repositories.BidListRepository;
+import com.nnk.springboot.repositories.UserRepository;
+import com.nnk.springboot.service.CrudService;
 import com.nnk.springboot.service.MyUserDetailsService;
-import org.junit.jupiter.api.BeforeEach;
+import com.nnk.springboot.service.PrincipalUser;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.web.JsonPath;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-@ExtendWith(SpringExtension.class)
+@RunWith(SpringRunner.class)
 @WebMvcTest(BidListController.class)
 class BidListControllerTest {
 
+	@Autowired
 	private MockMvc mockMvc;
 
-	@Autowired
-	private WebApplicationContext webApplicationContext;
+	@MockBean
+	private CrudService<BidList> bidListServiceCrud;
+	@MockBean
+	private BidListRepository bidListRepository;
+	@MockBean
+	private UserRepository userRepository;
 
 	@MockBean
-	BidListServiceCrudImpl bidListServiceCrud;
-	@MockBean
-	private MyUserDetailsService myUserDetailsService;
-	@MockBean
-	private BidListController bidListController;
-
-	private BidList bid;
-
-	@BeforeEach
-	void init() {
-		bid = new BidList("Account", "Type", 23d);
-		mockMvc = MockMvcBuilders
-				.webAppContextSetup(webApplicationContext)
-				.build();
-	}
+	private PrincipalUser principalUser;
 
 	@Test
 	void getBidList() throws Exception {
-		when(bidListServiceCrud.getAll()).thenReturn(Collections.singletonList(bid));
-		mockMvc.perform(get("/bidList/list")
-						.contentType(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk())
-				.andExpect(view().name("bidList/list"));
+//		BidList bid = new BidList("Account", "Type", 12d);
+//		List<BidList> allBids = new ArrayList<>();
+//		allBids.add(bid);
+//		when(bidListRepository.findAll()).thenReturn(allBids);
+//		mockMvc.perform(get("/bidList/list")
+//						.contentType(MediaType.APPLICATION_JSON))
+//				.andExpect(status().isOk())
+//				.andExpect(view().name("bidList/list"));
 	}
 
 	@Test
 	void addBidForm() throws Exception {
-		BidList bidList = new BidList("Account1", "Type1", 12d);
+		UserAccount user = new UserAccount("bob", "dfd", "fds", "ADMIN");
+		when(principalUser.getCurrentUserName()).thenReturn(user.getUsername());
+		when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
 
-		when(bidListServiceCrud.add(bidList)).thenReturn(bidList);
 		mockMvc.perform(get("/bidList/add")
 						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
