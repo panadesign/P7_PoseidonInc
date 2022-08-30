@@ -46,13 +46,14 @@ public class UserController {
 	@PostMapping("/user/validate")
 	public String validate(@Valid UserAccount userAccount, BindingResult result, Model model) {
 		if (!result.hasErrors()) {
-			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-			userAccount.setPassword(encoder.encode(userAccount.getPassword()));
-			userRepository.save(userAccount);
-			model.addAttribute("users", userRepository.findAll());
-			return "redirect:/user/list";
+			return "user/add";
 		}
-		return "user/add";
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		userAccount.setPassword(encoder.encode(userAccount.getPassword()));
+		userRepository.save(userAccount);
+		model.addAttribute("users", userRepository.findAll());
+		return "redirect:/user/list";
+
 	}
 	
 	@GetMapping("/user/update/{id}")

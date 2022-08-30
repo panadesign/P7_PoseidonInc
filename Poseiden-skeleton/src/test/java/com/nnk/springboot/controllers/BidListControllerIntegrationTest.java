@@ -25,42 +25,49 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @Transactional
 class BidListControllerIntegrationTest {
-	
-	private MockMvc mockMvc;
-	
-	@Autowired
-	private WebApplicationContext webApplicationContext;
-	
-	@Autowired
-	private BidListRepository bidListRepository;
-	
-	
-	@Autowired
-	private UserRepository userRepository;
-	
-	@BeforeEach
-	public void init() {
-		mockMvc = MockMvcBuilders
-				.webAppContextSetup(webApplicationContext)
-				.apply(springSecurity())
-				.build();
-	}
-	
-	@Test
-	@WithMockUser(authorities="ADMIN")
-	void getBidListTest() throws Exception {
-		//GIVEN
-		BidList bid = new BidList("Account", "Type", 12d);
-		bidListRepository.save(bid);
-		
-		//WHEN
-		var response =     mockMvc.perform(get("/bidList/list")
-				.contentType(MediaType.APPLICATION_JSON));
-		
-		// THEN
-		response
-				.andExpect(status().isOk())
-				.andExpect(view().name("bidList/list"))
-				.andExpect(model().attribute("allBidList", List.of(bid)));
-	}
+
+    private MockMvc mockMvc;
+
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
+    @Autowired
+    private BidListRepository bidListRepository;
+
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @BeforeEach
+    public void init() {
+        mockMvc = MockMvcBuilders
+                .webAppContextSetup(webApplicationContext)
+                .apply(springSecurity())
+                .build();
+    }
+
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    void getBidListTest() throws Exception {
+        //GIVEN
+        BidList bid = new BidList("Account", "Type", 12d);
+        bidListRepository.save(bid);
+
+        //WHEN
+        var response = mockMvc.perform(get("/bidList/list")
+                .contentType(MediaType.APPLICATION_JSON));
+
+        // THEN
+        response
+                .andExpect(status().isOk())
+                .andExpect(view().name("bidList/list"))
+                .andExpect(model().attribute("allBidList", List.of(bid)));
+    }
+
+    @Test
+    @WithMockUser(authorities = "Admin")
+    void getAddBidListForm() throws Exception {
+        mockMvc.perform(get("/bidList/add"))
+                .andExpect(status().isOk());
+    }
 }
