@@ -1,7 +1,9 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domain.BidList;
-import com.nnk.springboot.repositories.BidListRepository;
+import com.nnk.springboot.domain.Rating;
+import com.nnk.springboot.domain.Trade;
+import com.nnk.springboot.repositories.RatingRepository;
+import com.nnk.springboot.repositories.TradeRepository;
 import com.nnk.springboot.repositories.UserRepository;
 import com.nnk.springboot.service.CrudService;
 import org.junit.jupiter.api.Test;
@@ -18,14 +20,13 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(BidListController.class)
-class BidListControllerTest {
+@WebMvcTest(RatingController.class)
+class RatingControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -34,62 +35,54 @@ class BidListControllerTest {
     private WebApplicationContext webApplicationContext;
 
     @MockBean
-    private CrudService<BidList> bidListServiceCrud;
+    private CrudService<Rating> ratingCrudService;
 
     @MockBean
-    private BidListRepository bidListRepository;
+    private RatingRepository ratingRepository;
 
     @MockBean
     private UserRepository userRepository;
 
     @Test
     @WithMockUser(username = "admin", password = "AdminSpring_123")
-    void getBidList() throws Exception {
-        List<BidList> allBids = List.of(
-                new BidList("Account", "Type", 12d)
+    void getTrade() throws Exception {
+        List<Rating> allRatings = List.of(
+                new Rating("moody", "fdsf", "fdsf", 1)
         );
 
-        when(bidListServiceCrud.getAll()).thenReturn(allBids);
-        mockMvc.perform(get("/bidList/list")
+        when(ratingCrudService.getAll()).thenReturn(allRatings);
+        mockMvc.perform(get("/rating/list")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(view().name("bidList/list"));
+                .andExpect(view().name("rating/list"));
     }
 
     @Test
     @WithMockUser(username = "admin", password = "AdminSpring_123")
-    void addBidForm() throws Exception {
+    void showRatingAddForm() throws Exception {
 
-        mockMvc.perform(get("/bidList/add")
+        mockMvc.perform(get("/rating/add")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(view().name("bidList/add"));
+                .andExpect(view().name("rating/add"));
     }
 
     @Test
     @WithMockUser(username = "admin", password = "AdminSpring_123")
     void validate() throws Exception {
-//		BidList bidList = new BidList(2, "Account1", "Type1", 12d);
-//		when(bidListServiceCrud.add(bidList)).thenReturn(bidList);
-//
-//		mockMvc.perform(post("/bidList/validate")
-//						.sessionAttr("bidList", bidList)
-//						.param("account", bidList.getAccount())
-//						.param("type", bidList.getType())
-//						.param("bidQuantity", bidList.getBidQuantity().toString()))
-//				.andExpect(status().isCreated());
+
     }
 
     @Test
     @WithMockUser(username = "admin", password = "AdminSpring_123")
     void showUpdateForm() throws Exception {
-        BidList bidList = new BidList(1, "Account1", "Type1", 12d);
-        when(bidListRepository.save(bidList)).thenReturn(bidList);
-        when(bidListServiceCrud.getById(bidList.getId())).thenReturn(bidList);
+        Rating rating = new Rating(1, "AA", "BB", "CCC", 2);
+        when(ratingRepository.save(rating)).thenReturn(rating);
+        when(ratingCrudService.getById(rating.getId())).thenReturn(rating);
 
-        int id = bidList.getId();
+        int id = rating.getId();
 
-        mockMvc.perform(get("/bidList/update/{id}", id))
+        mockMvc.perform(get("/rating/update/{id}", id))
                 .andExpect(status().isOk());
     }
 
@@ -100,13 +93,5 @@ class BidListControllerTest {
     @Test
     @WithMockUser(username = "admin", password = "AdminSpring_123")
     void deleteBid() throws Exception {
-//        BidList bidList = new BidList(1, "Account1", "Type1", 12d);
-//        when(bidListRepository.save(bidList)).thenReturn(bidList);
-//        when(bidListServiceCrud.getById(bidList.getId())).thenReturn(bidList);
-//        int id = bidList.getId();
-//        mockMvc.perform(delete("/bidList/delete/{id}", id))
-//                .andExpect(status().isNotFound())
-//                .andExpect(view().name("/bidList/list"));
-
     }
 }

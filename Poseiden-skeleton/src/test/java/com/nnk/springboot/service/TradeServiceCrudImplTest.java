@@ -79,18 +79,17 @@ class TradeServiceCrudImplTest {
 
 	@Test
 	void getTradeByIdNotExistException() {
-		Trade trade = new Trade(1, "account", "type");
-		Assertions.assertThrows(ResourceNotExistException.class, () -> tradeService.getById(trade.getId()));
+		int tradeNotExisting = 99;
+		Assertions.assertThrows(ResourceNotExistException.class, () -> tradeService.getById(tradeNotExisting));
 	}
 
 	@Test
 	void getAllTrades() {
 		//GIVEN
-		List<Trade> trades = new ArrayList<>();
-		Trade trade = new Trade(1, "account", "type");
-		Trade trade2 = new Trade(2, "account2", "type2");
-		trades.add(trade);
-		trades.add(trade2);
+		List<Trade> trades = List.of(
+				new Trade(1, "account", "type"),
+				new Trade(2, "account2", "type2")
+		);
 
 		//WHEN
 		when(tradeRepository.findAll()).thenReturn(trades);

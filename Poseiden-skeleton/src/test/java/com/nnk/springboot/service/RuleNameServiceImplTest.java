@@ -68,13 +68,11 @@ class RuleNameServiceImplTest {
 	@Test
 	void getAllRuleName() {
 		//GIVEN
-		RuleName ruleName = new RuleName(1, "name", "description", "json", "template", "sqlStr", "sqlPart");
-		RuleName ruleName2 = new RuleName(1, "name", "description", "json", "template", "sqlStr", "sqlPart");
+		List<RuleName> allRuleName = List.of(
+				new RuleName(1, "name", "description", "json", "template", "sqlStr", "sqlPart"),
+				new RuleName(1, "name", "description", "json", "template", "sqlStr", "sqlPart")
+		);
 
-		List<RuleName> allRuleName = ruleNameService.getAll();
-
-		allRuleName.add(ruleName);
-		allRuleName.add(ruleName2);
 		when(ruleNameRepository.findAll()).thenReturn(allRuleName);
 
 		List<RuleName> ruleNameList = ruleNameService.getAll();
@@ -98,9 +96,9 @@ class RuleNameServiceImplTest {
 
 	@Test
 	void getRuleNameByIdNotExistResource() {
-		RuleName ruleName = new RuleName(1, "name", "description", "json", "template", "sqlStr", "sqlPart");
+		int ruleNameNotExisting = 99;
 
-		Assertions.assertThrows(ResourceNotExistException.class, () -> ruleNameService.getById(ruleName.getId()));
+		Assertions.assertThrows(ResourceNotExistException.class, () -> ruleNameService.getById(ruleNameNotExisting));
 	}
 
 	@Test

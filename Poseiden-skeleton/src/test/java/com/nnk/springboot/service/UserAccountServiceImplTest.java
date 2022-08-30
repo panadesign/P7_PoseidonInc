@@ -12,15 +12,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserAccountServiceImplTest {
@@ -127,11 +124,10 @@ class UserAccountServiceImplTest {
 	@Test
 	void getAllUsers() {
 		//GIVEN
-		List<UserAccount> userAccounts = new ArrayList<>();
-		UserAccount userAccount = new UserAccount(1, "Bob", "1", "Morane", "ADMIN");
-		UserAccount userAccount2 = new UserAccount(2, "Bla", "1", "Morane", "ADMIN");
-		userAccounts.add(userAccount);
-		userAccounts.add(userAccount2);
+		List<UserAccount> userAccounts = List.of(
+				new UserAccount(1, "Bob", "1", "Morane", "ADMIN"),
+				new UserAccount(2, "Bla", "1", "Morane", "ADMIN")
+		);
 
 		//WHEN
 		when(mockUserRepository.findAll()).thenReturn(userAccounts);

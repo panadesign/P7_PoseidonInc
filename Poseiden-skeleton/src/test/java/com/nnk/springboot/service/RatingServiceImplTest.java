@@ -67,13 +67,11 @@ class RatingServiceImplTest {
 	@Test
 	void getAllRating() {
 		//GIVEN
-		Rating rating = new Rating(1, "test", "test1", "test2", 3);
-		Rating rating2 = new Rating(2, "test", "test1", "test2", 3);
+		List<Rating> allRatings = List.of(
+				new Rating(1, "test", "test1", "test2", 3),
+				new Rating(2, "test", "test1", "test2", 3)
+		);
 
-		List<Rating> allRatings = ratingService.getAll();
-
-		allRatings.add(rating);
-		allRatings.add(rating2);
 		when(ratingRepository.findAll()).thenReturn(allRatings);
 
 		List<Rating> ratingList = ratingService.getAll();
@@ -97,9 +95,9 @@ class RatingServiceImplTest {
 
 	@Test
 	void getRatingByIdNotExistResource() {
-		Rating rating = new Rating(1, "test", "test1", "test2", 3);
+		int ratingNotExisting = 99;
 
-		Assertions.assertThrows(ResourceNotExistException.class, () -> ratingService.getById(rating.getId()));
+		Assertions.assertThrows(ResourceNotExistException.class, () -> ratingService.getById(ratingNotExisting));
 	}
 
 	@Test

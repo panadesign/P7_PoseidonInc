@@ -48,7 +48,15 @@ public class CurvePoint {
 		this.term = term;
 		this.curveValue = curveValue;
 	}
-	
+
+	public CurvePoint(Integer id, Integer curveId, Double term, Double curveValue) {
+		this.id = id;
+		this.curveId = curveId;
+		this.term = term;
+		this.curveValue = curveValue;
+	}
+
+
 	public CurvePoint update(CurvePoint curvePoint) {
 		this.curveId = curvePoint.getCurveId();
 		this.term = curvePoint.getTerm();

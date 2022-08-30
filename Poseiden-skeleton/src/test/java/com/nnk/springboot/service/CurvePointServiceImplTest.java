@@ -22,107 +22,104 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class CurvePointServiceImplTest {
 
-	private CurvePointServiceCrudImpl curvePointService;
+    private CurvePointServiceCrudImpl curvePointService;
 
-	@Mock
-	private CurvePointRepository curvePointRepository;
+    @Mock
+    private CurvePointRepository curvePointRepository;
 
-	@BeforeEach
-	void init() {
-		curvePointService = new CurvePointServiceCrudImpl(curvePointRepository);
-	}
+    @BeforeEach
+    void init() {
+        curvePointService = new CurvePointServiceCrudImpl(curvePointRepository);
+    }
 
-	@Test
-	void addCurvePoint() {
-		CurvePoint curvePoint = new CurvePoint(1, 21, null, 4.3, 20.4, null);
+    @Test
+    void addCurvePoint() {
+        CurvePoint curvePoint = new CurvePoint(1, 21, null, 4.3, 20.4, null);
 
-		when(curvePointRepository.save(curvePoint)).thenAnswer(c -> c.getArguments()[0]);
+        when(curvePointRepository.save(curvePoint)).thenAnswer(c -> c.getArguments()[0]);
 
-		CurvePoint curvePointToAdd = curvePointService.add(curvePoint);
+        CurvePoint curvePointToAdd = curvePointService.add(curvePoint);
 
-		assertThat(curvePointToAdd)
-				.satisfies(cp -> {
-					assertThat(cp.getId()).hasToString("1");
-					assertThat(cp.getCurveId()).hasToString("21");
-					assertThat(cp.getTerm()).hasToString("4.3");
-					assertThat(cp.getCurveValue()).hasToString("20.4");
-				});
-	}
+        assertThat(curvePointToAdd)
+                .satisfies(cp -> {
+                    assertThat(cp.getId()).hasToString("1");
+                    assertThat(cp.getCurveId()).hasToString("21");
+                    assertThat(cp.getTerm()).hasToString("4.3");
+                    assertThat(cp.getCurveValue()).hasToString("20.4");
+                });
+    }
 
-	@Test
-	void deleteCurvePoint() {
-		//GIVEN
-		CurvePoint curvePoint = new CurvePoint(1, 21, null, 4.3, 20.4, null);
+    @Test
+    void deleteCurvePoint() {
+        //GIVEN
+        CurvePoint curvePoint = new CurvePoint(1, 21, null, 4.3, 20.4, null);
 
-		//WHEN
-		curvePointService = Mockito.spy(new CurvePointServiceCrudImpl(curvePointRepository));
-		curvePointService.delete(curvePoint.getId());
+        //WHEN
+        curvePointService = Mockito.spy(new CurvePointServiceCrudImpl(curvePointRepository));
+        curvePointService.delete(curvePoint.getId());
 
-		//THEN
-		verify(curvePointRepository, times(1)).deleteById(curvePoint.getId());
-	}
+        //THEN
+        verify(curvePointRepository, times(1)).deleteById(curvePoint.getId());
+    }
 
 
-	@Test
-	void getCurvePointById() {
-		//GIVEN
-		CurvePoint curvePoint = new CurvePoint(1, 21, null, 4.3, 20.4, null);
+    @Test
+    void getCurvePointById() {
+        //GIVEN
+        CurvePoint curvePoint = new CurvePoint(1, 21, null, 4.3, 20.4, null);
 
-		//WHEN
-		when(curvePointRepository.findById(1)).thenReturn(Optional.of(curvePoint));
-		CurvePoint curvePointToGet = curvePointService.getById(curvePoint.getId());
+        //WHEN
+        when(curvePointRepository.findById(1)).thenReturn(Optional.of(curvePoint));
+        CurvePoint curvePointToGet = curvePointService.getById(curvePoint.getId());
 
-		//THEN
-		Assertions.assertEquals(1, curvePointToGet.getId());
-	}
+        //THEN
+        Assertions.assertEquals(1, curvePointToGet.getId());
+    }
 
-	@Test
-	void getCurvePointByIdNotExistException() {
-		CurvePoint curvePoint = new CurvePoint(1, 21, null, 4.3, 20.4, null);
-		Assertions.assertThrows(ResourceNotExistException.class, () -> curvePointService.getById(curvePoint.getId()));
-	}
+    @Test
+    void getCurvePointByIdNotExistException() {
+        int curvePointNotExisting = 99;
+        Assertions.assertThrows(ResourceNotExistException.class, () -> curvePointService.getById(curvePointNotExisting));
+    }
 
-	@Test
-	void getAllCurvePoint() {
-		//GIVEN
-		CurvePoint curvePoint = new CurvePoint(1, 21, null, 4.3, 20.4, null);
-		CurvePoint curvePoint2 = new CurvePoint(2, 21, null, 4.3, 20.4, null);
+    @Test
+    void getAllCurvePoint() {
+        //GIVEN
+        List<CurvePoint> allCurvePoint = List.of(
+                new CurvePoint(1, 21, null, 4.3, 20.4, null),
+                new CurvePoint(2, 21, null, 4.3, 20.4, null)
+        );
 
-		List<CurvePoint> allCurvePoint = curvePointService.getAll();
+        //WHEN
+        when(curvePointRepository.findAll()).thenReturn(allCurvePoint);
 
-		allCurvePoint.add(curvePoint);
-		allCurvePoint.add(curvePoint2);
+        List<CurvePoint> curvePointList = curvePointService.getAll();
 
-		//WHEN
-		when(curvePointRepository.findAll()).thenReturn(allCurvePoint);
+        //THEN
+        Assertions.assertEquals(2, curvePointList.size());
+    }
 
-		List<CurvePoint> curvePointList = curvePointService.getAll();
+    @Test
+    void updateCurvePoint() {
+        //GIVEN
+        CurvePoint curvePoint = new CurvePoint(1, 21, null, 4.3, 20.4, null);
+        //WHEN
+        when(curvePointRepository.findById(1)).thenReturn(Optional.of(curvePoint));
 
-		//THEN
-		Assertions.assertEquals(2, curvePointList.size());
-	}
+        CurvePoint curvePointDto = new CurvePoint(34.5, 29.4);
 
-	@Test
-	void updateCurvePoint() {
-		//GIVEN
-		CurvePoint curvePoint = new CurvePoint(1, 21, null, 4.3, 20.4, null);
-		//WHEN
-		when(curvePointRepository.findById(1)).thenReturn(Optional.of(curvePoint));
+        CurvePoint curvePointUpdated = curvePointService.update(1, curvePointDto);
 
-		CurvePoint curvePointDto = new CurvePoint(34.5, 29.4);
+        //THEN
+        Assertions.assertEquals(34.5, curvePointUpdated.getTerm());
+        Assertions.assertEquals(29.4, curvePointUpdated.getCurveValue());
 
-		CurvePoint curvePointUpdated = curvePointService.update(1, curvePointDto);
+    }
 
-		//THEN
-		Assertions.assertEquals(34.5, curvePointUpdated.getTerm());
-		Assertions.assertEquals(29.4, curvePointUpdated.getCurveValue());
-
-	}
-
-	@Test
-	void updateBidListNotExistingException() {
-		CurvePoint curvePointDto = new CurvePoint(1, 21, null, 4.3, 20.4, null);
-		Assertions.assertThrows(ResourceNotExistException.class, () -> curvePointService.update(1, curvePointDto));
-	}
+    @Test
+    void updateBidListNotExistingException() {
+        CurvePoint curvePointDto = new CurvePoint(1, 21, null, 4.3, 20.4, null);
+        Assertions.assertThrows(ResourceNotExistException.class, () -> curvePointService.update(1, curvePointDto));
+    }
 
 }

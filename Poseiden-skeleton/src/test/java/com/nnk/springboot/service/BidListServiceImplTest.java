@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class BidListServiceImplTest {
+class 	BidListServiceImplTest {
 
 	private BidListServiceCrudImpl bidListService;
 
@@ -85,20 +85,18 @@ class BidListServiceImplTest {
 
 	@Test
 	void getBidListByIdNotExistResource() {
-		BidList bidList = new BidList(2, "account1", "type1", 12);
-		Assertions.assertThrows(ResourceNotExistException.class, () -> bidListService.getById(bidList.getId()));
+		int bidNotExisting = 99;
+		Assertions.assertThrows(ResourceNotExistException.class, () -> bidListService.getById(bidNotExisting));
 	}
 
 	@Test
 	void getAllBidList() {
 		//GIVEN
-		BidList bidList = new BidList(2, "account1", "type1", 12);
-		BidList bidList2 = new BidList(3, "account2", "type2", 129);
+		List<BidList> allBidList = List.of(
+				new BidList(2, "account1", "type1", 12),
+				new BidList(3, "account2", "type2", 129)
+		);
 
-		List<BidList> allBidList = bidListService.getAll();
-
-		allBidList.add(bidList);
-		allBidList.add(bidList2);
 		when(bidListRepository.findAll()).thenReturn(allBidList);
 
 		List<BidList> bidsList = bidListService.getAll();
