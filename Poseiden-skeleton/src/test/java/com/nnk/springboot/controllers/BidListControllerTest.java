@@ -15,8 +15,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +27,7 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -35,10 +38,15 @@ class BidListControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 
+	@Autowired
+	private WebApplicationContext webApplicationContext;
+
 	@MockBean
 	private CrudService<BidList> bidListServiceCrud;
+
 	@MockBean
 	private BidListRepository bidListRepository;
+
 	@MockBean
 	private UserRepository userRepository;
 
@@ -46,22 +54,21 @@ class BidListControllerTest {
 	private PrincipalUser principalUser;
 
 	@Test
+	@WithMockUser(username="admin", password="AdminSpring_123")
 	void getBidList() throws Exception {
-//		BidList bid = new BidList("Account", "Type", 12d);
-//		List<BidList> allBids = new ArrayList<>();
-//		allBids.add(bid);
-//		when(bidListRepository.findAll()).thenReturn(allBids);
-//		mockMvc.perform(get("/bidList/list")
-//						.contentType(MediaType.APPLICATION_JSON))
-//				.andExpect(status().isOk())
-//				.andExpect(view().name("bidList/list"));
+		BidList bid = new BidList("Account", "Type", 12d);
+		List<BidList> allBids = new ArrayList<>();
+		allBids.add(bid);
+		when(bidListServiceCrud.getAll()).thenReturn(allBids);
+		mockMvc.perform(get("/bidList/list")
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(view().name("bidList/list"));
 	}
 
 	@Test
+	@WithMockUser(username="admin", password="AdminSpring_123")
 	void addBidForm() throws Exception {
-		UserAccount user = new UserAccount("bob", "dfd", "fds", "ADMIN");
-		when(principalUser.getCurrentUserName()).thenReturn(user.getUsername());
-		when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
 
 		mockMvc.perform(get("/bidList/add")
 						.contentType(MediaType.APPLICATION_JSON))
@@ -69,6 +76,7 @@ class BidListControllerTest {
 	}
 
 	@Test
+	@WithMockUser(username="admin", password="AdminSpring_123")
 	void validate() throws Exception {
 //		BidList bidList = new BidList("Account1", "Type1", 12d);
 //		when(bidListServiceCrud.add(bidList)).thenReturn(bidList);
@@ -82,13 +90,17 @@ class BidListControllerTest {
 	}
 
 	@Test
+	@WithMockUser(username="admin", password="AdminSpring_123")
 	void showUpdateForm() throws Exception {
-//		BidList bidList = new BidList("Account1", "Type1", 12d);
-//
-//		when(bidListServiceCrud.update(bidList.getId(), bidList)).thenReturn(bidList);
-//
-//		mockMvc.perform(get("/bidList/update"))
-//				.andExpect(status().isOk());
+		BidList bidList = new BidList(1,"Account1", "Type1", 12d);
+		when(bidListRepository.save(bidList)).thenReturn(bidList);
+		when(bidListServiceCrud.getById(bidList.getId())).thenReturn(bidList);
+
+		int id = bidList.getId();
+
+		mockMvc.perform(get("/bidList/update")
+						.param("id", String.valueOf(id)))
+				.andExpect(status().isOk());
 	}
 
 	@Test
