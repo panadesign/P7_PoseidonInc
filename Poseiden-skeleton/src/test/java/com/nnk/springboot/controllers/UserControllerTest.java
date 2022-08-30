@@ -27,70 +27,70 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserController.class)
 class UserControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
-    @MockBean
-    private CrudService<UserAccount> userAccountCrudService;
-
-    @MockBean
-    private UserRepository userRepository;
-
-
-    @Test
-    @WithMockUser(username = "admin", password = "AdminSpring_123")
-    void getUserList() throws Exception {
-        List<UserAccount> allUsers = List.of(
-                new UserAccount("Account", "Testtest_2022", "name", "USER")
-        );
-
-        when(userAccountCrudService.getAll()).thenReturn(allUsers);
-        mockMvc.perform(get("/user/list")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(view().name("user/list"));
-    }
-
-    @Test
-    @WithMockUser(username = "admin", password = "AdminSpring_123")
-    void addUserAddForm() throws Exception {
-        mockMvc.perform(get("/user/add")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(view().name("user/add"));
-    }
-
-    @Test
-    @WithMockUser(username = "admin", password = "AdminSpring_123")
-    void validate() throws Exception {
+	
+	@Autowired
+	private MockMvc mockMvc;
+	
+	@Autowired
+	private WebApplicationContext webApplicationContext;
+	
+	@MockBean
+	private CrudService<UserAccount> userAccountCrudService;
+	
+	@MockBean
+	private UserRepository userRepository;
+	
+	
+	@Test
+	@WithMockUser(username = "user", password = "UserSpring_123")
+	void getUserList() throws Exception {
+		List<UserAccount> allUsers = List.of(
+				new UserAccount("Account", "Testtest_2022", "name", "USER")
+		);
+		
+		when(userAccountCrudService.getAll()).thenReturn(allUsers);
+		mockMvc.perform(get("/user/list")
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(view().name("user/list"));
+	}
+	
+	@Test
+	@WithMockUser(username = "admin", password = "AdminSpring_123")
+	void addUserAddForm() throws Exception {
+		mockMvc.perform(get("/user/add")
+						.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(view().name("user/add"));
+	}
+	
+	@Test
+	@WithMockUser(username = "admin", password = "AdminSpring_123")
+	void validate() throws Exception {
 //
-    }
-
-    @Test
-    @WithMockUser(username = "admin", password = "AdminSpring_123")
-    void showUpdateForm() throws Exception {
-        UserAccount userAccount = new UserAccount(1, "username", "TestTest_2002", "name", "USER");
-        when(userRepository.save(userAccount)).thenReturn(userAccount);
-        when(userAccountCrudService.getById(userAccount.getId())).thenReturn(userAccount);
-
-        int id = userAccount.getId();
-
-        mockMvc.perform(get("/user/update/{id}", id))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    void updateUserAccount() {
-    }
-
-    @Test
-    @WithMockUser(username = "admin", password = "AdminSpring_123")
-    void deleteUserAccount() throws Exception {
+	}
+	
+	@Test
+	@WithMockUser(username = "admin", password = "AdminSpring_123")
+	void showUpdateForm() throws Exception {
+		UserAccount userAccount = new UserAccount(1, "username", "TestTest_2002", "name", "USER");
+		when(userRepository.save(userAccount)).thenReturn(userAccount);
+		when(userAccountCrudService.getById(userAccount.getId())).thenReturn(userAccount);
+		
+		int id = userAccount.getId();
+		
+		mockMvc.perform(get("/user/update/{id}", id))
+				.andExpect(status().isOk());
+	}
+	
+	@Test
+	void updateUserAccount() {
+	}
+	
+	@Test
+	@WithMockUser(username = "admin", password = "AdminSpring_123")
+	void deleteUserAccount() throws Exception {
 //
-
-    }
+	
+	}
 }

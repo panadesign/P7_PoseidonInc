@@ -32,4 +32,4 @@
 
 ## Users for dev
 1. Role ADMIN(username: admin, password: AdminSpring_123)
-2. Role USER(username: userAccount, password: UserSpring_123)
+2. Role USER(username: user, password: UserSpring_123)
