@@ -19,8 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -35,9 +34,12 @@ class CurvePointControllerIntegrationTest {
     @Autowired
     private CurvePointRepository curvePointRepository;
 
+    private CurvePoint curvePoint;
+
 
     @BeforeEach
     public void init() {
+        curvePoint = new CurvePoint(2, 12d, 3d);
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
                 .apply(springSecurity())
@@ -48,7 +50,6 @@ class CurvePointControllerIntegrationTest {
     @WithMockUser(authorities = "ADMIN")
     void getCurvePointTest() throws Exception {
         //GIVEN
-        CurvePoint curvePoint = new CurvePoint(3, 1d, 4d);
         curvePointRepository.save(curvePoint);
 
         //WHEN
@@ -70,10 +71,21 @@ class CurvePointControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser(authorities = "USER")
+    void validateAddNewCurvePoint() throws Exception {
+        ResultActions response = mockMvc.perform(post("/curvePoint/validate")
+                        .param("curveId", String.valueOf(curvePoint.getCurveId()))
+                        .param("term",  String.valueOf(curvePoint.getTerm()))
+                        .param("curveValue",  String.valueOf(curvePoint.getCurveValue()))
+                .contentType(MediaType.APPLICATION_JSON));
+
+        response.andExpect(status().isFound());
+    }
+
+    @Test
     @WithMockUser(authorities = "ADMIN")
     void getUpdateCurvePointForm() throws Exception {
         //GIVEN
-        CurvePoint curvePoint = new CurvePoint(3, 1d, 4d);
         CurvePoint curvePointAdded = curvePointRepository.save(curvePoint);
 
         //WHEN
@@ -88,7 +100,6 @@ class CurvePointControllerIntegrationTest {
     @WithMockUser(authorities = "ADMIN")
     void getDeleteCurvePoint() throws Exception {
         //GIVEN
-        CurvePoint curvePoint = new CurvePoint(3, 1d, 4d);
         CurvePoint curvePointAdded = curvePointRepository.save(curvePoint);
 
         //WHEN
