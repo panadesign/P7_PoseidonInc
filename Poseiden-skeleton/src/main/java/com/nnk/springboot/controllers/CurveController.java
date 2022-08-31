@@ -80,8 +80,7 @@ public class CurveController {
 	@GetMapping("/curvePoint/delete/{id}")
 	public String deleteBid(@PathVariable("id") Integer id) {
 		log.debug("Delete curve point with id" + id);
-		CurvePoint curvePointToDelete = crudService.getById(id);
-		crudService.delete(curvePointToDelete.getId());
+		crudService.delete(id);
 		return "redirect:/curvePoint/list";
 	}
 }

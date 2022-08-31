@@ -2,14 +2,12 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.UserAccount;
 import com.nnk.springboot.repositories.UserRepository;
-import com.sun.xml.bind.v2.model.core.ID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -86,31 +84,77 @@ class UserAccountControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser(authorities = "USER")
+    void getAddUserFormWithUserRole() throws Exception {
+        mockMvc.perform(get("/user/add"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
     @WithMockUser(authorities = "ADMIN")
     void validateAddNewUserAccount() throws Exception {
-        UserAccount userAccountToAdd = new UserAccount("userName", "Password_2022", "fullName", "USER");
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        userAccountToAdd.setPassword(encoder.encode(userAccountToAdd.getPassword()));
-        UserAccount userAccountAdded = userRepository.save(userAccountToAdd);
-
-        ResultActions response = mockMvc.perform(post("/user/validate")
-                        .contentType(MediaType.APPLICATION_JSON));
-
-        response.andExpect(status().isCreated())
-                .andExpect(model().attribute("users", List.of(userAccountAdded)))
-                .andExpect(view().name("/user/list"));
-
+//        //GIVEN
+//        UserAccount userAccount = new UserAccount("userName", "Password_123", "fullName", "USER");
+//
+//        //WHEN
+//        ResultActions response = mockMvc.perform(post("/user/validate", userAccount)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .accept(MediaType.APPLICATION_JSON));
+//
+//        //THEN
+//        response.andExpect(status().isFound());
     }
 
     @Test
     @WithMockUser(authorities = "ADMIN")
     void getUpdateUserAccountForm() throws Exception {
-        UserAccount userAccountToAdd = new UserAccount("userName", "Password_2022", "fullName", "USER");
+        UserAccount userAccountToAdd = new UserAccount("userName", "$2y$10$f80DJ24HiDgE1V2Rr4caLOwkL7tBGsPMMpY/Ehw63/3NhGVBLXiNO", "fullName", "USER");
         UserAccount userAccountAdded = userRepository.save(userAccountToAdd);
 
         ResultActions response = mockMvc.perform(get("/user/update/{id}", userAccountAdded.getId())
                 .contentType(MediaType.APPLICATION_JSON));
 
         response.andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(authorities = "USER")
+    void getUpdateUserAccountFormWithUserRole() throws Exception {
+        UserAccount userAccountToAdd = new UserAccount("userName", "$2y$10$f80DJ24HiDgE1V2Rr4caLOwkL7tBGsPMMpY/Ehw63/3NhGVBLXiNO", "fullName", "USER");
+        UserAccount userAccountAdded = userRepository.save(userAccountToAdd);
+
+        ResultActions response = mockMvc.perform(get("/user/update/{id}", userAccountAdded.getId())
+                .contentType(MediaType.APPLICATION_JSON));
+
+        response.andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    void updateUserAccount() throws Exception {
+//        UserAccount userAccountToAdd = new UserAccount("userName", "$2y$10$f80DJ24HiDgE1V2Rr4caLOwkL7tBGsPMMpY/Ehw63/3NhGVBLXiNO", "fullName", "USER");
+//        UserAccount userAccountAdded = userRepository.save(userAccountToAdd);
+//
+//        userAccountAdded.setFullname("TEST");
+//
+//        ResultActions response = mockMvc.perform(post("/user/update/{id}", userAccountAdded.getId())
+//                .contentType(MediaType.APPLICATION_JSON));
+//
+//        response.andExpect(status().isOk())
+//                .andExpect(view().name("/user/list"));
+
+    }
+
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    void deleteUserAccount() throws Exception {
+        UserAccount userAccountToAdd = new UserAccount("userName", "$2y$10$f80DJ24HiDgE1V2Rr4caLOwkL7tBGsPMMpY/Ehw63/3NhGVBLXiNO", "fullName", "USER");
+        UserAccount userAccountAdded = userRepository.save(userAccountToAdd);
+
+        ResultActions response = mockMvc.perform(get("/user/delete/{id}", userAccountAdded.getId())
+                .contentType(MediaType.APPLICATION_JSON));
+
+        response.andExpect(status().isFound())
+                .andExpect(redirectedUrl("/user/list"));
     }
 }

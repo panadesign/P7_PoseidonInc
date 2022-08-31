@@ -47,8 +47,8 @@ public class LoginController {
         return mav;
     }
     
-    @PostMapping("logout")
-    public String logout() {
-        return "/";
-    }
+//    @PostMapping("logout")
+//    public String logout() {
+//        return "/";
+//    }
 }
