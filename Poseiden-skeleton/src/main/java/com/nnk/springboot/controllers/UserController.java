@@ -45,6 +45,7 @@ public class UserController {
 	
 	@PostMapping("/user/validate")
 	public String validate(@Valid UserAccount userAccount, BindingResult result, Model model) {
+		log.debug("Add a new user account");
 		if (!result.hasErrors()) {
 			return "user/add";
 		}

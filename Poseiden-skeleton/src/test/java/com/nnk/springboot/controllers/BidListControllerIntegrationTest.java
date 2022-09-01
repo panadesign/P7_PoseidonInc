@@ -3,6 +3,7 @@ package com.nnk.springboot.controllers;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.repositories.BidListRepository;
+import com.nnk.springboot.util.Mapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.List;
 
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -36,9 +38,17 @@ class BidListControllerIntegrationTest {
     @Autowired
     private BidListRepository bidListRepository;
 
+    @Autowired
+    private Mapper mapper;
+
+    private
+    BidList bid;
+
 
     @BeforeEach
     public void init() {
+        bid = new BidList("Account", "Type", 12d);
+
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
                 .apply(springSecurity())
@@ -49,7 +59,6 @@ class BidListControllerIntegrationTest {
     @WithMockUser(authorities = "ADMIN")
     void getBidListTest() throws Exception {
         //GIVEN
-        BidList bid = new BidList("Account", "Type", 12d);
         bidListRepository.save(bid);
 
         //WHEN
@@ -71,10 +80,23 @@ class BidListControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser(authorities = "ADMIN")
+    void validateAddNewBidList() throws Exception {
+        //WHEN
+        ResultActions response = mockMvc.perform(post("/bidList/validate")
+                .with(csrf())
+                .content(mapper.asJsonString(bid))
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        //THEN
+        response.andExpect(status().isOk());
+    }
+
+    @Test
     @WithMockUser(authorities = "Admin")
     void getUpdateBidListForm() throws Exception {
-        BidList bidList = new BidList("Account", "Type", 5d);
-        BidList bidListAdded = bidListRepository.save(bidList);
+        BidList bidListAdded = bidListRepository.save(bid);
 
         ResultActions response = mockMvc.perform(get("/bidList/update/{id}", bidListAdded.getId())
                 .contentType(MediaType.APPLICATION_JSON));

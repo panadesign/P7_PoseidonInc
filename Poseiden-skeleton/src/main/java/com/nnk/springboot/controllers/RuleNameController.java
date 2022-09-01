@@ -46,6 +46,7 @@ public class RuleNameController {
 	
 	@PostMapping("/ruleName/validate")
 	public String validate(@Valid RuleName ruleName, BindingResult result, Model model) {
+		log.debug("Add a new rule name");
 		if (result.hasErrors()) {
 			log.error("Error: " + result.getFieldError());
 			return "ruleName/add";

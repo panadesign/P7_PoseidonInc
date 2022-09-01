@@ -48,7 +48,7 @@ public class RatingController {
 	
 	@PostMapping("/rating/validate")
 	public String validate(@Valid Rating rating, BindingResult result, Model model) {
-		log.debug("Add a new rating with id: " + rating.getId());
+		log.debug("Add a new rating");
 		if (result.hasErrors()) {
 			log.error("Error: " + result.getFieldError());
 			return "rating/add";

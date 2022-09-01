@@ -2,11 +2,14 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.UserAccount;
 import com.nnk.springboot.repositories.UserRepository;
+import com.nnk.springboot.util.Mapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -17,6 +20,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -34,8 +39,20 @@ class UserAccountControllerIntegrationTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private Mapper mapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    private UserAccount userAccount;
+
     @BeforeEach
     public void init() {
+        String password = "Testtest_2022";
+        String passwordEncoded = passwordEncoder.encode(password);
+        userAccount = new UserAccount("Account", passwordEncoded, "name", "USER");
+
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
                 .apply(springSecurity())
@@ -46,11 +63,10 @@ class UserAccountControllerIntegrationTest {
     @WithMockUser(authorities = "ADMIN")
     void getUserListByAdmin() throws Exception {
         //GIVEN
-        var newUser = new UserAccount("Account", "Testtest_2022", "name", "USER");
-        var savedUser = userRepository.save(newUser);
+        UserAccount savedUser = userRepository.save(userAccount);
 
         //WHEN
-        var response = mockMvc.perform(get("/user/list")
+        ResultActions response = mockMvc.perform(get("/user/list")
                 .contentType(MediaType.APPLICATION_JSON));
 
         //THEN
@@ -64,8 +80,7 @@ class UserAccountControllerIntegrationTest {
     @WithMockUser(authorities = "USER")
     void getUserListByUser() throws Exception {
         //GIVEN
-        UserAccount newUser = new UserAccount("Account", "Testtest_2022", "name", "USER");
-        userRepository.save(newUser);
+        userRepository.save(userAccount);
 
         //WHEN
         ResultActions response = mockMvc.perform(get("/user/list")
@@ -84,25 +99,24 @@ class UserAccountControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser(authorities = "ADMIN")
+    void validateAddUserAccount() throws Exception {
+//        //WHEN
+//        ResultActions response = mockMvc.perform(post("/user/validate")
+//                .with(csrf())
+//                .content(mapper.asJsonString(userAccount))
+//                .accept(MediaType.APPLICATION_JSON)
+//                .contentType(MediaType.APPLICATION_JSON));
+//
+//        //THEN
+//        response.andExpect(status().isOk());
+    }
+
+    @Test
     @WithMockUser(authorities = "USER")
     void getAddUserFormWithUserRole() throws Exception {
         mockMvc.perform(get("/user/add"))
                 .andExpect(status().isForbidden());
-    }
-
-    @Test
-    @WithMockUser(authorities = "ADMIN")
-    void validateAddNewUserAccount() throws Exception {
-//        //GIVEN
-//        UserAccount userAccount = new UserAccount("userName", "Password_123", "fullName", "USER");
-//
-//        //WHEN
-//        ResultActions response = mockMvc.perform(post("/user/validate", userAccount)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .accept(MediaType.APPLICATION_JSON));
-//
-//        //THEN
-//        response.andExpect(status().isFound());
     }
 
     @Test

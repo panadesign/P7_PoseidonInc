@@ -22,7 +22,7 @@ public class WebSecurityConfig{
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/*", "/403").permitAll()
+				.antMatchers("/*").permitAll()
 				.antMatchers("/user/**", "/app/secure/**", "/admin/**").hasAuthority("ADMIN")
 				.anyRequest().authenticated()
 				.and()
@@ -40,7 +40,7 @@ public class WebSecurityConfig{
 				.and()
 				.logout()
 				.logoutSuccessUrl("/")
-				.logoutRequestMatcher(new AntPathRequestMatcher("/app-logout")) //todo
+				.logoutRequestMatcher(new AntPathRequestMatcher("/app-logout"))
 				.permitAll()
 				.invalidateHttpSession(true)
 				.deleteCookies("JSESSIONID")

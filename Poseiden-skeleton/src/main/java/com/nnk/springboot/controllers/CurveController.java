@@ -46,7 +46,7 @@ public class CurveController {
 	
 	@PostMapping("/curvePoint/validate")
 	public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
-		log.debug("Add a new curve point id: " + curvePoint.getId());
+		log.debug("Add a new curve point");
 		if (result.hasErrors()) {
 			log.error("Error: " + result.getFieldError());
 			return "curvePoint/add";

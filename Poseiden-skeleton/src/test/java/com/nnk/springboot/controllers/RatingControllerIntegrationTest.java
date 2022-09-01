@@ -3,6 +3,7 @@ package com.nnk.springboot.controllers;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.repositories.RatingRepository;
+import com.nnk.springboot.util.Mapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,10 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -33,9 +36,15 @@ class RatingControllerIntegrationTest {
     @Autowired
     private RatingRepository ratingRepository;
 
+    @Autowired
+    private Mapper mapper;
+
+    private
+    Rating rating;
 
     @BeforeEach
     public void init() {
+        rating = new Rating("moody", "sand","fitch",1);
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
                 .apply(springSecurity())
@@ -46,7 +55,6 @@ class RatingControllerIntegrationTest {
     @WithMockUser(authorities = "ADMIN")
     void getRatingTest() throws Exception {
         //GIVEN
-        Rating rating = new Rating("moody", "sand","fitch",1);
         ratingRepository.save(rating);
 
         //WHEN
@@ -68,9 +76,22 @@ class RatingControllerIntegrationTest {
     }
 
     @Test
+    @WithMockUser(authorities = "ADMIN")
+    void validateAddRating() throws Exception {
+        //WHEN
+        ResultActions response = mockMvc.perform(post("/rating/validate")
+                .with(csrf())
+                .content(mapper.asJsonString(rating))
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        //THEN
+        response.andExpect(status().isOk());
+    }
+
+    @Test
     @WithMockUser(authorities = "Admin")
     void getUpdateRatingForm() throws Exception {
-        Rating rating = new Rating("moody", "sand","fitch",1);
         Rating ratingAdded = ratingRepository.save(rating);
 
         ResultActions response = mockMvc.perform(get("/rating/update/{id}", ratingAdded.getId())
@@ -82,7 +103,6 @@ class RatingControllerIntegrationTest {
     @Test
     @WithMockUser(authorities = "ADMIN")
     void deleteRating() throws Exception {
-        Rating rating = new Rating("moody", "sand","fitch",1);
         Rating ratingAdded = ratingRepository.save(rating);
 
         ResultActions response = mockMvc.perform(get("/rating/delete/{id}", ratingAdded.getId())
