@@ -1,10 +1,8 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.Trade;
-import com.nnk.springboot.domain.UserAccount;
 import com.nnk.springboot.repositories.TradeRepository;
 import com.nnk.springboot.service.CrudService;
-import com.nnk.springboot.util.Mapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +21,11 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @SpringBootTest
 @Transactional
@@ -36,9 +38,6 @@ class TradeControllerIntegrationTest {
 
     @Autowired
     private TradeRepository tradeRepository;
-
-    @Autowired
-    private Mapper mapper;
 
     @Autowired
     private CrudService<Trade> crudService;
@@ -87,15 +86,15 @@ class TradeControllerIntegrationTest {
         //WHEN
         ResultActions response = mockMvc.perform(post("/trade/validate")
                 .with(csrf())
-                .content(mapper.asJsonString(trade))
+                        .param("account", trade.getAccount())
+                        .param("type", trade.getType())
+                        .param("buyQuantity", String.valueOf(trade.getBuyQuantity()))
                 .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(trade.getAccount(), trade.getType(), trade.getBuyQuantity().toString()));
-
-        crudService.add(trade);
+                .contentType(MediaType.APPLICATION_JSON));
 
         //THEN
-        response.andExpect(status().isOk());
+        response.andExpect(status().is3xxRedirection())
+                .andExpect(header().string("Location", "/trade/list"));
     }
 
     @Test
@@ -107,6 +106,25 @@ class TradeControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON));
 
         response.andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    void updateTrade() throws Exception {
+        Trade tradeAdded = tradeRepository.save(trade);
+
+        tradeAdded.setAccount("accountUpdated");
+
+        ResultActions response = mockMvc.perform(post("/trade/update/{id}",tradeAdded.getId())
+                .with(csrf())
+                .param("account", trade.getAccount())
+                .param("type", trade.getType())
+                .param("buyQuantity", String.valueOf(trade.getBuyQuantity()))
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        response.andExpect(status().is3xxRedirection())
+                .andExpect(header().string("Location", "/trade/list"));
     }
 
     @Test

@@ -1,9 +1,7 @@
 package com.nnk.springboot.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.repositories.CurvePointRepository;
-import com.nnk.springboot.util.Mapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +18,13 @@ import java.util.List;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @SpringBootTest
 @Transactional
@@ -34,9 +37,6 @@ class CurvePointControllerIntegrationTest {
 
 	@Autowired
 	private CurvePointRepository curvePointRepository;
-
-	@Autowired
-	private Mapper mapper;
 
 	private CurvePoint curvePoint;
 
@@ -80,12 +80,15 @@ class CurvePointControllerIntegrationTest {
 		//WHEN
 		ResultActions response = mockMvc.perform(post("/curvePoint/validate")
 				.with(csrf())
-				.content(mapper.asJsonString(curvePoint))
+				.param("curveId", String.valueOf(curvePoint.getCurveId()))
+				.param("term", String.valueOf(curvePoint.getTerm()))
+				.param("curveValue", String.valueOf(curvePoint.getCurveValue()))
 				.accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON));
 
 		//THEN
-		response.andExpect(status().isOk());
+		response.andExpect(status().is3xxRedirection())
+				.andExpect(header().string("Location", "/curvePoint/list"));
 	}
 
 	@Test
@@ -100,6 +103,25 @@ class CurvePointControllerIntegrationTest {
 
 		//THEN
 		response.andExpect(status().isOk());
+	}
+
+	@Test
+	@WithMockUser(authorities = "ADMIN")
+	void updateCurvePoint() throws Exception {
+		CurvePoint curvePointAdded = curvePointRepository.save(curvePoint);
+
+		curvePointAdded.setTerm(3d);
+
+		ResultActions response = mockMvc.perform(post("/curvePoint/update/{id}",curvePointAdded.getId())
+				.with(csrf())
+				.param("curveId", String.valueOf(curvePoint.getCurveId()))
+				.param("term", String.valueOf(curvePoint.getTerm()))
+				.param("curveValue", String.valueOf(curvePoint.getCurveValue()))
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON));
+
+		response.andExpect(status().is3xxRedirection())
+				.andExpect(header().string("Location", "/curvePoint/list"));
 	}
 
 	@Test
