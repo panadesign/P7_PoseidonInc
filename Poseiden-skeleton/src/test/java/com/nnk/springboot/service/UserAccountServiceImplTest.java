@@ -4,6 +4,7 @@ import com.nnk.springboot.domain.UserAccount;
 import com.nnk.springboot.exception.ResourceNotExistException;
 import com.nnk.springboot.exception.UserAlreadyExistException;
 import com.nnk.springboot.repositories.UserRepository;
+import com.nnk.springboot.util.PasswordConstraintValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

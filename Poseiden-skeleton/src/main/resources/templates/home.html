@@ -10,19 +10,17 @@
 <body>
 <div class="container loginForm">
     <img class="logo" src="../img/logo.png" alt="Poseidon Inc"/>
-
-    <div th:if="${param.error}">
-        Invalid email or password.
-    </div>
     <form class="form-group login" th:action="@{/}" method="post">
         <h4>Login with Username and Password</h4>
         <div class="form-group">
-            <label for="username">User: </label>
-            <input id="username" name="username" type="text" class="form-control" placeholder="Enter username" required autofocus>
+            <label for="username">User name</label>
+            <input class="form-control" id="username" type="text" name="username" placeholder="Enter username">
+<!--            <p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>-->
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
-            <input id="password" type="password" name="password" class="form-control" placeholder="Password" required>
+            <input class="form-control" id="password" type="password" name="password" placeholder="Password">
+<!--            <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>-->
         </div>
         <button type="submit" class="btn btn-primary"><i class="bi bi-key"></i>Login</button>
     </form>

@@ -55,12 +55,13 @@ public class BidListController {
 		}
 		crudService.add(bidList);
 		model.addAttribute("bidList", bidListRepository.findAll());
+		log.debug("A new bid list has been created and bidList/validate redirect to bidList/list");
 		return "redirect:/bidList/list";
 	}
 
 	@GetMapping("/bidList/update/{id}")
 	public String showUpdateForm(@PathVariable("id") Integer id, BidList bidList, Model model) {
-		log.debug("Get update form for id" + id);
+		log.debug("Get update form for id " + id);
 		bidList = crudService.getById(id);
 		model.addAttribute("bidList", bidList);
 		return "bidList/update";
@@ -73,6 +74,7 @@ public class BidListController {
 		}
 		crudService.update(id, bidList);
 		model.addAttribute("bidList", bidListRepository.findAll());
+		log.debug("Bid list with id "+ id + " has been updated and bidList/update/" + id + " is redirected to bidList/list");
 		return "redirect:/bidList/list";
 	}
 
@@ -81,6 +83,7 @@ public class BidListController {
 		log.debug("Delete bid list with id" + id);
 		BidList bidList = crudService.getById(id);
 		crudService.delete(bidList.getId());
+		log.debug("Bid list with id "+ id + " has been deleted and bidList/delete/" + id + " is redirected to bidList/list");
 		return "redirect:/bidList/list";
 	}
 }

@@ -49,6 +49,7 @@ public class CurveController {
 		log.debug("Add a new curve point");
 		if (result.hasErrors()) {
 			log.error("Error: " + result.getFieldError());
+			log.debug("A new curve point has been created and curvePoint/validate redirect to curvePoint/list");
 			return "curvePoint/add";
 		}
 		
@@ -74,6 +75,7 @@ public class CurveController {
 		curvePoint.setId(curvePoint.getId());
 		crudService.update(id, curvePoint);
 		model.addAttribute("curvePoints", curvePointRepository.findAll());
+		log.debug("Curve point with id "+ curvePoint.getId() + " has been updated and curvePoint/update/"+curvePoint.getId() + " is redirected to curvePoint/list");
 		return "redirect:/curvePoint/list";
 	}
 
@@ -81,6 +83,7 @@ public class CurveController {
 	public String deleteBid(@PathVariable("id") Integer id) {
 		log.debug("Delete curve point with id" + id);
 		crudService.delete(id);
+		log.debug("Curve point with id "+ id + " has been deleted and curvePoint/delete/" + id + " is redirected to curvePoint/list");
 		return "redirect:/curvePoint/list";
 	}
 }

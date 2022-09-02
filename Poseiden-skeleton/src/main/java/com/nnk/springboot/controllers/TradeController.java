@@ -26,11 +26,11 @@ public class TradeController {
 	private final CrudService<Trade> crudService;
 	@Autowired
 	private TradeRepository tradeRepository;
-	
+
 	TradeController(CrudService<Trade> crudService) {
 		this.crudService = crudService;
 	}
-	
+
 	@RequestMapping("/trade/list")
 	public String home(Model model) {
 		log.debug("Get all trades");
@@ -38,46 +38,49 @@ public class TradeController {
 		model.addAttribute("allTrades", allTrades);
 		return "trade/list";
 	}
-	
+
 	@GetMapping("/trade/add")
 	public String addUser(Trade trade) {
+		log.debug("Get add trade form");
 		return "trade/add";
 	}
-	
+
 	@PostMapping("/trade/validate")
 	public String validate(@Valid Trade trade, BindingResult result, Model model) {
 		log.debug("Add a new trade");
-        if (result.hasErrors()) {
-            log.error("Error: " + result.getFieldError());
-            return "trade/add";
-        }
-        crudService.add(trade);
-        model.addAttribute("allTrades", tradeRepository.findAll());
+		if(result.hasErrors()) {
+			log.error("Error: " + result.getFieldError());
+			return "trade/add";
+		}
+		crudService.add(trade);
+		model.addAttribute("allTrades", tradeRepository.findAll());
+		log.debug("A new trade has been created and trade/validate redirect to trade/list");
 		return "redirect:/trade/list";
 	}
-	
+
 	@GetMapping("/trade/update/{id}")
 	public String showUpdateForm(@PathVariable("id") Integer id, Trade trade, Model model) {
-        log.debug("Get update form for id" + id);
-        trade = crudService.getById(id);
-        model.addAttribute("trade", trade);
+		log.debug("Get update form for id " + id);
+		trade = crudService.getById(id);
+		model.addAttribute("trade", trade);
 		return "trade/update";
 	}
-	
+
 	@PostMapping("/trade/update/{id}")
 	public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade,
-	                          BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "trade/update";
-        }
-        crudService.update(id, trade);
-        model.addAttribute("trade", tradeRepository.findAll());
+							  BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			return "trade/update";
+		}
+		crudService.update(id, trade);
+		model.addAttribute("trade", tradeRepository.findAll());
+		log.debug("Trade with id " + trade.getId() + " has been updated and trade/update/" + trade.getId() + " is redirected to trade/list");
 		return "redirect:/trade/list";
 	}
-	
+
 	@GetMapping("/trade/delete/{id}")
 	public String deleteTrade(@PathVariable("id") Integer id, Model model) {
-		log.debug("Delete trade with id: " + id);
+		log.debug("Trade with id "+ id + " has been deleted and trade/delete/" + id + " is redirected to trade/list");
 		crudService.delete(id);
 		return "redirect:/trade/list";
 	}

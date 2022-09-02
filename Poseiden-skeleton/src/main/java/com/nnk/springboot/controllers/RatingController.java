@@ -57,12 +57,13 @@ public class RatingController {
 		crudService.add(rating);
 		log.debug("rating with id: " + rating.getId() + ", has been added");
 		model.addAttribute("rating", ratingRepository.findAll());
+		log.debug("A new rating has been created and rating/validate redirect to rating/list");
 		return "redirect:/rating/list";
 	}
 	
 	@GetMapping("/rating/update/{id}")
 	public String showUpdateForm(@PathVariable("id") Integer id, Rating rating, Model model) {
-		log.debug("Get update form for id" + id);
+		log.debug("Get update form for id " + id);
 		Rating rate = crudService.getById(id);
 		model.addAttribute("rating", rate);
 		return "rating/update";
@@ -75,6 +76,7 @@ public class RatingController {
 		}
 		crudService.update(id, rating);
 		model.addAttribute("rating", ratingRepository.findAll());
+		log.debug("Rating with id "+ rating.getId() + " has been updated and rating/update/"+rating.getId() + " is redirected to rating/list");
 		return "redirect:/rating/list";
 	}
 	
@@ -83,6 +85,7 @@ public class RatingController {
 		Rating ratingToDelete = crudService.getById(id);
 		log.debug("Get rating to delete" + ratingToDelete.getId());
 		crudService.delete(ratingToDelete.getId());
+		log.debug("Rating with id "+ id + " has been deleted and rating/delete/" + id + " is redirected to rating/list");
 		return "redirect:/rating/list";
 	}
 }

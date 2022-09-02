@@ -20,7 +20,7 @@
 				<p class="text-danger" th:if="${#fields.hasErrors('account')}" th:errors="*{account}"></p>
 			</label>
 			<label for="type">
-				<input class="form-control" type="text" th:field="*{type}" name="description" id="type" placeholder="Type"/>
+				<input class="form-control" type="text" th:field="*{type}" name="type" id="type" placeholder="Type"/>
 				<p class="text-danger" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></p>
 			</label>
 			<label for="buyQuantity">

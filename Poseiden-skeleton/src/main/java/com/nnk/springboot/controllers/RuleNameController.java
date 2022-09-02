@@ -40,7 +40,8 @@ public class RuleNameController {
 	}
 	
 	@GetMapping("/ruleName/add")
-	public String addRuleForm(RuleName bid) {
+	public String addRuleForm(RuleName ruleName) {
+		log.debug("Get rule name account form");
 		return "ruleName/add";
 	}
 	
@@ -53,12 +54,13 @@ public class RuleNameController {
 		}
 		crudService.add(ruleName);
 		model.addAttribute("ruleName", ruleNameRepository.findAll());
+		log.debug("A new rule name has been created and ruleName/validate redirect to ruleName/list");
 		return "redirect:/ruleName/list";
 	}
 	
 	@GetMapping("/ruleName/update/{id}")
 	public String showUpdateForm(@PathVariable("id") Integer id, RuleName ruleName, Model model) {
-		log.debug("Get update form for id" + id);
+		log.debug("Get update form for id " + id);
 		ruleName = crudService.getById(id);
 		model.addAttribute("ruleName", ruleName);
 		return "ruleName/update";
@@ -72,6 +74,7 @@ public class RuleNameController {
 		}
 		crudService.update(id, ruleName);
 		model.addAttribute("ruleName", ruleNameRepository.findAll());
+		log.debug("Rule name with id "+ ruleName.getId() + " has been updated and ruleName/update/"+ruleName.getId() + " is redirected to ruleName/list");
 		return "redirect:/ruleName/list";
 	}
 	
@@ -79,6 +82,7 @@ public class RuleNameController {
 	public String deleteRuleName(@PathVariable("id") Integer id) {
 		log.debug("Delete rule name with id: " + id);
 		crudService.delete(id);
+		log.debug("Rule name with id "+ id + " has been deleted and ruleName/delete/" + id + " is redirected to ruleName/list");
 		return "redirect:/ruleName/list";
 	}
 }

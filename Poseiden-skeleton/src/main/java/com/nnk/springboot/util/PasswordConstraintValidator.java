@@ -1,7 +1,9 @@
-package com.nnk.springboot.service;
+package com.nnk.springboot.util;
 
+import com.nnk.springboot.util.ValidPassword;
 import lombok.SneakyThrows;
 import org.passay.*;
+import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -10,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+@Service
 public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, String> {
 	
 	@Override
@@ -18,17 +21,10 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
 	
 	@SneakyThrows
 	@Override
-	
-	
 	public boolean isValid(String password, ConstraintValidatorContext context) {
-		
-		
 		Properties props = new Properties();
-		
 		InputStream inputStream = getClass().getClassLoader().getResourceAsStream("passay.properties");
-		
 		props.load(inputStream);
-		
 		MessageResolver resolver = new PropertiesMessageResolver(props);
 		
 		PasswordValidator validator = new PasswordValidator(resolver, Arrays.asList(

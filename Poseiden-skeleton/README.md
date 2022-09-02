@@ -1,7 +1,7 @@
 # spring-boot
 ## Technical:
 
-1. Framework: Spring Boot v2.7.3
+1. Framework: Spring Boot v2.7.0
 2. Java 17
 3. Thymeleaf
 4. Bootstrap v.5.2.0
