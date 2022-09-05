@@ -22,12 +22,12 @@ public class WebSecurityConfig{
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/*").permitAll()
+				.antMatchers("/*", "/login").permitAll()
 				.antMatchers("/user/**", "/app/secure/**", "/admin/**").hasAuthority("ADMIN")
 				.anyRequest().authenticated()
 				.and()
 				.formLogin()
-				.loginPage("/")
+				.loginPage("/login")
 				.defaultSuccessUrl("/bidList/list", true)
 				.failureUrl("/login?error=true")
 				.usernameParameter("username")
@@ -35,7 +35,7 @@ public class WebSecurityConfig{
 				.permitAll()
 				.and()
 				.oauth2Login()
-				.loginPage("/")
+				.loginPage("/login")
 				.defaultSuccessUrl("/bidList/list", true)
 				.and()
 				.logout()
