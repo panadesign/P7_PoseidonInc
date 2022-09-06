@@ -40,7 +40,7 @@ class UserAccountServiceImplTest {
 
 	@BeforeEach
 	void init() {
-		userService = new UserServiceCrudImpl(mockUserRepository, mockPasswordEncoder, myUserDetailsService);
+		userService = new UserServiceCrudImpl(mockUserRepository, mockPasswordEncoder, myUserDetailsService, mockPasswordConstraintValidator);
 	}
 
 	@Test

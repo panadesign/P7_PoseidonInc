@@ -1,31 +1,25 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domain.UserAccount;
 import com.nnk.springboot.repositories.UserRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
-
 @Controller
+@Log4j2
 @RequestMapping("app")
 public class LoginController {
 
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("login")
-    public ModelAndView login(@Valid UserAccount userAccount, BindingResult result) {
+    @GetMapping("/login")
+    public ModelAndView login() {
         ModelAndView mav = new ModelAndView();
-        if (result.hasErrors()) {
-            String errorMessage = "User with this user name doesn't exist or password is false";
-            mav.addObject("errorMsg", errorMessage);
-        }
         mav.setViewName("login");
         return mav;
     }

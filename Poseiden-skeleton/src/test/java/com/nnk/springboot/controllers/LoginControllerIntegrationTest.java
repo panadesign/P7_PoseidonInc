@@ -2,6 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.UserAccount;
 import com.nnk.springboot.repositories.UserRepository;
+import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @Transactional
+@Log4j2
 class LoginControllerIntegrationTest {
 
     private MockMvc mockMvc;
@@ -44,16 +46,10 @@ class LoginControllerIntegrationTest {
 
     @Test
     void getLogin() throws Exception {
-        UserAccount userAccount = new UserAccount("test", "Password_123", "name", "USER");
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        userAccount.setPassword(encoder.encode(userAccount.getPassword()));
-        userRepository.save(userAccount);
-
-        Optional<UserAccount> userToConnect = userRepository.findByUsername("test");
-
-        mockMvc.perform(get("/app/login", userToConnect))
-                .andExpect(status().isFound());
-
+        mockMvc.perform(get("/app/login"))
+                .andExpect(status().isFound())
+                .andExpect(status().is3xxRedirection())
+				.andExpect(header().string("Location", "/login"));
     }
 
     @Test
