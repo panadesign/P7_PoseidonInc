@@ -10,17 +10,17 @@
 <body>
 <div class="container loginForm">
     <img class="logo" src="../img/logo.png" alt="Poseidon Inc"/>
-    <form class="form-group login" th:action="@{/login}" th:object="${userAccount}" method="post">
+    <form class="form-group login" th:action="@{/login}" method="post">
         <h4>Login with Username and Password</h4>
         <div class="form-group">
             <label for="username">User name</label>
-            <input class="form-control" id="username" type="text" th:field="*{username}" name="username" placeholder="Enter username" required>
-            <p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{errorMsg}"></p>
+            <input class="form-control" id="username" type="text" name="username" placeholder="Enter username" required>
+<!--            <p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{errorMsg}"></p>-->
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
-            <input class="form-control" id="password" type="password" th:field="*{password}" name="password" placeholder="Password" required>
-            <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{errorMsg}"></p>
+            <input class="form-control" id="password" type="password" name="password" placeholder="Password" required>
+<!--            <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{errorMsg}"></p>-->
         </div>
         <button type="submit" class="btn btn-primary"><i class="bi bi-key"></i>Login</button>
     </form>

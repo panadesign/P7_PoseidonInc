@@ -29,7 +29,7 @@ public class WebSecurityConfig{
 				.formLogin()
 				.loginPage("/app/login")
 				.defaultSuccessUrl("/bidList/list", true)
-				.failureUrl("/login?error=true")
+				.failureUrl("/app/login?error=true")
 				.usernameParameter("username")
 				.passwordParameter("password")
 				.permitAll()
