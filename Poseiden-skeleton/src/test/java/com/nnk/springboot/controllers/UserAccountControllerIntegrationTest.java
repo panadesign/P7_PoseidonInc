@@ -106,24 +106,7 @@ class UserAccountControllerIntegrationTest {
 		response.andExpect(status().is3xxRedirection())
 				.andExpect(header().string("Location", "/user/list"));
 	}
-	@Test
-	@WithMockUser(authorities = "ADMIN")
-	void validateAddUserAccountReturnException() throws Exception {
-		//WHEN
-		ResultActions response = mockMvc.perform(post("/user/validate")
-				.with(csrf())
-				.param("username", userAccount.getUsername())
-				.param("password", userAccount.getPassword())
-				.param("fullname", userAccount.getFullname())
-				.param("role", userAccount.getRole())
-				.accept(MediaType.APPLICATION_JSON)
-				.contentType(MediaType.APPLICATION_JSON));
-
-		//THEN
-		response.andExpect(status().isOk())
-				.andExpect(view().name("user/add"));
-	}
-
+	
 	@Test
 	@WithMockUser(authorities = "USER")
 	void getAddUserFormWithUserRole() throws Exception {

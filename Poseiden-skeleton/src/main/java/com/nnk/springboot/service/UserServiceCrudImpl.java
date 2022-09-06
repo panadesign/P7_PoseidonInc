@@ -1,6 +1,7 @@
 package com.nnk.springboot.service;
 
 import com.nnk.springboot.domain.UserAccount;
+import com.nnk.springboot.exception.InvalidPasswordException;
 import com.nnk.springboot.exception.ResourceNotExistException;
 import com.nnk.springboot.exception.UserAlreadyExistException;
 import com.nnk.springboot.repositories.UserRepository;

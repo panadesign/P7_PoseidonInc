@@ -47,9 +47,7 @@ class LoginControllerIntegrationTest {
     @Test
     void getLogin() throws Exception {
         mockMvc.perform(get("/app/login"))
-                .andExpect(status().isFound())
-                .andExpect(status().is3xxRedirection())
-				.andExpect(header().string("Location", "/login"));
+                .andExpect(status().isOk());
     }
 
     @Test

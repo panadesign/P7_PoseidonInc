@@ -1,14 +1,17 @@
 package com.nnk.springboot.service;
 
 import com.nnk.springboot.domain.UserAccount;
+import com.nnk.springboot.exception.InvalidPasswordException;
 import com.nnk.springboot.exception.ResourceNotExistException;
 import com.nnk.springboot.exception.UserAlreadyExistException;
 import com.nnk.springboot.repositories.UserRepository;
-import com.nnk.springboot.util.PasswordConstraintValidator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;

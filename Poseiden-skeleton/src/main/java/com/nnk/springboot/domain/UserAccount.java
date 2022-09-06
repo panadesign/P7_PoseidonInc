@@ -23,7 +23,6 @@ public class UserAccount {
 	private String username;
 	
 	@NotBlank(message = "Password is mandatory")
-//	@ValidPassword
 	private String password;
 	
 	@NotBlank(message = "FullName is mandatory")
