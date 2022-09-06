@@ -71,8 +71,6 @@ public class UserController {
 		if (result.hasErrors()) {
 			return "user/update";
 		}
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		userAccount.setPassword(encoder.encode(userAccount.getPassword()));
 		crudService.update(id, userAccount);
 		model.addAttribute("users", userRepository.findAll());
 		log.debug("User account with id "+ userAccount.getId() + " has been updated and user/update/"+userAccount.getId() + " is redirected to user/list");

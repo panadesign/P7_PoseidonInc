@@ -1,16 +1,11 @@
 package com.nnk.springboot.domain;
 
-import com.nnk.springboot.util.PasswordConstraintValidator;
-import com.nnk.springboot.util.ValidPassword;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.passay.PasswordValidator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 
 @Data
 @AllArgsConstructor
@@ -43,13 +38,7 @@ public class UserAccount {
 		this.fullname = fullname;
 		this.role = role;
 	}
-	
-	public <E> UserAccount(String username, String password, ArrayList<E> role) {
-		this.username = username;
-		this.password = password;
-		this.role = "role";
-	}
-	
+
 	public UserAccount update(UserAccount userAccount) {
 		this.username = userAccount.getUsername();
 		this.password = userAccount.getPassword();

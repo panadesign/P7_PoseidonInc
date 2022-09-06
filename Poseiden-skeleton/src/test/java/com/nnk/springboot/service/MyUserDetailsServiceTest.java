@@ -33,7 +33,7 @@ class MyUserDetailsServiceTest {
 		
 		//WHEN
 		when(mockUserRepository.findByUsername(userAccount.getUsername())).thenReturn(Optional.of(userAccount));
-		UserAccount newUser = new UserAccount(userAccount.getUsername(), userAccount.getPassword(), new ArrayList<>());
+		UserAccount newUser = new UserAccount(userAccount.getUsername(), userAccount.getPassword(), userAccount.getFullname(), userAccount.getRole());
 		
 		userDetailsService.loadUserByUsername("userName");
 		
@@ -44,7 +44,7 @@ class MyUserDetailsServiceTest {
 	@Test
 	void loadUserByUsernameReturnResourceNotExistingException() {
 		//GIVEN
-		UserAccount userAccount = new UserAccount("userName", "pass", new ArrayList<>());
+		UserAccount userAccount = new UserAccount("userName", "pass", "fullname", "role");
 		
 		//WHEN
 		when(mockUserRepository.findByUsername(userAccount.getUsername())).thenReturn(Optional.empty());

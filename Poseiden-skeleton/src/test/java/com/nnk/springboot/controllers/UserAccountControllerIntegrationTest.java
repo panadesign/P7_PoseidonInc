@@ -38,9 +38,6 @@ class UserAccountControllerIntegrationTest {
 	@Autowired
 	private UserRepository userRepository;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-
 	private UserAccount userAccount;
 
 	@BeforeEach
@@ -98,7 +95,6 @@ class UserAccountControllerIntegrationTest {
 		//WHEN
 		ResultActions response = mockMvc.perform(post("/user/validate")
 				.with(csrf())
-				.param("id", String.valueOf(userAccount.getId()))
 				.param("username", userAccount.getUsername())
 				.param("password", userAccount.getPassword())
 				.param("fullname", userAccount.getFullname())
