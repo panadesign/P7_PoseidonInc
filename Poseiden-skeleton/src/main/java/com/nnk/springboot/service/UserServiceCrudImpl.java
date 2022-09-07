@@ -61,7 +61,7 @@ public class UserServiceCrudImpl extends AbstractServiceCrud<UserAccount, UserRe
 	}
 	
 	private static boolean isValidPassword(String password) {
-		String regex = "^(?=.*[0-9]\s)(?=.*[a-z]\s)(?=.*[A-Z]\s)(?=.*[!@#&()-[{}]:;',?/*~$^+=<>_]\s).{8,60}$";
+		String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()-[{}]:;',?/*~$^+=<>_])(?=\\S+$).{8,60}$";
 		return Pattern.compile(regex).matcher(password).matches();
 	}
 }

@@ -42,7 +42,7 @@ class UserAccountControllerIntegrationTest {
 
 	@BeforeEach
 	public void init() {
-		userAccount = new UserAccount("userName", "Testtest_2022", "name", "USER");
+		userAccount = new UserAccount("userName", "Testtest!2022", "name", "USER");
 
 		mockMvc = MockMvcBuilders
 				.webAppContextSetup(webApplicationContext)
@@ -78,7 +78,6 @@ class UserAccountControllerIntegrationTest {
 				.contentType(MediaType.APPLICATION_JSON));
 
 		//THEN
-
 		response.andExpect(status().isForbidden());
 	}
 
