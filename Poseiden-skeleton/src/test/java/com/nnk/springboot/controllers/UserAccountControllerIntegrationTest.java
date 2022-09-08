@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -21,10 +20,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @Transactional
@@ -105,6 +101,24 @@ class UserAccountControllerIntegrationTest {
 		response.andExpect(status().is3xxRedirection())
 				.andExpect(header().string("Location", "/user/list"));
 	}
+
+	@Test
+	@WithMockUser(authorities = "ADMIN")
+	void validateAddUserAccountWithError() throws Exception {
+		//WHEN
+		ResultActions response = mockMvc.perform(post("/user/validate")
+				.with(csrf())
+				.param("username", "")
+				.param("password", userAccount.getPassword())
+				.param("fullname", userAccount.getFullname())
+				.param("role", userAccount.getRole())
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON));
+
+		//THEN
+		response.andExpect(status().isOk())
+				.andExpect(view().name("user/add"));
+	}
 	
 	@Test
 	@WithMockUser(authorities = "USER")
@@ -155,6 +169,27 @@ class UserAccountControllerIntegrationTest {
 
         response.andExpect(status().is3xxRedirection())
 				.andExpect(header().string("Location", "/user/list"));
+
+	}
+
+	@Test
+	@WithMockUser(authorities = "ADMIN")
+	void updateUserAccountWithError() throws Exception {
+		UserAccount userAccountAdded = userRepository.save(userAccount);
+
+		userAccountAdded.setFullname("");
+
+		ResultActions response = mockMvc.perform(post("/user/update/{id}", userAccountAdded.getId())
+				.with(csrf())
+				.param("username", userAccount.getUsername())
+				.param("password", userAccount.getPassword())
+				.param("fullname", userAccount.getFullname())
+				.param("role", userAccount.getRole())
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON));
+
+		response.andExpect(status().isOk())
+				.andExpect(view().name("user/update"));
 
 	}
 

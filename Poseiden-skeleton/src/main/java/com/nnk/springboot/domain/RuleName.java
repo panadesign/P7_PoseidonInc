@@ -11,29 +11,63 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+/**
+ * The type Rule name.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "Rulename")
 public class RuleName {
-	@Id
+    /**
+     * The Id.
+     */
+    @Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Integer id;
-	@NotBlank(message = "Name cannot be null")
+    /**
+     * The Name.
+     */
+    @NotBlank(message = "Name cannot be null")
 	String name;
-	@NotBlank(message = "Description cannot be null")
+    /**
+     * The Description.
+     */
+    @NotBlank(message = "Description cannot be null")
 	String description;
-	@NotBlank(message = "Json cannot be null")
+    /**
+     * The Json.
+     */
+    @NotBlank(message = "Json cannot be null")
 	String json;
-	@NotBlank(message = "Template cannot be null")
+    /**
+     * The Template.
+     */
+    @NotBlank(message = "Template cannot be null")
 	String template;
-	@NotBlank(message = "Sql str cannot be null")
+    /**
+     * The Sql str.
+     */
+    @NotBlank(message = "Sql str cannot be null")
 	String sqlStr;
-	@NotBlank(message = "Sql part cannot be null")
+    /**
+     * The Sql part.
+     */
+    @NotBlank(message = "Sql part cannot be null")
 	String sqlPart;
 
-	public RuleName(String name, String description, String json, String template, String sqlStr, String sqlPart) {
+    /**
+     * Instantiates a new Rule name.
+     *
+     * @param name        the name
+     * @param description the description
+     * @param json        the json
+     * @param template    the template
+     * @param sqlStr      the sql str
+     * @param sqlPart     the sql part
+     */
+    public RuleName(String name, String description, String json, String template, String sqlStr, String sqlPart) {
 		this.name = name;
 		this.description = description;
 		this.json = json;
@@ -42,7 +76,13 @@ public class RuleName {
 		this.sqlPart = sqlPart;
 	}
 
-	public RuleName update(RuleName ruleName) {
+    /**
+     * Update rule name.
+     *
+     * @param ruleName the rule name
+     * @return the rule name
+     */
+    public RuleName update(RuleName ruleName) {
 		this.name = ruleName.getName();
 		this.description = ruleName.getDescription();
 		this.json = ruleName.getJson();

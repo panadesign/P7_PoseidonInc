@@ -7,11 +7,19 @@ import com.nnk.springboot.repositories.TradeRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Trade service crud.
+ */
 @Log4j2
 @Component
 public class TradeServiceCrudImpl extends AbstractServiceCrud<Trade, TradeRepository>{
 
-	public TradeServiceCrudImpl(TradeRepository repository) {
+    /**
+     * Instantiates a new Trade service crud.
+     *
+     * @param repository the repository
+     */
+    public TradeServiceCrudImpl(TradeRepository repository) {
 		super(repository);
 	}
 	

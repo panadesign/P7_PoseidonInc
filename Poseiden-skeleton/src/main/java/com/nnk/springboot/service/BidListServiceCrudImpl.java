@@ -7,12 +7,20 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Bid list service crud.
+ */
 @Log4j2
 @Component
 @Qualifier("bidList")
 public class BidListServiceCrudImpl extends AbstractServiceCrud<BidList, BidListRepository> {
 
-	public BidListServiceCrudImpl(BidListRepository repository) {
+    /**
+     * Instantiates a new Bid list service crud.
+     *
+     * @param repository the repository
+     */
+    public BidListServiceCrudImpl(BidListRepository repository) {
 		super(repository);
 	}
 

@@ -211,4 +211,20 @@ class UserAccountServiceImplTest {
 		Assertions.assertThrows(ResourceNotExistException.class, () -> userService.update(1, userAccountDto));
 	}
 
+
+	@Test
+	void updateUserInvalidPasswordException() {
+		//GIVEN
+		UserAccount userAccount = new UserAccount(1, "Bob", "123456", "Morane", "ADMIN");
+
+		String rawPassword = "invalidPassword";
+		String hashedPassword = "hashedPassword";
+		UserAccount userAccountDto = new UserAccount("Bob",rawPassword, "Morane", "ADMIN");
+
+		//WHEN
+		when(mockUserRepository.findById(1)).thenReturn(Optional.of(userAccount));
+
+		//THEN
+		Assertions.assertThrows(InvalidPasswordException.class, () -> userService.update(1, userAccountDto));
+	}
 }

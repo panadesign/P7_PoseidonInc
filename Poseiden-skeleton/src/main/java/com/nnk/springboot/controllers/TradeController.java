@@ -1,8 +1,6 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.domain.Trade;
-import com.nnk.springboot.repositories.RuleNameRepository;
 import com.nnk.springboot.repositories.TradeRepository;
 import com.nnk.springboot.service.CrudService;
 import lombok.extern.log4j.Log4j2;
@@ -19,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * The type Trade controller.
+ */
 @Controller
 @Log4j2
 public class TradeController {
@@ -27,10 +28,21 @@ public class TradeController {
 	@Autowired
 	private TradeRepository tradeRepository;
 
+	/**
+	 * Instantiates a new Trade controller.
+	 *
+	 * @param crudService the crud service
+	 */
 	TradeController(CrudService<Trade> crudService) {
 		this.crudService = crudService;
 	}
 
+	/**
+	 * Home string.
+	 *
+	 * @param model the model
+	 * @return the string
+	 */
 	@RequestMapping("/trade/list")
 	public String home(Model model) {
 		log.debug("Get all trades");
@@ -39,12 +51,26 @@ public class TradeController {
 		return "trade/list";
 	}
 
+	/**
+	 * Add user string.
+	 *
+	 * @param trade the trade
+	 * @return the string
+	 */
 	@GetMapping("/trade/add")
 	public String addUser(Trade trade) {
 		log.debug("Get add trade form");
 		return "trade/add";
 	}
 
+	/**
+	 * Validate string.
+	 *
+	 * @param trade  the trade
+	 * @param result the result
+	 * @param model  the model
+	 * @return the string
+	 */
 	@PostMapping("/trade/validate")
 	public String validate(@Valid Trade trade, BindingResult result, Model model) {
 		log.debug("Add a new trade");
@@ -58,6 +84,14 @@ public class TradeController {
 		return "redirect:/trade/list";
 	}
 
+	/**
+	 * Show update form string.
+	 *
+	 * @param id    the id
+	 * @param trade the trade
+	 * @param model the model
+	 * @return the string
+	 */
 	@GetMapping("/trade/update/{id}")
 	public String showUpdateForm(@PathVariable("id") Integer id, Trade trade, Model model) {
 		log.debug("Get update form for id " + id);
@@ -66,6 +100,15 @@ public class TradeController {
 		return "trade/update";
 	}
 
+	/**
+	 * Update trade string.
+	 *
+	 * @param id     the id
+	 * @param trade  the trade
+	 * @param result the result
+	 * @param model  the model
+	 * @return the string
+	 */
 	@PostMapping("/trade/update/{id}")
 	public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade,
 							  BindingResult result, Model model) {

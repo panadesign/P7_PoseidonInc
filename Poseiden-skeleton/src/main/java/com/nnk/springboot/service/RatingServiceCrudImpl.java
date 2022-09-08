@@ -6,11 +6,19 @@ import com.nnk.springboot.repositories.RatingRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Rating service crud.
+ */
 @Log4j2
 @Component
 public class RatingServiceCrudImpl extends AbstractServiceCrud<Rating, RatingRepository>{
 
-	public RatingServiceCrudImpl(RatingRepository repository) {
+    /**
+     * Instantiates a new Rating service crud.
+     *
+     * @param repository the repository
+     */
+    public RatingServiceCrudImpl(RatingRepository repository) {
 		super(repository);
 	}
 	

@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * The type Curve controller.
+ */
 @Controller
 @Log4j2
 public class CurveController {
@@ -25,26 +28,51 @@ public class CurveController {
 	private final CrudService<CurvePoint> crudService;
 	@Autowired
 	private CurvePointRepository curvePointRepository;
-	
-	CurveController(CrudService<CurvePoint> crudService) {
+
+    /**
+     * Instantiates a new Curve controller.
+     *
+     * @param crudService the crud service
+     */
+    CurveController(CrudService<CurvePoint> crudService) {
 		this.crudService = crudService;
 	}
-	
-	@RequestMapping("/curvePoint/list")
+
+    /**
+     * Home string.
+     *
+     * @param model the model
+     * @return the string
+     */
+    @RequestMapping("/curvePoint/list")
 	public String home(Model model) {
 		log.debug("Get all curve point");
 		List<CurvePoint> curvePointList = crudService.getAll();
 		model.addAttribute("curvePointList", curvePointList);
 		return "curvePoint/list";
 	}
-	
-	@GetMapping("/curvePoint/add")
+
+    /**
+     * Add bid form string.
+     *
+     * @param curvePoint the curve point
+     * @return the string
+     */
+    @GetMapping("/curvePoint/add")
 	public String addBidForm(CurvePoint curvePoint) {
 		log.debug("Get add curve point form");
 		return "curvePoint/add";
 	}
-	
-	@PostMapping("/curvePoint/validate")
+
+    /**
+     * Validate string.
+     *
+     * @param curvePoint the curve point
+     * @param result     the result
+     * @param model      the model
+     * @return the string
+     */
+    @PostMapping("/curvePoint/validate")
 	public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
 		log.debug("Add a new curve point");
 		if (result.hasErrors()) {
@@ -58,16 +86,33 @@ public class CurveController {
 		model.addAttribute("curvePoint", curvePointRepository.findAll());
 		return "redirect:/curvePoint/list";
 	}
-	
-	@GetMapping("/curvePoint/update/{id}")
+
+    /**
+     * Show update form string.
+     *
+     * @param id         the id
+     * @param curvePoint the curve point
+     * @param model      the model
+     * @return the string
+     */
+    @GetMapping("/curvePoint/update/{id}")
 	public String showUpdateForm(@PathVariable("id") Integer id, CurvePoint curvePoint, Model model) {
 		log.debug("Get update form for id " + id);
 		CurvePoint cp = crudService.getById(id);
 		model.addAttribute("curvePoint", cp);
 		return "curvePoint/update";
 	}
-	
-	@PostMapping("/curvePoint/update/{id}")
+
+    /**
+     * Update curve point string.
+     *
+     * @param id         the id
+     * @param curvePoint the curve point
+     * @param result     the result
+     * @param model      the model
+     * @return the string
+     */
+    @PostMapping("/curvePoint/update/{id}")
 	public String updateCurvePoint(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint, BindingResult result, Model model) {
 		if(result.hasErrors()) {
 			return "curvePoint/update";
@@ -79,7 +124,13 @@ public class CurveController {
 		return "redirect:/curvePoint/list";
 	}
 
-	@GetMapping("/curvePoint/delete/{id}")
+    /**
+     * Delete bid string.
+     *
+     * @param id the id
+     * @return the string
+     */
+    @GetMapping("/curvePoint/delete/{id}")
 	public String deleteBid(@PathVariable("id") Integer id) {
 		log.debug("Delete curve point with id" + id);
 		crudService.delete(id);

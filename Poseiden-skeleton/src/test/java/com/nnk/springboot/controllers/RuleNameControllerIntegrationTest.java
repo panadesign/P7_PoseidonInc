@@ -96,6 +96,27 @@ class RuleNameControllerIntegrationTest {
 	}
 
 	@Test
+	@WithMockUser(authorities = "ADMIN")
+	void validateAddRuleNameWithError() throws Exception {
+		//WHEN
+		ResultActions response = mockMvc.perform(post("/ruleName/validate")
+				.with(csrf())
+				.param("name", ruleName.getName())
+				.param("description", ruleName.getDescription())
+				.param("json", "")
+				.param("template", ruleName.getTemplate())
+				.param("sqlStr", ruleName.getSqlStr())
+				.param("sqlPart", ruleName.getSqlPart())
+
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON));
+
+		//THEN
+		response.andExpect(status().isOk())
+				.andExpect(view().name("ruleName/add"));
+	}
+
+	@Test
 	@WithMockUser(authorities = "Admin")
 	void getUpdateRuleNameForm() throws Exception {
 		RuleName ruleNameAdded = ruleNameRepository.save(ruleName);
@@ -126,6 +147,28 @@ class RuleNameControllerIntegrationTest {
 
 		response.andExpect(status().is3xxRedirection())
 				.andExpect(header().string("Location", "/ruleName/list"));
+	}
+
+	@Test
+	@WithMockUser(authorities = "ADMIN")
+	void updateRuleNameWithError() throws Exception {
+		RuleName ruleNameAdded = ruleNameRepository.save(ruleName);
+
+		ruleNameAdded.setName("TEST");
+
+		ResultActions response = mockMvc.perform(post("/ruleName/update/{id}", ruleNameAdded.getId())
+				.with(csrf())
+				.param("name", ruleName.getName())
+				.param("description", ruleName.getDescription())
+				.param("json", "")
+				.param("template", ruleName.getTemplate())
+				.param("sqlStr", ruleName.getSqlStr())
+				.param("sqlPart", ruleName.getSqlPart())
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON));
+
+		response.andExpect(status().isOk())
+				.andExpect(view().name("ruleName/update"));
 	}
 
 	@Test

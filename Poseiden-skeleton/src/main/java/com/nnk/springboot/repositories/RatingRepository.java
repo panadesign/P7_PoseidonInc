@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * The interface Rating repository.
+ */
 @Repository
 public interface RatingRepository extends JpaRepository<Rating, Integer> {
 	Optional<Rating> findById(Integer id);

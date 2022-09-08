@@ -11,12 +11,21 @@ import org.springframework.stereotype.Component;
 
 import java.util.regex.Pattern;
 
+/**
+ * The type User service crud.
+ */
 @Log4j2
 @Component
 public class UserServiceCrudImpl extends AbstractServiceCrud<UserAccount, UserRepository>{
 	
 	private final PasswordEncoder passwordEncoder;
-	
+
+	/**
+	 * Instantiates a new User service crud.
+	 *
+	 * @param repository      the repository
+	 * @param passwordEncoder the password encoder
+	 */
 	public UserServiceCrudImpl(UserRepository repository, PasswordEncoder passwordEncoder) {
 		super(repository);
 		this.passwordEncoder = passwordEncoder;
@@ -25,13 +34,13 @@ public class UserServiceCrudImpl extends AbstractServiceCrud<UserAccount, UserRe
 	@Override
 	public UserAccount add(UserAccount userAccount) {
 		if(usernameExist(userAccount.getUsername())) {
-			throw new UserAlreadyExistException("This username exist already" + userAccount.getUsername());
+			throw new UserAlreadyExistException("This username exist already: " + userAccount.getUsername());
 		}
-		
+
 		if(!isValidPassword(userAccount.getPassword())){
 			throw new InvalidPasswordException("Password not valid");
 		}
-		
+
 		String password = passwordEncoder.encode(userAccount.getPassword());
 		UserAccount newUserAccount =  new UserAccount(userAccount.getUsername(), password, userAccount.getFullname(), userAccount.getRole());
 

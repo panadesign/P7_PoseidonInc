@@ -9,11 +9,20 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 
+/**
+ * The type Abstract service crud.
+ *
+ * @param <T> the type parameter
+ * @param <R> the type parameter
+ */
 @RequiredArgsConstructor
 @Component
 public abstract class AbstractServiceCrud<T, R extends JpaRepository<T, Integer>> implements CrudService<T> {
-	
-	protected final R repository;
+
+    /**
+     * The Repository.
+     */
+    protected final R repository;
 	
 	@Override
 	public void delete(Integer id) {

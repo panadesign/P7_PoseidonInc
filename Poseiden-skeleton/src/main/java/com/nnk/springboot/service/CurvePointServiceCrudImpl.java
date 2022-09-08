@@ -6,11 +6,19 @@ import com.nnk.springboot.repositories.CurvePointRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Curve point service crud.
+ */
 @Log4j2
 @Component
 public class CurvePointServiceCrudImpl extends AbstractServiceCrud<CurvePoint, CurvePointRepository>{
 
-	public CurvePointServiceCrudImpl(CurvePointRepository repository) {
+    /**
+     * Instantiates a new Curve point service crud.
+     *
+     * @param repository the repository
+     */
+    public CurvePointServiceCrudImpl(CurvePointRepository repository) {
 		super(repository);
 	}
 	

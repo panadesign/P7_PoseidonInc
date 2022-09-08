@@ -93,6 +93,24 @@ class RatingControllerIntegrationTest {
 	}
 
 	@Test
+	@WithMockUser(authorities = "ADMIN")
+	void validateAddRatingWithError() throws Exception {
+		//WHEN
+		ResultActions response = mockMvc.perform(post("/rating/validate")
+				.with(csrf())
+				.param("moodysRating", rating.getMoodysRating())
+				.param("sandPRating", "")
+				.param("fitchRating", rating.getFitchRating())
+				.param("orderNumber", String.valueOf(rating.getOrderNumber()))
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON));
+
+		//THEN
+		response.andExpect(status().isOk())
+				.andExpect(view().name("rating/add"));
+	}
+
+	@Test
 	@WithMockUser(authorities = "Admin")
 	void getUpdateRatingForm() throws Exception {
 		Rating ratingAdded = ratingRepository.save(rating);
@@ -121,6 +139,26 @@ class RatingControllerIntegrationTest {
 
 		response.andExpect(status().is3xxRedirection())
 				.andExpect(header().string("Location", "/rating/list"));
+	}
+
+	@Test
+	@WithMockUser(authorities = "ADMIN")
+	void updateRatingWithError() throws Exception {
+		Rating ratingAdded = ratingRepository.save(rating);
+
+		ratingAdded.setFitchRating("TEST");
+
+		ResultActions response = mockMvc.perform(post("/rating/update/{id}",ratingAdded.getId())
+				.with(csrf())
+				.param("moodysRating", rating.getMoodysRating())
+				.param("sandPRating", "")
+				.param("fitchRating", rating.getFitchRating())
+				.param("orderNumber", String.valueOf(rating.getOrderNumber()))
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON));
+
+		response.andExpect(status().isOk())
+				.andExpect(view().name("rating/update"));
 	}
 
 	@Test

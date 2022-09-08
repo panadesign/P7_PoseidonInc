@@ -10,33 +10,65 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
+/**
+ * The type Rating.
+ */
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Rating")
 public class Rating {
-	@Id
+    /**
+     * The Id.
+     */
+    @Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Integer id;
-	@NotBlank(message = "Moody's rating cannot be null")
+    /**
+     * The Moodys rating.
+     */
+    @NotBlank(message = "Moody's rating cannot be null")
 	String moodysRating;
-	@NotBlank(message = "Sand rating cannot be null")
+    /**
+     * The Sand p rating.
+     */
+    @NotBlank(message = "Sand rating cannot be null")
 	String sandPRating;
-	@NotBlank(message = "Fitch rating cannot be null")
+    /**
+     * The Fitch rating.
+     */
+    @NotBlank(message = "Fitch rating cannot be null")
 	String fitchRating;
-	@NotNull(message = "Order number cannot be null")
+    /**
+     * The Order number.
+     */
+    @NotNull(message = "Order number cannot be null")
 	@Min(1)
 	Integer orderNumber;
 
-	public Rating(String moodysRating, String sandPRating, String fitchRating, Integer orderNumber) {
+    /**
+     * Instantiates a new Rating.
+     *
+     * @param moodysRating the moodys rating
+     * @param sandPRating  the sand p rating
+     * @param fitchRating  the fitch rating
+     * @param orderNumber  the order number
+     */
+    public Rating(String moodysRating, String sandPRating, String fitchRating, Integer orderNumber) {
 		this.moodysRating = moodysRating;
 		this.sandPRating = sandPRating;
 		this.fitchRating = fitchRating;
 		this.orderNumber = orderNumber;
 	}
 
-	public Rating update(Rating rating) {
+    /**
+     * Update rating.
+     *
+     * @param rating the rating
+     * @return the rating
+     */
+    public Rating update(Rating rating) {
 		this.moodysRating = rating.getMoodysRating();
 		this.sandPRating = rating.getSandPRating();
 		this.fitchRating = rating.getFitchRating();

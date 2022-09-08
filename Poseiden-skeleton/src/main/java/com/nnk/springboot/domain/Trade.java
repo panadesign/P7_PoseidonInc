@@ -11,66 +11,166 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
+/**
+ * The type Trade.
+ */
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Trade")
 public class Trade {
-	@Id
+    /**
+     * The Id.
+     */
+    @Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	Integer id;
-	@NotBlank(message = "Account cannot be null")
+    /**
+     * The Account.
+     */
+    @NotBlank(message = "Account cannot be null")
 	String account;
-	@NotBlank(message = "Type cannot be null")
+    /**
+     * The Type.
+     */
+    @NotBlank(message = "Type cannot be null")
 	String type;
-	@NotNull(message = "Quantity cannot be null")
+    /**
+     * The Buy quantity.
+     */
+    @NotNull(message = "Quantity cannot be null")
 	@Min(1)
 	Double buyQuantity;
-	@Min(1)
+    /**
+     * The Sell quantity.
+     */
+    @Min(1)
 	Double sellQuantity;
-	Double buyPrice;
-	Double sellPrice;
-	String benchmark;
-	Timestamp tradeDate;
-	String security;
-	String status;
-	String trader;
-	String book;
-	String creationName;
-	Timestamp creationDate;
-	String revisionName;
-	Timestamp revisionDate;
-	String dealName;
-	String dealType;
-	String sourceListId;
-	String side;
+    /**
+     * The Buy price.
+     */
+    Double buyPrice;
+    /**
+     * The Sell price.
+     */
+    Double sellPrice;
+    /**
+     * The Benchmark.
+     */
+    String benchmark;
+    /**
+     * The Trade date.
+     */
+    Timestamp tradeDate;
+    /**
+     * The Security.
+     */
+    String security;
+    /**
+     * The Status.
+     */
+    String status;
+    /**
+     * The Trader.
+     */
+    String trader;
+    /**
+     * The Book.
+     */
+    String book;
+    /**
+     * The Creation name.
+     */
+    String creationName;
+    /**
+     * The Creation date.
+     */
+    Timestamp creationDate;
+    /**
+     * The Revision name.
+     */
+    String revisionName;
+    /**
+     * The Revision date.
+     */
+    Timestamp revisionDate;
+    /**
+     * The Deal name.
+     */
+    String dealName;
+    /**
+     * The Deal type.
+     */
+    String dealType;
+    /**
+     * The Source list id.
+     */
+    String sourceListId;
+    /**
+     * The Side.
+     */
+    String side;
 
-	public Trade(Integer id, String account, String type) {
+    /**
+     * Instantiates a new Trade.
+     *
+     * @param id      the id
+     * @param account the account
+     * @param type    the type
+     */
+    public Trade(Integer id, String account, String type) {
 		this.id = id;
 		this.account = account;
 		this.type = type;
 	}
 
-	public Trade(String account, String type) {
+    /**
+     * Instantiates a new Trade.
+     *
+     * @param account the account
+     * @param type    the type
+     */
+    public Trade(String account, String type) {
 		this.account = account;
 		this.type = type;
 	}
 
-	public Trade(String account, String type, Double buyQuantity) {
+    /**
+     * Instantiates a new Trade.
+     *
+     * @param account     the account
+     * @param type        the type
+     * @param buyQuantity the buy quantity
+     */
+    public Trade(String account, String type, Double buyQuantity) {
 		this.account = account;
 		this.type = type;
 		this.buyQuantity = buyQuantity;
 	}
 
-	public Trade(String account, String type, Double buyQuantity, Double sellQuantity) {
+    /**
+     * Instantiates a new Trade.
+     *
+     * @param account      the account
+     * @param type         the type
+     * @param buyQuantity  the buy quantity
+     * @param sellQuantity the sell quantity
+     */
+    public Trade(String account, String type, Double buyQuantity, Double sellQuantity) {
 		this.account = account;
 		this.type = type;
 		this.buyQuantity = buyQuantity;
 		this.sellQuantity = sellQuantity;
 	}
-	
-	public Trade update(Trade trade) {
+
+    /**
+     * Update trade.
+     *
+     * @param trade the trade
+     * @return the trade
+     */
+    public Trade update(Trade trade) {
 		this.account = trade.getAccount();
 		this.type = trade.getType();
 		this.buyQuantity = trade.getBuyQuantity();

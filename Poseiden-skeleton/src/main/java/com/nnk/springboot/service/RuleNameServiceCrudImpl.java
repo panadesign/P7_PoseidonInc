@@ -8,11 +8,19 @@ import com.nnk.springboot.repositories.RuleNameRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Rule name service crud.
+ */
 @Log4j2
 @Component
 public class RuleNameServiceCrudImpl extends AbstractServiceCrud<RuleName, RuleNameRepository>{
 
-	public RuleNameServiceCrudImpl(RuleNameRepository repository) {
+    /**
+     * Instantiates a new Rule name service crud.
+     *
+     * @param repository the repository
+     */
+    public RuleNameServiceCrudImpl(RuleNameRepository repository) {
 		super(repository);
 	}
 	

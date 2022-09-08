@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * The type My user details service.
+ */
 @Service("userDetailsService")
 public class MyUserDetailsService implements UserDetailsService {
 	@Autowired

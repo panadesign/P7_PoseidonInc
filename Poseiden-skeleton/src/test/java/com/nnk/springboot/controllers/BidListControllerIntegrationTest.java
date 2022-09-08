@@ -94,6 +94,23 @@ class BidListControllerIntegrationTest {
 	}
 
 	@Test
+	@WithMockUser(authorities = "ADMIN")
+	void validateAddNewBidListWithError() throws Exception {
+		//WHEN
+		ResultActions response = mockMvc.perform(post("/bidList/validate")
+				.with(csrf())
+				.param("account", bid.getAccount())
+				.param("type", "")
+				.param("bidQuantity", String.valueOf(bid.getBidQuantity()))
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON));
+
+		//THEN
+		response.andExpect(status().isOk())
+				.andExpect(view().name("bidList/add"));
+	}
+
+	@Test
 	@WithMockUser(authorities = "Admin")
 	void getUpdateBidListForm() throws Exception {
 		BidList bidListAdded = bidListRepository.save(bid);
@@ -124,15 +141,22 @@ class BidListControllerIntegrationTest {
 	}
 
 	@Test
-	@WithMockUser(authorities = "Admin")
-	void getUpdateBidList() throws Exception {
-//        BidList bidList = new BidList("Account", "Type", 5d);
-//        BidList bidListAdded = bidListRepository.save(bidList);
-//
-//        ResultActions response = mockMvc.perform(post("/bidList/update/{id}", bidListAdded.getId())
-//                .contentType(MediaType.APPLICATION_JSON));
-//
-//        response.andExpect(status().isOk());
+	@WithMockUser(authorities = "ADMIN")
+	void updateBidWithError() throws Exception {
+		BidList bidAdded = bidListRepository.save(bid);
+
+		bidAdded.setBidQuantity(3d);
+
+		ResultActions response = mockMvc.perform(post("/bidList/update/{id}",bidAdded.getId())
+				.with(csrf())
+				.param("account", bid.getAccount())
+				.param("type", "")
+				.param("bidQuantity", String.valueOf(bid.getBidQuantity()))
+				.accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON));
+
+		response.andExpect(status().isOk())
+				.andExpect(view().name("bidList/update"));
 	}
 
 	@Test

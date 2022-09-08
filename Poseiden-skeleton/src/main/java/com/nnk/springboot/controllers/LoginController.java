@@ -41,9 +41,5 @@ public class LoginController {
         mav.setViewName("403");
         return mav;
     }
-    
-    @PostMapping("logout")
-    public String logout() {
-        return "/";
-    }
+
 }

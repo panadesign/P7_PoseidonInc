@@ -64,11 +64,4 @@ class LoginControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("403"));
     }
-
-    @Test
-    @WithMockUser(authorities = "USER")
-    void logout() throws Exception {
-//        mockMvc.perform(post("/app/logout"))
-//                .andExpect(redirectedUrl("/"));
-    }
 }

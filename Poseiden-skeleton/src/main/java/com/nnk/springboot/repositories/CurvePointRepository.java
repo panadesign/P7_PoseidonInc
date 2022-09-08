@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * The interface Curve point repository.
+ */
 @Repository
 public interface CurvePointRepository extends JpaRepository<CurvePoint, Integer> {
 	Optional<CurvePoint> findById(Integer id);

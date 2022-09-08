@@ -10,16 +10,31 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+/**
+ * The type Web security config.
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig{
-	
-	@Bean
+
+    /**
+     * Password encoder password encoder.
+     *
+     * @return the password encoder
+     */
+    @Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
-	@Bean
+    /**
+     * Filter chain security filter chain.
+     *
+     * @param http the http
+     * @return the security filter chain
+     * @throws Exception the exception
+     */
+    @Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/*", "/app/login").permitAll()
@@ -50,8 +65,13 @@ public class WebSecurityConfig{
 				
 		return http.build();
 	}
-	
-	@Bean
+
+    /**
+     * Web security customizer web security customizer.
+     *
+     * @return the web security customizer
+     */
+    @Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring()
 				.antMatchers("/css/**", "/img/**")

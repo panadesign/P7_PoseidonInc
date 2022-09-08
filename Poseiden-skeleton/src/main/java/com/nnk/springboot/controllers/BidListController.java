@@ -19,20 +19,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * The type Bid list controller.
+ */
 @Controller
 @Log4j2
 public class BidListController {
 	@Qualifier("bidList")
 	private final CrudService<BidList> crudService;
 
-	BidListController(CrudService<BidList> crudService) {
+    /**
+     * Instantiates a new Bid list controller.
+     *
+     * @param crudService the crud service
+     */
+    BidListController(CrudService<BidList> crudService) {
 		this.crudService = crudService;
 	}
 	
 	@Autowired
 	private BidListRepository bidListRepository;
 
-	@RequestMapping("/bidList/list")
+    /**
+     * Home string.
+     *
+     * @param model the model
+     * @return the string
+     */
+    @RequestMapping("/bidList/list")
 	public String home(Model model) {
 		log.debug("Get all bid list");
 		List<BidList> allBidList = crudService.getAll();
@@ -40,13 +54,27 @@ public class BidListController {
 		return "bidList/list";
 	}
 
-	@GetMapping("/bidList/add")
+    /**
+     * Add bid form string.
+     *
+     * @param bidList the bid list
+     * @return the string
+     */
+    @GetMapping("/bidList/add")
 	public String addBidForm(BidList bidList) {
 		log.debug("Get add bid list form");
 		return "bidList/add";
 	}
 
-	@PostMapping("/bidList/validate")
+    /**
+     * Validate string.
+     *
+     * @param bidList the bid list
+     * @param result  the result
+     * @param model   the model
+     * @return the string
+     */
+    @PostMapping("/bidList/validate")
 	public String validate(@Valid BidList bidList, BindingResult result, Model model) {
 		log.debug("Add a new bid");
 		if(result.hasErrors()) {
@@ -59,7 +87,15 @@ public class BidListController {
 		return "redirect:/bidList/list";
 	}
 
-	@GetMapping("/bidList/update/{id}")
+    /**
+     * Show update form string.
+     *
+     * @param id      the id
+     * @param bidList the bid list
+     * @param model   the model
+     * @return the string
+     */
+    @GetMapping("/bidList/update/{id}")
 	public String showUpdateForm(@PathVariable("id") Integer id, BidList bidList, Model model) {
 		log.debug("Get update form for id " + id);
 		bidList = crudService.getById(id);
@@ -67,7 +103,16 @@ public class BidListController {
 		return "bidList/update";
 	}
 
-	@PostMapping("/bidList/update/{id}")
+    /**
+     * Update bid string.
+     *
+     * @param id      the id
+     * @param bidList the bid list
+     * @param result  the result
+     * @param model   the model
+     * @return the string
+     */
+    @PostMapping("/bidList/update/{id}")
 	public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList,	BindingResult result, Model model) {
 		if(result.hasErrors()) {
 			return "bidList/update";
@@ -78,7 +123,13 @@ public class BidListController {
 		return "redirect:/bidList/list";
 	}
 
-	@GetMapping("/bidList/delete/{id}")
+    /**
+     * Delete bid string.
+     *
+     * @param id the id
+     * @return the string
+     */
+    @GetMapping("/bidList/delete/{id}")
 	public String deleteBid(@PathVariable("id") Integer id) {
 		log.debug("Delete bid list with id" + id);
 		BidList bidList = crudService.getById(id);

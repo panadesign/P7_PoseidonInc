@@ -14,14 +14,7 @@
 	</div>
 
 	<div class="row">
-		<form action="#" th:action="@{/user/update/{id}(id=${userAccount.id})}" th:object="${user}" method="post" class="form-horizontal" style="width: 100%">
-			<div class="form-group">
-				<label for="fullname" class="col-sm-2 control-label">Full Name</label>
-				<div class="col-sm-10">
-					<input type="text" th:field="*{fullname}" id="fullname" placeholder="Full Name" class="col-4">
-					<p class="text-danger" th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}"></p>
-				</div>
-			</div>
+		<form action="#" th:action="@{/user/update/{id}(id=${userAccount.id})}" th:object="${userAccount}" method="post" class="form-horizontal" style="width: 100%">
 			<div class="form-group">
 				<label for="username" class="col-sm-2 control-label">User Name</label>
 				<div class="col-sm-10">
@@ -36,6 +29,13 @@
 					<p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
 				</div>
 			</div>
+			<div class="form-group">
+			<label for="fullname" class="col-sm-2 control-label">Full Name</label>
+			<div class="col-sm-10">
+				<input type="text" th:field="*{fullname}" id="fullname" name="fullname" placeholder="Full Name" class="col-4">
+				<p class="text-danger" th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}"></p>
+			</div>
+		</div>
 			<div class="form-group">
 				<label for="password" class="col-sm-2 control-label">Role</label>
 				<div class="col-sm-10">
