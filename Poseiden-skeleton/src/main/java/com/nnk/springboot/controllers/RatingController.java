@@ -49,7 +49,7 @@ public class RatingController {
      * @param model the model
      * @return the string
      */
-    @RequestMapping("/rating/list")
+    @GetMapping("/rating/list")
 	public String home(Model model) {
 		log.debug("Get all ratings");
 		List<Rating> allRatings = crudService.getAll();

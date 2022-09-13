@@ -37,7 +37,7 @@ public abstract class AbstractServiceCrud<T, R extends JpaRepository<T, Integer>
 	@Override
 	public T getById(Integer id) {
 		return repository.findById(id)
-				.orElseThrow(() -> new ResourceNotExistException("Resource " + getObjectType() + "not found with id = " + id));
+				.orElseThrow(() -> new ResourceNotExistException("Resource " + getObjectType() + " not found with id = " + id));
 	}
 	
 	private String getObjectType(){

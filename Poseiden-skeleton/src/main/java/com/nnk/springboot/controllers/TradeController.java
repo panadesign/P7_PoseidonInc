@@ -43,7 +43,7 @@ public class TradeController {
 	 * @param model the model
 	 * @return the string
 	 */
-	@RequestMapping("/trade/list")
+	@GetMapping("/trade/list")
 	public String home(Model model) {
 		log.debug("Get all trades");
 		List<Trade> allTrades = crudService.getAll();

@@ -46,7 +46,7 @@ public class BidListController {
      * @param model the model
      * @return the string
      */
-    @RequestMapping("/bidList/list")
+    @GetMapping("/bidList/list")
 	public String home(Model model) {
 		log.debug("Get all bid list");
 		List<BidList> allBidList = crudService.getAll();

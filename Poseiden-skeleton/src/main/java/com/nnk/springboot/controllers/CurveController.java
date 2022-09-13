@@ -44,7 +44,7 @@ public class CurveController {
      * @param model the model
      * @return the string
      */
-    @RequestMapping("/curvePoint/list")
+    @GetMapping("/curvePoint/list")
 	public String home(Model model) {
 		log.debug("Get all curve point");
 		List<CurvePoint> curvePointList = crudService.getAll();

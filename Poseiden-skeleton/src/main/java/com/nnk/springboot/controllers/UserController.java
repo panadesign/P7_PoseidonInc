@@ -3,6 +3,7 @@ package com.nnk.springboot.controllers;
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.domain.UserAccount;
 import com.nnk.springboot.exception.InvalidPasswordException;
+import com.nnk.springboot.exception.UserAlreadyExistException;
 import com.nnk.springboot.repositories.TradeRepository;
 import com.nnk.springboot.repositories.UserRepository;
 import com.nnk.springboot.service.CrudService;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,7 +50,7 @@ public class UserController {
      * @param model the model
      * @return the string
      */
-    @RequestMapping("/user/list")
+    @GetMapping("/user/list")
     public String home(Model model) {
         model.addAttribute("users", userRepository.findAll());
         log.debug("Get user account list");
@@ -78,16 +80,21 @@ public class UserController {
     @PostMapping("/user/validate")
     public String validate(@Valid UserAccount userAccount, BindingResult result, Model model) {
         log.debug("Add a new user account");
+
         if (result.hasErrors()) {
-            log.error("Check if there is errors");
             return "user/add";
         }
 
-        crudService.add(userAccount);
-        model.addAttribute("users", userRepository.findAll());
+        try {
+            crudService.add(userAccount);
+            model.addAttribute("users", userRepository.findAll());
+        } catch(Exception e) {
+            result.addError(new ObjectError("userAccount", e.getMessage()));
+            return "user/add";
+        }
+
         log.debug("A new user Account has been created and user/validate redirect to user/list");
         return "redirect:/user/list";
-
     }
 
     /**

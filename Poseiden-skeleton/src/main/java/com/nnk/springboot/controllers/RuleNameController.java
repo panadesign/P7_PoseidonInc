@@ -45,7 +45,7 @@ public class RuleNameController {
      * @param model the model
      * @return the string
      */
-    @RequestMapping("/ruleName/list")
+    @GetMapping("/ruleName/list")
 	public String home(Model model) {
 		log.debug("Get all rule name");
 		List<RuleName> allRuleName = crudService.getAll();

@@ -2,13 +2,12 @@ package com.nnk.springboot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
-import javax.persistence.Entity;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 
 /**
  * The type Application.
  */
+
 @SpringBootApplication
 public class Application {
 
@@ -18,6 +17,6 @@ public class Application {
      * @param args the input arguments
      */
     public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+        SpringApplication.run(Application.class, args);
+    }
 }

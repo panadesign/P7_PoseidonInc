@@ -3,10 +3,13 @@ package com.nnk.springboot.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.bytebuddy.implementation.bind.MethodDelegationBinder;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
+import javax.validation.Constraint;
 import javax.validation.constraints.NotBlank;
-import java.util.regex.Pattern;
+import javax.validation.constraints.Pattern;
 
 /**
  * The type User account.
@@ -26,7 +29,7 @@ public class UserAccount {
 	@NotBlank(message = "Username is mandatory")
 	private String username;
 	
-	@NotBlank(message = "Password must contain at least 8 characters, 1 or more uppercase, lowercase, number and special character")
+	@Pattern(regexp= "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()-[{}]:;',?/*~$^+=<>_])(?=\\S+$).{8,60}$", message = "Invalid password ! Password must contain at least 8 character, one or mmore uppercase, number and special character.")
 	private String password;
 	
 	@NotBlank(message = "FullName is mandatory")

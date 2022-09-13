@@ -37,9 +37,6 @@ public class UserServiceCrudImpl extends AbstractServiceCrud<UserAccount, UserRe
 			throw new UserAlreadyExistException("This username exist already: " + userAccount.getUsername());
 		}
 
-		if(!isValidPassword(userAccount.getPassword())){
-			throw new InvalidPasswordException("Password not valid");
-		}
 
 		String password = passwordEncoder.encode(userAccount.getPassword());
 		UserAccount newUserAccount =  new UserAccount(userAccount.getUsername(), password, userAccount.getFullname(), userAccount.getRole());
@@ -54,9 +51,7 @@ public class UserServiceCrudImpl extends AbstractServiceCrud<UserAccount, UserRe
 		UserAccount userAccountToUpdate = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotExistException("User with id " + id + " doesn't exist."));
 		
-		if (!isValidPassword(userAccountDto.getPassword())) {
-			throw new InvalidPasswordException("Password not valid");
-		}
+
 		
 		userAccountDto.setPassword(passwordEncoder.encode(userAccountDto.getPassword()));
 		
@@ -69,8 +64,8 @@ public class UserServiceCrudImpl extends AbstractServiceCrud<UserAccount, UserRe
 		return repository.findByUsername(username).isPresent();
 	}
 	
-	private static boolean isValidPassword(String password) {
-		String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()-[{}]:;',?/*~$^+=<>_])(?=\\S+$).{8,60}$";
-		return Pattern.compile(regex).matcher(password).matches();
-	}
+//	private static boolean isValidPassword(String password) {
+//		String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()-[{}]:;',?/*~$^+=<>_])(?=\\S+$).{8,60}$";
+//		return Pattern.compile(regex).matcher(password).matches();
+//	}
 }
