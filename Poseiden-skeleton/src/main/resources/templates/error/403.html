@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Poseidon Inc | 403</title>
+    <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <h2>Error</h2>
+    </div>
+    <div class="row">
+        Logged in userAccount: <b th:inline="text" class="userAccount"> [[${#httpServletRequest.remoteUser}]] </b>
+    </div>
+    <div class="row">
+        <form th:action="@{/app-logout}" method="POST">
+            <input class="btn btn-secondary" type="submit" value="Logout"/>
+        </form>
+        <input action="action" type="button" class="btn btn-primary" onclick="history.go(-1);" value="Return"/>
+    </div>
+    <div class="row">
+        <p class="error" th:text="${status}"></p>
+    </div>
+    <div class="row">
+        <p class="error_message">You don't have authorisation to accessed to this page! Sorry :(</p>
+    </div>
+</div>
+</body>
+</html>   
