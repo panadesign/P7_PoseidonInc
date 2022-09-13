@@ -56,12 +56,4 @@ class LoginControllerIntegrationTest {
         mockMvc.perform(get("/app/secure/article-details"))
                 .andExpect(status().isOk());
     }
-
-    @Test
-    @WithMockUser(authorities = "USER")
-    void getError() throws Exception {
-        mockMvc.perform(get("/app/error"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("403"));
-    }
 }

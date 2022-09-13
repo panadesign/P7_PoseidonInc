@@ -186,7 +186,7 @@ class UserAccountServiceImplTest {
 	@Test
 	void updateUser() {
 		//GIVEN
-		UserAccount userAccount = new UserAccount(1, "Bob", "123456", "Morane", "ADMIN");
+		UserAccount userAccount = new UserAccount(1, "Bob", "PasswordTest_345", "Morane", "ADMIN");
 		
 		String rawPassword = "validRawPassword123-";
 		String hashedPassword = "hashedPassword";

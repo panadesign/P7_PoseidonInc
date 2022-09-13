@@ -60,8 +60,7 @@ public class WebSecurityConfig{
 				.invalidateHttpSession(true)
 				.deleteCookies("JSESSIONID")
 				.and()
-				.exceptionHandling()
-				.accessDeniedPage("/403");
+				.exceptionHandling();
 				
 		return http.build();
 	}

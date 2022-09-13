@@ -28,8 +28,8 @@ public class UserAccount {
 	
 	@NotBlank(message = "Username is mandatory")
 	private String username;
-	
-	@Pattern(regexp= "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()-[{}]:;',?/*~$^+=<>_])(?=\\S+$).{8,60}$", message = "Invalid password ! Password must contain at least 8 character, one or mmore uppercase, number and special character.")
+
+	@NotBlank(message = "Password is mandatory")
 	private String password;
 	
 	@NotBlank(message = "FullName is mandatory")
