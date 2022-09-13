@@ -89,7 +89,7 @@ public class UserController {
             crudService.add(userAccount);
             model.addAttribute("users", userRepository.findAll());
         } catch(Exception e) {
-            result.addError(new ObjectError("userAccount", e.getMessage()));
+            model.addAttribute("error", e.getMessage());
             return "user/add";
         }
 

@@ -31,34 +31,35 @@ public class CurvePoint {
      */
     @Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	Integer id;
+    private Integer id;
     /**
      * The Curve id.
      */
     @NotNull(message = "Curve point id cannot be null")
 	@Min(1)
-	Integer curveId;
+    private Integer curveId;
     /**
      * The As of date.
      */
-    Timestamp asOfDate;
+    private Timestamp asOfDate;
     /**
      * The Term.
      */
     @NotNull(message = "Curve point term cannot be null")
 	@Min(1)
-	Double term;
+    private Double term;
     /**
      * The Curve value.
      */
     @NotNull(message = "Curve point value cannot be null")
 	@Min(1)
-	Double curveValue;
+    private Double curveValue;
     /**
      * The Creation date.
      */
-    Timestamp creationDate;
+    private Timestamp creationDate;
 
+	
     /**
      * Instantiates a new Curve point.
      *
@@ -78,21 +79,6 @@ public class CurvePoint {
      * @param curveValue the curve value
      */
     public CurvePoint(Integer curveId, Double term, Double curveValue) {
-		this.curveId = curveId;
-		this.term = term;
-		this.curveValue = curveValue;
-	}
-
-    /**
-     * Instantiates a new Curve point.
-     *
-     * @param id         the id
-     * @param curveId    the curve id
-     * @param term       the term
-     * @param curveValue the curve value
-     */
-    public CurvePoint(Integer id, Integer curveId, Double term, Double curveValue) {
-		this.id = id;
 		this.curveId = curveId;
 		this.term = term;
 		this.curveValue = curveValue;

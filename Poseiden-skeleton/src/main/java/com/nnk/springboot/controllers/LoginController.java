@@ -21,6 +21,9 @@ public class LoginController {
     @GetMapping("/login")
     public ModelAndView login() {
         ModelAndView mav = new ModelAndView();
+        // if error = true
+        //     mav.addObject("error" , true);
+        //
         mav.setViewName("login");
         return mav;
     }

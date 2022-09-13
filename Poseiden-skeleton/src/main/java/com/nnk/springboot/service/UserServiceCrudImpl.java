@@ -55,10 +55,10 @@ public class UserServiceCrudImpl extends AbstractServiceCrud<UserAccount, UserRe
 		UserAccount userAccountToUpdate = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotExistException("User with id " + id + " doesn't exist."));
 
-
-		if(!isValidPassword(userAccountToUpdate.getPassword())) {
-			throw new InvalidPasswordException("Invalid password");
-		}
+//
+//		if(!isValidPassword(userAccountToUpdate.getPassword())) {
+//			throw new InvalidPasswordException("Invalid password");
+//		}
 		
 		userAccountDto.setPassword(passwordEncoder.encode(userAccountDto.getPassword()));
 		

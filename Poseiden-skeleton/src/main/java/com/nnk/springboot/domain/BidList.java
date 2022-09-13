@@ -26,31 +26,31 @@ public class BidList {
      */
     @Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	Integer id;
+    private Integer id;
     /**
      * The Account.
      */
     @NotBlank(message = "Account cannot be null")
-	String account;
+    private String account;
     /**
      * The Type.
      */
     @NotBlank(message = "Type cannot be null")
-	String type;
+    private String type;
     /**
      * The Bid quantity.
      */
     @NotNull(message = "Bid quantity cannot be null")
 	@Min(1)
-	Double bidQuantity;
+    private Double bidQuantity;
     /**
      * The Ask quantity.
      */
-    Double askQuantity;
+    private Double askQuantity;
     /**
      * The Bid.
      */
-    Double bid;
+    private Double bid;
     /**
      * The Ask.
      */
