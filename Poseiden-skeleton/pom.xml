@@ -138,11 +138,6 @@
             <version>5.7.3</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>5.3.13</version>
-        </dependency>
     </dependencies>
 
     <build>
