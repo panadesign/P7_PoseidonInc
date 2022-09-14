@@ -37,7 +37,6 @@ public class UserServiceCrudImpl extends AbstractServiceCrud<UserAccount, UserRe
 			throw new UserAlreadyExistException("This username exist already: " + userAccount.getUsername());
 		}
 
-
 		String password = passwordEncoder.encode(userAccount.getPassword());
 		UserAccount newUserAccount =  new UserAccount(userAccount.getUsername(), password, userAccount.getFullname(), userAccount.getRole());
 
@@ -50,11 +49,6 @@ public class UserServiceCrudImpl extends AbstractServiceCrud<UserAccount, UserRe
 	public UserAccount update(Integer id, UserAccount userAccountDto) {
 		UserAccount userAccountToUpdate = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotExistException("User with id " + id + " doesn't exist."));
-
-//
-//		if(!isValidPassword(userAccountToUpdate.getPassword())) {
-//			throw new InvalidPasswordException("Invalid password");
-//		}
 		
 		userAccountDto.setPassword(passwordEncoder.encode(userAccountDto.getPassword()));
 		
@@ -66,9 +60,4 @@ public class UserServiceCrudImpl extends AbstractServiceCrud<UserAccount, UserRe
 	private boolean usernameExist(String username) {
 		return repository.findByUsername(username).isPresent();
 	}
-	
-//	private static boolean isValidPassword(String password) {
-//		String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()-[{}]:;',?/*~$^+=<>_])(?=\\S+$).{8,60}$";
-//		return Pattern.compile(regex).matcher(password).matches();
-//	}
 }

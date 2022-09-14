@@ -4,10 +4,9 @@ import com.nnk.springboot.repositories.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -19,11 +18,13 @@ public class LoginController {
     private UserRepository userRepository;
 
     @GetMapping("/login")
-    public ModelAndView login() {
+    public ModelAndView login(@RequestParam(name = "error", required = false) boolean error) {
         ModelAndView mav = new ModelAndView();
-        // if error = true
-        //     mav.addObject("error" , true);
-        //
+        if (error) {
+            mav.addObject("error", true);
+            mav.setViewName("login");
+            return mav;
+        }
         mav.setViewName("login");
         return mav;
     }
@@ -35,14 +36,5 @@ public class LoginController {
         mav.setViewName("user/list");
         return mav;
     }
-
-//    @GetMapping("error")
-//    public ModelAndView error() {
-//        ModelAndView mav = new ModelAndView();
-//        String errorMessage = "You are not authorized for the requested data.";
-//        mav.addObject("errorMsg", errorMessage);
-//        mav.setViewName("error");
-//        return mav;
-//    }
 
 }

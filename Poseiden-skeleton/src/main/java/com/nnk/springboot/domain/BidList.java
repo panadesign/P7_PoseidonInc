@@ -54,67 +54,67 @@ public class BidList {
     /**
      * The Ask.
      */
-    Double ask;
+    private Double ask;
     /**
      * The Benchmark.
      */
-    String benchmark;
+    private String benchmark;
     /**
      * The Bid list date.
      */
-    Timestamp bidListDate;
+    private Timestamp bidListDate;
     /**
      * The Commentary.
      */
-    String commentary;
+    private String commentary;
     /**
      * The Security.
      */
-    String security;
+    private String security;
     /**
      * The Status.
      */
-    String status;
+    private String status;
     /**
      * The Trader.
      */
-    String trader;
+    private String trader;
     /**
      * The Book.
      */
-    String book;
+    private String book;
     /**
      * The Creation name.
      */
-    String creationName;
+    private String creationName;
     /**
      * The Creation date.
      */
-    Timestamp creationDate;
+    private Timestamp creationDate;
     /**
      * The Revision name.
      */
-    String revisionName;
+    private String revisionName;
     /**
      * The Revision date.
      */
-    Timestamp revisionDate;
+    private Timestamp revisionDate;
     /**
      * The Deal name.
      */
-    String dealName;
+    private String dealName;
     /**
      * The Deal type.
      */
-    String dealType;
+    private String dealType;
     /**
      * The Source list id.
      */
-    String sourceListId;
+    private String sourceListId;
     /**
      * The Side.
      */
-    String side;
+    private String side;
 
     /**
      * Instantiates a new Bid list.

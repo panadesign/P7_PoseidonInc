@@ -25,37 +25,37 @@ public class RuleName {
      */
     @Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	Integer id;
+	private Integer id;
     /**
      * The Name.
      */
     @NotBlank(message = "Name cannot be null")
-	String name;
+	private String name;
     /**
      * The Description.
      */
     @NotBlank(message = "Description cannot be null")
-	String description;
+	private String description;
     /**
      * The Json.
      */
     @NotBlank(message = "Json cannot be null")
-	String json;
+	private String json;
     /**
      * The Template.
      */
     @NotBlank(message = "Template cannot be null")
-	String template;
+	private String template;
     /**
      * The Sql str.
      */
     @NotBlank(message = "Sql str cannot be null")
-	String sqlStr;
+	private String sqlStr;
     /**
      * The Sql part.
      */
     @NotBlank(message = "Sql part cannot be null")
-	String sqlPart;
+	private String sqlPart;
 
     /**
      * Instantiates a new Rule name.

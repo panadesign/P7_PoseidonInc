@@ -88,7 +88,7 @@ public class UserController {
         try {
             crudService.add(userAccount);
             model.addAttribute("users", userRepository.findAll());
-        } catch(Exception e) {
+        } catch(UserAlreadyExistException e) {
             model.addAttribute("error", e.getMessage());
             return "user/add";
         }

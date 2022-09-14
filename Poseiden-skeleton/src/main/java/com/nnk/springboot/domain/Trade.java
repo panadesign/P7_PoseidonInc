@@ -25,92 +25,92 @@ public class Trade {
      */
     @Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
-	Integer id;
+    private Integer id;
     /**
      * The Account.
      */
     @NotBlank(message = "Account cannot be null")
-	String account;
+    private String account;
     /**
      * The Type.
      */
     @NotBlank(message = "Type cannot be null")
-	String type;
+    private String type;
     /**
      * The Buy quantity.
      */
     @NotNull(message = "Quantity cannot be null")
 	@Min(1)
-	Double buyQuantity;
+    private Double buyQuantity;
     /**
      * The Sell quantity.
      */
     @Min(1)
-	Double sellQuantity;
+    private Double sellQuantity;
     /**
      * The Buy price.
      */
-    Double buyPrice;
+    private Double buyPrice;
     /**
      * The Sell price.
      */
-    Double sellPrice;
+    private Double sellPrice;
     /**
      * The Benchmark.
      */
-    String benchmark;
+    private String benchmark;
     /**
      * The Trade date.
      */
-    Timestamp tradeDate;
+    private Timestamp tradeDate;
     /**
      * The Security.
      */
-    String security;
+    private String security;
     /**
      * The Status.
      */
-    String status;
+    private String status;
     /**
      * The Trader.
      */
-    String trader;
+    private String trader;
     /**
      * The Book.
      */
-    String book;
+    private String book;
     /**
      * The Creation name.
      */
-    String creationName;
+    private String creationName;
     /**
      * The Creation date.
      */
-    Timestamp creationDate;
+    private Timestamp creationDate;
     /**
      * The Revision name.
      */
-    String revisionName;
+    private String revisionName;
     /**
      * The Revision date.
      */
-    Timestamp revisionDate;
+    private Timestamp revisionDate;
     /**
      * The Deal name.
      */
-    String dealName;
+    private String dealName;
     /**
      * The Deal type.
      */
-    String dealType;
+    private String dealType;
     /**
      * The Source list id.
      */
-    String sourceListId;
+    private String sourceListId;
     /**
      * The Side.
      */
-    String side;
+    private String side;
 
     /**
      * Instantiates a new Trade.

@@ -24,28 +24,28 @@ public class Rating {
      */
     @Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	Integer id;
+	private Integer id;
     /**
      * The Moodys rating.
      */
     @NotBlank(message = "Moody's rating cannot be null")
-	String moodysRating;
+	private String moodysRating;
     /**
      * The Sand p rating.
      */
     @NotBlank(message = "Sand rating cannot be null")
-	String sandPRating;
+	private String sandPRating;
     /**
      * The Fitch rating.
      */
     @NotBlank(message = "Fitch rating cannot be null")
-	String fitchRating;
+	private String fitchRating;
     /**
      * The Order number.
      */
     @NotNull(message = "Order number cannot be null")
 	@Min(1)
-	Integer orderNumber;
+	private Integer orderNumber;
 
     /**
      * Instantiates a new Rating.
