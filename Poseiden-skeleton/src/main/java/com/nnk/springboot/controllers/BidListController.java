@@ -1,6 +1,7 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.exception.UserAlreadyExistException;
 import com.nnk.springboot.repositories.BidListRepository;
 import com.nnk.springboot.service.CrudService;
 import lombok.extern.log4j.Log4j2;
@@ -81,8 +82,15 @@ public class BidListController {
 			log.error("Error: " + result.getFieldError());
 			return "bidList/add";
 		}
-		crudService.add(bidList);
-		model.addAttribute("bidList", bidListRepository.findAll());
+
+		try {
+			crudService.add(bidList);
+			model.addAttribute("bidList", bidListRepository.findAll());
+		} catch(UserAlreadyExistException e) {
+			model.addAttribute("error", e.getMessage());
+			return "bidList/add";
+		}
+
 		log.debug("A new bid list has been created and bidList/validate redirect to bidList/list");
 		return "redirect:/bidList/list";
 	}

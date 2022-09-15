@@ -230,6 +230,7 @@
                 <configuration>
                     <excludes>
                         <exclude>com/nnk/springboot/domain/*</exclude>
+                        <exclude>com/nnk/springboot/util/*</exclude>
                         <exclude>com/nnk/springboot/Application.class</exclude>
                     </excludes>
                 </configuration>

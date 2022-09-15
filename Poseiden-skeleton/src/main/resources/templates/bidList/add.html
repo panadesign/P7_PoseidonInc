@@ -24,7 +24,7 @@
 					<p class="text-danger" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></p>
 				</label>
 				<label for="bidQuantity">
-					<input id="bidQuantity" class="form-control" type="text" name="bidQuantity"  th:field="*{bidQuantity}" placeholder="Bid quantity">
+					<input id="bidQuantity" class="form-control" type="number" name="bidQuantity"  th:field="*{bidQuantity}" placeholder="Bid quantity">
 					<p class="text-danger" th:if="${#fields.hasErrors('bidQuantity')}" th:errors="*{bidQuantity}"></p>
 				</label>
 				<button class="btn btn-danger"  type="submit" value="Cancel"><a th:href="@{/bidList/list}" th:method="get" class="update">Cancel</a></button>

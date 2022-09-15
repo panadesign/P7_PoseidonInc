@@ -17,6 +17,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Optional;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.logout;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -34,7 +35,6 @@ class LoginControllerIntegrationTest {
 
     @Autowired
     UserRepository userRepository;
-
 
     @BeforeEach
     public void init() {
@@ -55,5 +55,13 @@ class LoginControllerIntegrationTest {
     void getAllUserArticles() throws Exception {
         mockMvc.perform(get("/app/secure/article-details"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    void getLogOut() throws Exception {
+        mockMvc.perform(get("/app/logout"))
+                .andExpect(status().isFound())
+                .andExpect(redirectedUrl("/"));
     }
 }
