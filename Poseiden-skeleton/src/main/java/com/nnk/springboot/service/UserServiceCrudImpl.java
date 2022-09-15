@@ -1,15 +1,12 @@
 package com.nnk.springboot.service;
 
 import com.nnk.springboot.domain.UserAccount;
-import com.nnk.springboot.exception.InvalidPasswordException;
 import com.nnk.springboot.exception.ResourceNotExistException;
 import com.nnk.springboot.exception.UserAlreadyExistException;
 import com.nnk.springboot.repositories.UserRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import java.util.regex.Pattern;
 
 /**
  * The type User service crud.
