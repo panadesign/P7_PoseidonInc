@@ -1,35 +1,54 @@
-# spring-boot
-## Technical:
+![](src/main/resources/static/img/logo.png)
+
+# Poseidon Inc.
 
 1. Framework: Spring Boot v2.7.0
 2. Java 17
 3. Thymeleaf
 4. Bootstrap v.5.2.0
 
+## HOW TO USE
 
-## Setup with Intellij IDE
-1. Create project from Initializr: File > New > project > Spring Initializr
-2. Add lib repository into pom.xml
-3. Add folders
-    - Source root: src/main/java
-    - View: src/main/resources
-    - Static: src/main/resource/static
-4. Create database with name "demo" as configuration in application.properties
-5. Run sql script to create table doc/data.sql
+**Clone the project**
+<br>`git clone https://github.com/panadesign/P7_PoseidonInc.git`
 
-## Implement a Feature
-1. Create mapping domain class and place in package com.nnk.springboot.domain
-2. Create repository class and place in package com.nnk.springboot.repositories
-3. Create controller class and place in package com.nnk.springboot.controllers
-4. Create view files and place in src/main/resource/templates
+**Run application**
+<br>In command line, go to the root of the project and execute:
+<br>**mvn spring-boot:run**
 
-## Write Unit Test
-1. Create unit test and place in package com.nnk.springboot in folder test > java
+**H2** for develop : ```mvn clean package -Pdev``` to use dev profile
 
-## Security
-1. Create userAccount service to load userAccount from  database and place in package com.nnk.springboot.services
-2. Add configuration class and place in package com.nnk.springboot.config
+http://localhost:8080
+<br>http://localhost:8080/h2-console
 
-## Users for dev
+You can now connect to the application with this admin account or user account :
+
 1. Role ADMIN(username: admin, password: AdminSpring_123)
 2. Role USER(username: user, password: UserSpring_123)
+
+### You can also use a mysql database
+
+User you're going to add in database:
+<br>username: admin
+<br>password: AdminSpring_123
+
+With this admin account you can do all you want.
+<br>You can add new user account at this address:<br>http://localhost:8080/user/list or http://localhost:8080/app/secure/article-details
+
+**Create a new mysql database with:**
+<br>CREATE DATABASE poseidonInc;
+<br>USE poseidonInc;
+
+And after use this SQL script:
+<br>
+create table user_account
+(
+id tinyint(4) NOT NULL AUTO_INCREMENT,
+username VARCHAR(125),
+password VARCHAR(125),
+fullname VARCHAR(125),
+role VARCHAR(125),
+
+PRIMARY KEY (Id)
+insert into Users(fullname, username, password, role) values("Administrator", "admin", "$2y$10$IBP5qFgrzcoHfKN2X6thmulbZ2jZDNi29PkVC2k4dG5Pl6nzsGFbC", "ADMIN")
+)
