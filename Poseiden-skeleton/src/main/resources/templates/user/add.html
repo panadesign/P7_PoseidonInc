@@ -20,21 +20,26 @@
         <form action="#" th:action="@{/user/validate}" th:object="${userAccount}" method="post" class="form-horizontal"
               style="width: 100%">
             <label for="username">User Name</label>
-                <input class="form-control" type="text" th:field="*{username}" name="username" id="username"  placeholder="User Name">
-                <p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+            <input class="form-control" type="text" th:field="*{username}" name="username" id="username"
+                   placeholder="User Name">
+            <p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+            <p class="text-danger" th:if="${errorMessage}" th:text="${errorMessage}">Error</p>
             <label for="password">Password</label>
-                <input class="form-control" type="password" th:field="*{password}" name="password" id="password" placeholder="Password">
-                <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+            <input class="form-control" type="password" th:field="*{password}" name="password" id="password"
+                   placeholder="Password">
+            <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
             <label for="fullname">Full Name</label>
-                <input class="form-control" type="text" th:field="*{fullname}" name="fullname" id="fullname" placeholder="Full Name">
-                <p class="text-danger" th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}"></p>
+            <input class="form-control" type="text" th:field="*{fullname}" name="fullname" id="fullname"
+                   placeholder="Full Name">
+            <p class="text-danger" th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}"></p>
             <label for="password">Role</label>
-                <label class="checkbox-inline"><input type="radio" th:field="*{role}" th:value="ADMIN">Admin</label>
-                <label class="checkbox-inline"><input type="radio" th:field="*{role}" th:value="USER">User</label>
-                <p class="text-danger" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></p>
+            <label class="checkbox-inline"><input type="radio" th:field="*{role}" th:value="ADMIN">Admin</label>
+            <label class="checkbox-inline"><input type="radio" th:field="*{role}" th:value="USER">User</label>
+            <p class="text-danger" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></p>
 
-            <button class="btn btn-danger"  type="submit" value="Cancel"><a th:href="@{/user/list}" th:method="get">Cancel</a></button>
-            <button class="btn btn-primary"  type="submit" value="Create">Add userAccount</button>
+            <button class="btn btn-danger" type="submit" value="Cancel"><a th:href="@{/user/list}" th:method="get">Cancel</a>
+            </button>
+            <button class="btn btn-primary" type="submit" value="Create">Add userAccount</button>
         </form>
     </div>
 
